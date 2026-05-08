@@ -874,36 +874,58 @@ function FinalCta() {
   return (
     <section id="contacto" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="contacto-title">
       <div className="mx-auto max-w-7xl">
-        <div className="relative overflow-hidden rounded-[2rem] border border-air-300/24 bg-gradient-to-br from-air-400/20 via-graphite-800 to-graphite-950 p-6 shadow-glow sm:p-10 lg:p-14">
+        <div className="relative overflow-hidden rounded-[2rem] border border-air-300/24 bg-gradient-to-br from-air-400/20 via-graphite-800 to-graphite-950 p-6 shadow-glow sm:p-8 lg:p-10">
           <div className="absolute inset-0 bg-technical-grid bg-[length:48px_48px] opacity-35" />
-          <div className="relative z-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">Contacto</p>
-              <h2
-                id="contacto-title"
-                className="mt-4 max-w-4xl font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
-              >
-                Transforme dados ambientais em controlo real da ventilação.
-              </h2>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-300">
-                Fale connosco para avaliar a aplicação do RenovAR no seu edifício.
-              </p>
+          <div className="relative z-10 grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.72fr)] lg:items-stretch">
+            <div className="flex flex-col justify-between gap-8 py-1 lg:py-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">Contacto</p>
+                <h2
+                  id="contacto-title"
+                  className="mt-4 max-w-4xl font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
+                >
+                  Transforme dados ambientais em controlo real da ventilação.
+                </h2>
+                <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-300">
+                  Fale connosco para avaliar a aplicação do RenovAR no seu edifício.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <a
+                  href="mailto:contacto@renovar.pt?subject=Pedido%20de%20demonstra%C3%A7%C3%A3o%20RenovAR"
+                  className="group inline-flex items-center justify-center gap-2 rounded-full bg-air-400 px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-graphite-950 shadow-glow transition hover:bg-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-300 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+                >
+                  Pedir demonstração
+                  <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
+                </a>
+                <a
+                  href="mailto:contacto@renovar.pt"
+                  className="inline-flex items-center justify-center rounded-full border border-white/14 bg-white/[0.04] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:border-air-300/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+                >
+                  Contactar equipa
+                </a>
+              </div>
             </div>
-            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-              <a
-                href="mailto:contacto@renovar.pt?subject=Pedido%20de%20demonstra%C3%A7%C3%A3o%20RenovAR"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-air-400 px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-graphite-950 shadow-glow transition hover:bg-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-300 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+
+            <figure className="relative min-h-[280px] overflow-hidden rounded-[1.6rem] border border-white/12 bg-graphite-950/48 shadow-insetline">
+              <img
+                src="/assets/renovar-equipa.jpeg"
+                alt="Equipa RenovAR junto ao protótipo de ventilação inteligente"
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-graphite-950/88 via-graphite-950/12 to-transparent" />
+              <figcaption
+                className="absolute inset-x-0 bottom-0 p-5 sm:p-6"
               >
-                Pedir demonstração
-                <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
-              </a>
-              <a
-                href="mailto:contacto@renovar.pt"
-                className="inline-flex items-center justify-center rounded-full border border-white/14 bg-white/[0.04] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:border-air-300/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
-              >
-                Contactar equipa
-              </a>
-            </div>
+                <p className="inline-flex rounded-full border border-air-300/28 bg-air-400/12 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-air-300 backdrop-blur-md">
+                  Equipa RenovAR
+                </p>
+                <p className="mt-3 max-w-md text-sm font-medium leading-6 text-white">
+                  Protótipo e demonstração do sistema em contexto académico e técnico.
+                </p>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
