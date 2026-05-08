@@ -9,17 +9,19 @@ import {
   CircuitBoard,
   CloudCog,
   Cpu,
+  EyeOff,
   Fan,
   Gauge,
   History,
+  Layers3,
   Menu,
+  PlugZap,
   RadioTower,
   RefreshCw,
   ShieldCheck,
   SlidersHorizontal,
   Thermometer,
   Waves,
-  Wind,
   X,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -33,6 +35,7 @@ type CardItem = {
 const navItems = [
   ['Produto', '#produto'],
   ['Funcionamento', '#funcionamento'],
+  ['Validação', '#validacao'],
   ['Benefícios', '#beneficios'],
   ['Mercado', '#mercado'],
   ['Roadmap', '#roadmap'],
@@ -117,8 +120,9 @@ const customers = [
   'Edifícios administrativos',
   'PMEs',
   'Facility managers',
-  'Espaços educativos',
+  'Investigação e educação',
   'Pequenas unidades de saúde',
+  'Ambientes controlados',
   'Edifícios em renovação',
 ];
 
@@ -132,11 +136,59 @@ const mvpItems = [
 ];
 
 const futureItems = [
-  'Inferência de ocupação',
-  'Otimização preditiva',
+  'Estimativa de ocupação sem câmaras',
+  'Modelos físicos + IA para otimização',
+  'Otimização preditiva da renovação do ar',
   'Relatórios automáticos',
   'Integração smart building',
   'Sensores adicionais',
+];
+
+const validatedVisuals = [
+  {
+    title: 'Arquitetura do sistema',
+    description:
+      'Do sensor à decisão: observação contínua, inteligência embebida, processamento local/cloud e interface de utilizador.',
+    image: '/assets/renovar-system-architecture.png',
+    alt: 'Diagrama validado da arquitetura RenovAR, do sensing e atuação até à interface de utilizador.',
+  },
+  {
+    title: 'Diferença estratégica',
+    description:
+      'Privacidade, modelos físicos com inteligência artificial, integração aberta e arquitetura escalável/local.',
+    image: '/assets/renovar-strategic-difference.png',
+    alt: 'Mapa estratégico RenovAR com privacidade, modelos físicos, integração simples e arquitetura escalável.',
+  },
+  {
+    title: 'Evolução não-intrusiva',
+    description:
+      'Linha de evolução para estimar ocupação e taxas de renovação sem câmaras nem sensores sensíveis.',
+    image: '/assets/renovar-non-intrusive-intelligence.png',
+    alt: 'Visual técnico sobre inteligência não-intrusiva e estimativa sem câmaras.',
+  },
+];
+
+const designPillars = [
+  {
+    title: 'Modularidade e escalabilidade',
+    description: 'Adaptação desde uma sala a edifícios com várias zonas e necessidades distintas.',
+    icon: Layers3,
+  },
+  {
+    title: 'Interoperabilidade',
+    description: 'Integração com sistemas existentes para comunicar, não para isolar.',
+    icon: PlugZap,
+  },
+  {
+    title: 'Privacidade e dados',
+    description: 'Insights úteis sem comprometer a identidade dos ocupantes.',
+    icon: EyeOff,
+  },
+  {
+    title: 'Operação a longo prazo',
+    description: 'Arquitetura preparada para piloto, atualização e operação contínua.',
+    icon: ShieldCheck,
+  },
 ];
 
 function App() {
@@ -150,6 +202,7 @@ function App() {
         <Hero />
         <ProblemSection />
         <SystemSection />
+        <ValidatedMaterialSection />
         <FeaturesSection />
         <BenefitsSection />
         <CustomersSection />
@@ -175,15 +228,14 @@ function Header({
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
         <a
           href="#top"
-          className="group inline-flex items-center gap-3 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+          className="group inline-flex items-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
           aria-label="RenovAR, ir para o início"
         >
-          <span className="grid size-9 place-items-center rounded-full border border-air-400/40 bg-air-400/10 shadow-glow">
-            <Wind className="size-4 text-air-300" aria-hidden="true" />
-          </span>
-          <span className="font-display text-lg font-semibold uppercase tracking-[0.18em] text-white">
-            RenovAR
-          </span>
+          <img
+            src="/assets/renovar-logo.png"
+            alt="RenovAR"
+            className="h-10 w-auto object-contain drop-shadow-[0_0_18px_rgba(67,230,178,0.16)] sm:h-12"
+          />
         </a>
 
         <nav aria-label="Navegação principal" className="hidden items-center gap-7 lg:flex">
@@ -264,8 +316,8 @@ function Hero() {
               Controlo inteligente da qualidade do ar interior.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-300 sm:text-lg">
-              O RenovAR liga monitorização ambiental e atuação automática, ajustando a
-              ventilação às condições reais de cada espaço.
+              Plataforma modular para monitorizar ambientes interiores e apoiar a ventilação
+              baseada em dados, integrando-se de forma simples em edifícios existentes.
             </p>
           </div>
 
@@ -346,7 +398,7 @@ function HeroVisual() {
               Zona A / Piso 02
             </p>
             <h2 className="mt-2 text-2xl font-semibold uppercase tracking-[0.08em] text-white">
-              Nucleo ambiental
+              Núcleo ambiental
             </h2>
           </div>
           <div className="rounded-full border border-air-300/30 bg-air-400/10 px-3 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-air-300">
@@ -513,6 +565,91 @@ function SystemSection() {
               ))}
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ValidatedMaterialSection() {
+  return (
+    <section
+      id="validacao"
+      className="px-5 py-16 lg:px-8 lg:py-24"
+      aria-labelledby="validacao-title"
+    >
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">
+              Material validado
+            </p>
+            <h2
+              id="validacao-title"
+              className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
+            >
+              Branding e narrativa técnica alinhados com a documentação RenovAR.
+            </h2>
+          </div>
+          <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
+            A página incorpora imagens e conceitos dos documentos de apresentação: arquitetura
+            modular, integração aberta, privacidade e evolução para inteligência não-intrusiva.
+            As funcionalidades futuras continuam separadas do MVP atual.
+          </p>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-3">
+          {validatedVisuals.map((visual, index) => (
+            <article
+              key={visual.title}
+              className={`group overflow-hidden rounded-[2rem] border border-white/10 bg-graphite-900/72 shadow-insetline transition hover:-translate-y-1 hover:border-air-300/28 ${
+                index === 0 ? 'lg:col-span-2' : index === 2 ? 'lg:col-span-3' : ''
+              }`}
+            >
+              <div className="relative overflow-hidden border-b border-white/10 bg-zinc-100 p-2">
+                <img
+                  src={visual.image}
+                  alt={visual.alt}
+                  loading="lazy"
+                  className="aspect-[16/10] h-full w-full object-contain object-center transition duration-500 group-hover:scale-[1.025]"
+                />
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-graphite-950/60 to-transparent" />
+              </div>
+              <div className="p-5 sm:p-6">
+                <div className="mb-5 flex items-center justify-between gap-4">
+                  <span className="text-[0.66rem] font-bold uppercase tracking-[0.18em] text-air-300">
+                    Fonte RenovAR
+                  </span>
+                  <ArrowRight
+                    className="size-4 text-zinc-600 transition group-hover:translate-x-1 group-hover:text-air-300"
+                    aria-hidden="true"
+                  />
+                </div>
+                <h3 className="text-xl font-semibold text-white">{visual.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-zinc-400">{visual.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {designPillars.map(({ title, description, icon: Icon }) => (
+            <article
+              key={title}
+              className="rounded-[1.6rem] border border-white/10 bg-white/[0.035] p-5 transition hover:border-air-300/30 hover:bg-white/[0.055]"
+            >
+              <div className="mb-6 flex items-center justify-between">
+                <span className="grid size-10 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
+                  <Icon className="size-5 text-air-300" aria-hidden="true" />
+                </span>
+                <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
+                  Pilar
+                </span>
+              </div>
+              <h3 className="text-base font-semibold leading-7 text-white">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>
@@ -688,7 +825,7 @@ function DashboardPreview() {
                 </p>
                 <span className="text-xs font-semibold text-air-300">CO₂ / atuação</span>
               </div>
-              <div className="chart-bars grid h-36 grid-cols-12 items-end gap-2" aria-label="Grafico temporal de qualidade do ar">
+              <div className="chart-bars grid h-36 grid-cols-12 items-end gap-2" aria-label="Gráfico temporal de qualidade do ar">
                 {[44, 52, 48, 68, 76, 71, 62, 54, 59, 49, 42, 38].map((height, index) => (
                   <span key={index} style={{ height: `${height}%` }} />
                 ))}
@@ -726,7 +863,7 @@ function RoadmapSection() {
 
         <div className="grid gap-4 lg:grid-cols-2">
           <RoadmapColumn title="MVP atual" items={mvpItems} active />
-          <RoadmapColumn title="Evolucao futura" items={futureItems} />
+          <RoadmapColumn title="Evolução futura" items={futureItems} />
         </div>
       </div>
     </section>
@@ -779,14 +916,11 @@ function Footer() {
     <footer className="border-t border-white/10 px-5 py-10 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto]">
         <div>
-          <div className="flex items-center gap-3">
-            <span className="grid size-9 place-items-center rounded-full border border-air-400/40 bg-air-400/10">
-              <Wind className="size-4 text-air-300" aria-hidden="true" />
-            </span>
-            <span className="font-display text-lg font-semibold uppercase tracking-[0.18em] text-white">
-              RenovAR
-            </span>
-          </div>
+          <img
+            src="/assets/renovar-logo.png"
+            alt="RenovAR"
+            className="h-14 w-auto object-contain drop-shadow-[0_0_18px_rgba(67,230,178,0.14)]"
+          />
           <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-400">
             Sistema IoT modular para monitorização da qualidade do ar interior e controlo
             automático da ventilação em edifícios de serviços.

@@ -1,5 +1,6 @@
 node_modules/
 dist/
+.asset-previews/
 vite.config.js
 vite.config.d.ts
 *.local
