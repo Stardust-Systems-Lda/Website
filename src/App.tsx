@@ -88,33 +88,33 @@ const heroProblemCards = [
 const diagnosticParameters = [
   {
     label: 'CO₂',
-    title: 'Indicador de renovação do ar',
+    title: 'Ar pouco renovado',
     description:
-      'Ajuda a perceber se o ar expirado se acumula e se o espaço pode precisar de mais ventilação.',
+      'Quando sobe, pode indicar que há muitas pessoas no espaço ou pouca entrada de ar novo.',
   },
   {
     label: 'COVs',
-    title: 'Compostos orgânicos voláteis',
+    title: 'Cheiros e químicos no ar',
     description:
-      'Podem resultar de materiais, mobiliário, produtos de limpeza ou atividade normal no espaço.',
+      'Podem vir de produtos de limpeza, mobiliário, tintas, equipamentos ou materiais interiores.',
   },
   {
     label: 'Partículas',
-    title: 'Poeiras e aerossóis',
+    title: 'Poeira e pequenas partículas',
     description:
-      'Indicam material suspenso no ar que pode variar com utilização, limpeza e ventilação.',
+      'Mostram matéria suspensa no ar, que pode variar com limpeza, circulação de pessoas ou ventilação.',
   },
   {
     label: 'Humidade',
-    title: 'Equilíbrio higrotérmico',
+    title: 'Ar demasiado seco ou húmido',
     description:
-      'Valores demasiado altos ou baixos podem afetar conforto e condições interiores.',
+      'Ajuda a perceber se o ambiente está confortável e se precisa de melhor controlo ou renovação de ar.',
   },
   {
     label: 'Ventilação',
-    title: 'Resposta do edifício',
+    title: 'Como o edifício responde',
     description:
-      'Mostra se a renovação do ar funciona por rotina ou se responde às condições reais.',
+      'O ponto principal é perceber se a ventilação reage ao estado real do espaço ou apenas a horários fixos.',
   },
 ];
 
