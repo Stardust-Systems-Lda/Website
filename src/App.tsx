@@ -77,11 +77,11 @@ const heroProblemCards = [
   },
   {
     title: 'Contínuo',
-    description: 'A degradação pode ocorrer ao longo de horas, dias ou meses.',
+    description: 'A qualidade do ar pode piorar ao longo de horas, dias ou meses.',
   },
   {
     title: 'Operacional',
-    description: 'Sem atuação automática, os dados não resolvem o problema.',
+    description: 'Sem resposta automática, os dados ficam por usar.',
   },
 ];
 
@@ -102,19 +102,19 @@ const diagnosticParameters = [
     label: 'Partículas',
     title: 'Poeira e pequenas partículas',
     description:
-      'Mostram matéria suspensa no ar, que pode variar com limpeza, circulação de pessoas ou ventilação.',
+      'Indicam poeiras e outras partículas no ar, que podem aumentar com limpeza, circulação de pessoas ou pouca ventilação.',
   },
   {
     label: 'Humidade',
     title: 'Ar demasiado seco ou húmido',
     description:
-      'Ajuda a perceber se o ambiente está confortável e se precisa de melhor controlo ou renovação de ar.',
+      'Ajuda a perceber se o espaço está demasiado seco ou húmido e se precisa de mais renovação de ar.',
   },
   {
     label: 'Ventilação',
     title: 'Como o edifício responde',
     description:
-      'O ponto principal é perceber se a ventilação reage ao estado real do espaço ou apenas a horários fixos.',
+      'O essencial é saber se a ventilação responde ao estado real do espaço ou se funciona apenas por horário.',
   },
 ];
 
@@ -122,25 +122,25 @@ const problemCards: CardItem[] = [
   {
     title: 'Ar interior invisível',
     description:
-      'Poluentes e parâmetros ambientais degradam-se sem sinais imediatos. Quando o desconforto é percebido, o espaço já pode estar mal ventilado há horas.',
+      'A qualidade do ar pode piorar sem sinais imediatos. Quando o desconforto se sente, o espaço pode já estar mal ventilado há horas.',
     icon: EyeOff,
   },
   {
     title: 'Ventilação estática',
     description:
-      'Horários fixos e regras manuais não acompanham ocupação real, variações ambientais ou necessidades específicas de cada espaço.',
+      'Horários fixos e regras manuais não acompanham a ocupação real, as variações do ar ou as necessidades de cada espaço.',
     icon: Wind,
   },
   {
     title: 'Sensores sem atuação',
     description:
-      'Muitos sistemas mostram valores num ecrã, mas não controlam a ventilação. A informação existe, mas não muda o comportamento do edifício.',
+      'Muitos sistemas mostram valores num ecrã, mas não controlam a ventilação. A informação existe, mas o edifício continua a funcionar da mesma forma.',
     icon: Activity,
   },
   {
     title: 'Impacto acumulado',
     description:
-      'A exposição repetida a ambientes interiores mal ventilados pode afetar conforto, bem-estar, concentração e perceção de qualidade do espaço.',
+      'Passar muitas horas em espaços mal ventilados pode afetar conforto, bem-estar, concentração e perceção de qualidade do espaço.',
     icon: Brain,
   },
   {
@@ -161,32 +161,32 @@ const impactItems = [
   {
     title: 'Conforto e bem-estar',
     description:
-      'Parâmetros fora dos limites configurados podem contribuir para desconforto e perceção negativa do espaço.',
+      'Quando o ar sai dos limites definidos, o espaço pode tornar-se desconfortável e menos agradável de usar.',
   },
   {
     title: 'Concentração e desempenho',
     description:
-      'Ambientes interiores mal ventilados podem afetar atenção, fadiga e qualidade de utilização ao longo do dia.',
+      'Espaços mal ventilados podem afetar atenção, fadiga e a forma como o espaço é usado ao longo do dia.',
   },
   {
     title: 'Sistema respiratório',
     description:
-      'Partículas, humidade e COVs reforçam a importância de monitorização contínua e ventilação adequada.',
+      'Partículas, humidade e COVs tornam mais importante acompanhar o ar e garantir ventilação adequada.',
   },
   {
     title: 'Ocupantes vulneráveis',
     description:
-      'Crianças, idosos e pessoas com alergias ou asma podem ser mais sensíveis a condições ambientais degradadas.',
+      'Crianças, idosos e pessoas com alergias ou asma podem ser mais sensíveis a ar interior em pior estado.',
   },
   {
     title: 'Operação e custos',
     description:
-      'A ventilação sem feedback ambiental aumenta a dependência de regras fixas e intervenção manual.',
+      'Sem informação sobre o ar interior, a ventilação depende mais de regras fixas e intervenção manual.',
   },
   {
     title: 'Conformidade e risco',
     description:
-      'A pressão regulamentar aumenta a necessidade de dados históricos, gestão consistente e evidência operacional.',
+      'A pressão regulamentar aumenta a necessidade de histórico, gestão consistente e registos de operação.',
   },
 ];
 
@@ -210,9 +210,9 @@ const marketShiftCards: CardItem[] = [
     icon: FileCheck,
   },
   {
-    title: 'Dados precisam de ação',
+    title: 'Dados que pedem resposta',
     description:
-      'A próxima etapa não é apenas medir melhor. É transformar dados ambientais em decisões operacionais.',
+      'A próxima etapa não é apenas medir melhor. É usar os dados para orientar decisões de operação.',
     icon: Zap,
   },
 ];
@@ -227,7 +227,7 @@ const solutionSteps = [
   {
     title: 'Interpretar',
     description:
-      'A lógica local ou local/cloud analisa os dados e determina a necessidade de ventilação.',
+      'A lógica local, cloud ou híbrida analisa os dados e avalia a necessidade de ventilação.',
     icon: Cpu,
   },
   {
@@ -248,7 +248,7 @@ const features: CardItem[] = [
   {
     title: 'Controlo automático',
     description:
-      'Execução de lógica de controlo para atuar sobre ventilação conforme as condições reais.',
+      'Regras de controlo atuam sobre a ventilação de acordo com as condições reais do espaço.',
     icon: SlidersHorizontal,
   },
   {
@@ -260,7 +260,7 @@ const features: CardItem[] = [
   {
     title: 'Operação local autónoma',
     description:
-      'Capacidade de funcionamento local para continuidade operacional, com opção local/cloud.',
+      'Continua a funcionar localmente, com opção de integração em infraestrutura local ou cloud.',
     icon: Cpu,
   },
   {
@@ -272,7 +272,7 @@ const features: CardItem[] = [
   {
     title: 'Atualizações OTA',
     description:
-      'Evolução de firmware e parâmetros sem intervenções físicas recorrentes no equipamento.',
+      'Atualização de firmware e parâmetros sem intervenções físicas recorrentes no equipamento.',
     icon: RefreshCw,
   },
   {
@@ -293,12 +293,12 @@ const benefits = [
   {
     title: 'Melhor qualidade do ar interior',
     description:
-      'Ajuda a manter os parâmetros ambientais observados e a atuar quando o espaço exige renovação de ar.',
+      'Ajuda a acompanhar as condições do ar e a atuar quando o espaço precisa de renovação.',
   },
   {
     title: 'Maior conforto e bem-estar dos ocupantes',
     description:
-      'Reduz a dependência de perceções tardias, apoiando uma gestão mais consistente das condições interiores.',
+      'Ajuda a agir antes de o desconforto ser evidente, mantendo uma gestão mais consistente do espaço.',
   },
   {
     title: 'Redução de ventilação desnecessária',
@@ -308,7 +308,7 @@ const benefits = [
   {
     title: 'Apoio à conformidade regulamentar',
     description:
-      'Fornece dados e histórico que ajudam equipas técnicas a acompanhar requisitos de qualidade e operação.',
+      'Fornece dados e histórico que ajudam equipas técnicas a acompanhar requisitos de qualidade do ar e operação.',
   },
   {
     title: 'Menor intervenção manual',
@@ -318,7 +318,7 @@ const benefits = [
   {
     title: 'Dados históricos para auditoria e análise',
     description:
-      'Regista tendências para perceber padrões, comparar espaços e justificar decisões operacionais.',
+      'Regista tendências para identificar padrões, comparar espaços e apoiar decisões de operação.',
   },
 ];
 
@@ -337,7 +337,7 @@ const mvpItems = [
   'Monitorização ambiental',
   'Controlo automático da ventilação',
   'Plataforma digital',
-  'Operação local/cloud',
+  'Operação local ou cloud',
   'Atualizações OTA',
   'Integração com ventilação existente',
 ];
@@ -355,7 +355,7 @@ const validatedVisuals = [
   {
     title: 'Arquitetura do sistema',
     description:
-      'Da observação ambiental à decisão local/cloud e à interface operacional para utilizadores técnicos.',
+      'Da leitura ambiental à decisão local ou cloud e à interface usada pelas equipas técnicas.',
     image: '/assets/renovar-system-architecture.png',
     alt: 'Diagrama validado da arquitetura RenovAR, do sensing e atuação até à interface de utilizador.',
   },
@@ -367,11 +367,11 @@ const validatedVisuals = [
     alt: 'Mapa estratégico RenovAR com privacidade, modelos físicos, integração simples e arquitetura escalável.',
   },
   {
-    title: 'Evolução não-intrusiva',
+    title: 'Evolução sem intrusão',
     description:
       'Linha de evolução para estimar ocupação e taxas de renovação sem câmaras nem sensores sensíveis.',
     image: '/assets/renovar-non-intrusive-intelligence.png',
-    alt: 'Visual técnico sobre inteligência não-intrusiva e estimativa sem câmaras.',
+    alt: 'Visual técnico sobre estimativa sem câmaras nem sensores sensíveis.',
   },
 ];
 
@@ -385,13 +385,13 @@ const designPillars = [
   {
     title: 'Interoperabilidade',
     description:
-      'Integra-se com sistemas existentes para acrescentar decisão, não para isolar a infraestrutura.',
+      'Integra-se com sistemas existentes para acrescentar decisão sem isolar a infraestrutura já instalada.',
     icon: PlugZap,
   },
   {
     title: 'Privacidade e dados',
     description:
-      'Foca-se em parâmetros ambientais e evolução não-intrusiva, evitando dependência de câmaras.',
+      'Baseia-se em dados ambientais e evita depender de câmaras.',
     icon: EyeOff,
   },
   {
@@ -406,7 +406,7 @@ const realWorldImages = [
   {
     title: 'Unidade sensora',
     description:
-      'Protótipo físico com caixa ventilada, eletrónica visível e instalação em parede para recolha ambiental contínua.',
+      'Protótipo físico com caixa ventilada, eletrónica visível e instalação em parede para leitura contínua do ar.',
     image: '/assets/renovar-sensor.jpeg',
     alt: 'Caixa do sensor RenovAR instalada numa parede com grelha frontal e eletrónica visível.',
     meta: 'Caixa do sensor RenovAR',
@@ -414,7 +414,7 @@ const realWorldImages = [
   {
     title: 'Atuação sobre ventilação natural',
     description:
-      'Integração com janelas atuadas automaticamente por um sistema RenovAR em contexto real.',
+      'Integração com janelas abertas automaticamente por um sistema RenovAR em contexto real.',
     image: '/assets/renovar-janelas-abertas.jpeg',
     alt: 'Janelas interiores abertas automaticamente por um sistema RenovAR.',
     meta: 'Integração física no edifício',
@@ -560,7 +560,7 @@ function HeroProblem() {
               </p>
               <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
                 Em muitos edifícios, a ventilação ainda funciona por horários fixos ou regras
-                estáticas. O ar degrada-se, os dados não são usados para decidir e os sistemas
+                estáticas. O ar piora, os dados não são usados para decidir e os sistemas
                 raramente atuam em função das condições reais do espaço.
               </p>
             </div>
@@ -648,8 +648,8 @@ function DiagnosticPanel() {
         <div className="rounded-[1.7rem] border border-air-300/22 bg-air-400/10 p-5 backdrop-blur-md">
           <p className="font-semibold text-white">Não são apenas números num ecrã.</p>
           <p className="mt-2 text-sm leading-6 text-zinc-300">
-            Estes parâmetros ajudam a interpretar o estado do ar interior. O valor está em usar
-            estes sinais para decidir quando ventilar, reduzir excesso ou manter a operação.
+            Estes sinais ajudam a perceber o estado do ar interior. O importante é usá-los para
+            decidir quando ventilar, evitar ventilar em excesso ou manter a operação.
           </p>
         </div>
 
@@ -750,7 +750,7 @@ function ProblemSection() {
           id="problema-title"
           eyebrow="Problema"
           title="O problema não está só no ar. Está na falta de resposta."
-          text="CO₂, partículas, humidade e compostos orgânicos voláteis podem acumular-se em ambientes interiores sem serem percebidos pelos ocupantes. Mesmo quando existem sensores, muitos edifícios continuam sem uma ligação efetiva entre monitorização e ventilação."
+          text="CO₂, partículas, humidade e compostos orgânicos voláteis podem acumular-se em ambientes interiores sem serem sentidos pelos ocupantes. Mesmo quando existem sensores, muitos edifícios continuam sem uma ligação prática entre monitorização e ventilação."
         />
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {problemCards.map((card) => (
@@ -758,8 +758,8 @@ function ProblemSection() {
           ))}
         </div>
         <div className="mt-4 rounded-[1.7rem] border border-air-300/20 bg-air-400/8 p-5 text-sm leading-7 text-zinc-300">
-          Os dados são apresentados, mas nem sempre são transformados em ação. O problema não
-          está apenas no ar que respiramos. Está na forma como os edifícios respondem a ele.
+          Os dados podem aparecer num ecrã, mas nem sempre levam a uma ação. O problema não
+          está apenas no ar que respiramos. Está na forma como o edifício responde a esse ar.
         </div>
       </div>
     </section>
@@ -780,7 +780,7 @@ function ImpactSection() {
               O que não se vê pode afetar todos os dias.
             </h2>
             <p className="mt-6 text-base leading-8 text-zinc-400">
-              A qualidade do ar interior influencia a forma como um espaço é sentido, utilizado e
+              A qualidade do ar interior influencia a forma como um espaço é sentido, usado e
               gerido. Em edifícios de serviços, escritórios, salas de reunião ou espaços educativos,
               a acumulação de CO₂, partículas, humidade e COVs pode afetar conforto, concentração
               e bem-estar.
@@ -828,7 +828,7 @@ function MarketShiftSection() {
           id="mudanca-title"
           eyebrow="Porque agora"
           title="O mercado está a mudar."
-          text="A próxima etapa não é apenas medir melhor. É transformar dados ambientais em decisões operacionais que ajustam a ventilação quando o espaço precisa."
+          text="A próxima etapa não é apenas medir melhor. É usar dados ambientais para ajustar a ventilação quando o espaço precisa de ar novo."
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {marketShiftCards.map((card) => (
@@ -864,10 +864,10 @@ function SolutionIntro() {
               RenovAR transforma dados ambientais em controlo real da ventilação.
             </p>
             <p className="mt-4 text-base leading-8 text-zinc-400">
-              O RenovAR foi desenvolvido para fechar a lacuna entre saber o que está a acontecer
-              no ar interior e agir sobre a ventilação. Mede parâmetros ambientais, interpreta os
-              dados e atua sobre sistemas existentes, ajudando o edifício a responder às suas
-              condições reais de utilização.
+              O RenovAR foi criado para resolver a falha entre saber o que se passa no ar
+              interior e agir sobre a ventilação. Lê as condições ambientais, interpreta os dados e
+              atua sobre sistemas existentes, ajudando o edifício a responder à forma como está a
+              ser usado.
             </p>
           </div>
         </div>
@@ -902,7 +902,7 @@ function SolutionIntro() {
             ))}
           </div>
           <div className="mt-4 rounded-[1.45rem] border border-air-300/20 bg-air-400/8 p-5 text-sm font-semibold leading-7 text-white">
-            Não é apenas monitorização. É monitorização com consequência operacional.
+            Não serve apenas para mostrar dados. Serve para transformar leitura em resposta operacional.
           </div>
         </div>
       </div>
@@ -914,12 +914,12 @@ function SystemArchitectureSection() {
   const nodes = [
     [
       'Unidades sensoras',
-      'Recolha contínua de parâmetros ambientais relevantes para qualidade do ar interior.',
+      'Recolha contínua de dados essenciais sobre a qualidade do ar interior.',
       RadioTower,
     ],
     [
       'Processamento local',
-      'Execução de lógica de controlo com capacidade de operação autónoma.',
+      'Regras de controlo executadas localmente, com capacidade de operação autónoma.',
       Cpu,
     ],
     [
@@ -929,7 +929,7 @@ function SystemArchitectureSection() {
     ],
     [
       'Módulo de controlo',
-      'Interface entre a decisão do sistema e a atuação física sobre a ventilação.',
+      'Ligação entre a decisão do sistema e a atuação física sobre a ventilação.',
       SlidersHorizontal,
     ],
     [
@@ -958,9 +958,9 @@ function SystemArchitectureSection() {
               Da medição à ação: a arquitetura do sistema.
             </h2>
             <p className="mt-6 text-base leading-8 text-zinc-400">
-              O RenovAR funciona como uma camada operacional sobre edifícios existentes. Em vez
-              de substituir a infraestrutura, integra-se com sistemas de ventilação natural ou
-              mecânica e acrescenta capacidade de decisão baseada em dados.
+              O RenovAR funciona como uma camada de operação para edifícios existentes. Em vez
+              de substituir a infraestrutura, liga-se a sistemas de ventilação natural ou mecânica
+              e ajuda a decidir com base em dados.
             </p>
             <div className="mt-8 rounded-[1.7rem] border border-white/10 bg-white/[0.035] p-5">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
@@ -1024,7 +1024,7 @@ function ValidatedMaterialSection() {
             </h2>
           </div>
           <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
-            A solução foi concebida para responder a uma limitação prática dos edifícios: a
+            O sistema foi desenhado para responder a uma limitação prática dos edifícios: a
             separação entre medição ambiental, decisão operacional e atuação física. A arquitetura
             modular permite começar pelo essencial e evoluir sem redesenhar todo o sistema.
           </p>
@@ -1086,7 +1086,7 @@ function ValidatedMaterialSection() {
 
         <div className="mt-4 rounded-[1.7rem] border border-white/10 bg-white/[0.035] p-5 text-sm leading-7 text-zinc-400">
           Funcionalidades como estimativa de ocupação, otimização preditiva e relatórios
-          automáticos fazem parte da evolução futura, não do núcleo atual do MVP.
+          automáticos fazem parte da evolução futura e não do núcleo atual do MVP.
         </div>
       </div>
     </section>
@@ -1101,7 +1101,7 @@ function FeaturesSection() {
           id="produto-title"
           eyebrow="MVP atual"
           title="O que o RenovAR já permite fazer."
-          text="O núcleo funcional do RenovAR já permite monitorizar parâmetros ambientais, executar lógica de controlo e atuar sobre ventilação existente em configurações reais."
+          text="Na base atual, o RenovAR já consegue acompanhar o estado do ar, executar regras de controlo e atuar sobre ventilação existente em cenários reais."
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
@@ -1130,9 +1130,9 @@ function RealWorldSection() {
             </h2>
           </div>
           <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
-            O RenovAR já foi materializado em hardware funcional, com unidades de sensorização,
-            módulos de controlo e integração com ventilação natural motorizada. Esta base permite
-            validar o funcionamento em ambientes reais e evoluir para instalações mais robustas.
+            O RenovAR já existe em hardware funcional, com unidades sensoras, módulos de controlo
+            e integração com ventilação natural motorizada. Esta base permite validar o
+            funcionamento em ambientes reais e evoluir para instalações mais robustas.
           </p>
         </div>
 
@@ -1182,7 +1182,7 @@ function BenefitsSection() {
           </p>
           <p className="mt-5 text-base leading-8 text-zinc-400">
             Ao ligar monitorização ambiental a atuação sobre ventilação, o RenovAR permite que o
-            edifício deixe de funcionar por pressupostos e passe a responder às condições reais
+            edifício deixe de funcionar por horários e suposições e passe a responder às condições reais
             do espaço.
           </p>
         </div>
@@ -1226,7 +1226,7 @@ function CustomersSection() {
           <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
             O foco inicial do RenovAR está em edifícios de serviços de pequena e média escala,
             onde a ocupação variável, a ausência de automação avançada e a necessidade de eficiência
-            tornam a gestão da ventilação particularmente relevante. O cliente pode ser o
+            tornam a gestão da ventilação muito relevante. O cliente pode ser o
             proprietário, a entidade gestora ou a organização responsável pela operação do espaço.
           </p>
         </div>
@@ -1266,7 +1266,7 @@ function DashboardPreview() {
           id="dashboard-title"
           eyebrow="Interface operacional"
           title="Dados que orientam decisões."
-          text="A dashboard combina estado ambiental, atuação, tendências e recomendações para apoiar operação técnica, não apenas visualização passiva."
+          text="A interface junta estado do ar, atuação, tendências e recomendações para apoiar equipas técnicas, não apenas para mostrar gráficos."
         />
 
         <div className="rounded-[2rem] border border-white/10 bg-graphite-900/80 p-4 shadow-insetline sm:p-6 lg:p-8">
@@ -1342,7 +1342,7 @@ function DashboardPreview() {
                 Ação recomendada
               </p>
               <h3 className="mt-5 text-xl font-semibold leading-7 text-white">
-                Ventilação recomendada até estabilização da tendência CO₂.
+                Manter ventilação até a tendência de CO₂ estabilizar.
               </h3>
               <p className="mt-4 text-sm leading-6 text-zinc-300">
                 Última atuação há 18 minutos. Tendência de descida observada. Sem intervenção
@@ -1363,8 +1363,8 @@ function RoadmapSection() {
         <SectionHeader
           id="roadmap-title"
           eyebrow="Roadmap"
-          title="Atual no essencial. Evolutivo no potencial."
-          text="A evolução futura será construída sobre a base já existente, sem apresentar estas capacidades como funcionalidades atuais."
+          title="O que existe hoje. O que vem a seguir."
+          text="A evolução futura será construída sobre a base já existente, sem tratar estas capacidades como funcionalidades já disponíveis."
         />
 
         <div className="grid gap-4 lg:grid-cols-2">
@@ -1471,7 +1471,7 @@ function Footer() {
               automático da ventilação existente.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {['MVP IoT', 'Operação local/cloud', 'Ventilação existente', 'Monitorização + atuação'].map((label) => (
+              {['MVP IoT', 'Operação local ou cloud', 'Ventilação existente', 'Monitorização + atuação'].map((label) => (
                 <span
                   key={label}
                   className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-[0.67rem] font-bold uppercase tracking-[0.16em] text-zinc-400"
