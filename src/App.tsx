@@ -704,9 +704,9 @@ function DiagnosticPanel() {
               <p className="mt-4 text-base font-semibold text-white">{ventilationSignal.title}</p>
               <p className="mt-2 text-sm leading-6 text-zinc-400">{ventilationSignal.description}</p>
             </div>
-            <div className="rounded-[1.35rem] border border-air-300/20 bg-air-400/10 p-4 lg:w-48">
+            <div className="rounded-[1.35rem] border border-air-300/20 bg-air-400/10 p-4 lg:min-w-[16.5rem]">
               <p className="text-sm font-semibold leading-6 text-white">A leitura isolada não chega.</p>
-              <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-air-300">
+              <p className="mt-2 whitespace-nowrap text-[0.68rem] font-bold uppercase tracking-[0.1em] text-air-300 sm:text-xs">
                 Medir → decidir → atuar
               </p>
             </div>
