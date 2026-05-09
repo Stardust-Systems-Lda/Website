@@ -538,8 +538,8 @@ function Header({
 function HeroProblem() {
   return (
     <section id="top" className="relative px-5 pb-12 pt-8 sm:pt-10 lg:px-8 lg:pb-20">
-      <div className="mx-auto grid max-w-7xl gap-4 lg:grid-cols-[1.02fr_0.98fr]">
-        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/78 p-6 shadow-insetline sm:p-8 lg:min-h-[600px] lg:p-9">
+      <div className="mx-auto grid max-w-7xl items-start gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/78 p-6 shadow-insetline sm:p-8 lg:p-9">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-air-300/30 bg-air-400/10 px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-air-300">
             <span className="size-1.5 rounded-full bg-air-300" />
             Diagnóstico de ar interior
@@ -606,8 +606,11 @@ function HeroProblem() {
 }
 
 function DiagnosticPanel() {
+  const airSignals = diagnosticParameters.slice(0, 4);
+  const ventilationSignal = diagnosticParameters[4];
+
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-800/80 via-graphite-800 to-graphite-950 p-5 shadow-insetline sm:p-6 lg:min-h-[600px]">
+    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-800/80 via-graphite-800 to-graphite-950 p-5 shadow-insetline sm:p-6">
       <div className="absolute inset-0 bg-technical-grid bg-[length:44px_44px] opacity-45" />
       <div className="absolute -right-20 top-20 size-72 rounded-full bg-air-400/12 blur-3xl" />
       <div className="absolute bottom-24 left-8 h-44 w-64 rounded-[2rem] border border-white/10 bg-white/[0.02]" />
@@ -619,7 +622,7 @@ function DiagnosticPanel() {
       <div className="airflow-line" />
       <div className="airflow-line" />
 
-      <div className="relative z-10 flex h-full flex-col justify-between gap-5">
+      <div className="relative z-10 grid gap-5">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.67rem] font-bold uppercase tracking-[0.2em] text-zinc-400">
@@ -642,44 +645,63 @@ function DiagnosticPanel() {
           </p>
         </div>
 
-        <div className="grid gap-3">
-          {diagnosticParameters.map((parameter, index) => (
-            <div
-              key={parameter.label}
-              className="rounded-[1.35rem] border border-white/10 bg-graphite-950/55 p-4 backdrop-blur-md"
-            >
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                <div>
-                  <div className="flex items-center gap-3">
-                    <span className="grid size-8 place-items-center rounded-full border border-air-300/20 bg-air-400/10 text-[0.65rem] font-bold text-air-300">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <span className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-400">
-                      {parameter.label}
-                    </span>
-                  </div>
-                  <p className="mt-3 text-base font-semibold text-white">{parameter.title}</p>
+        <div>
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <p className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-500">
+              Sinais do ar
+            </p>
+            <span className="h-px flex-1 bg-gradient-to-r from-air-300/25 to-transparent" />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {airSignals.map((parameter, index) => (
+              <div
+                key={parameter.label}
+                className="rounded-[1.35rem] border border-white/10 bg-graphite-950/55 p-4 backdrop-blur-md"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <span className="rounded-full border border-air-300/20 bg-air-400/10 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-air-300">
+                    {parameter.label}
+                  </span>
+                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-600">
+                    0{index + 1}
+                  </span>
                 </div>
-                <span className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-400">
-                  Parâmetro
-                </span>
+                <p className="mt-4 text-base font-semibold text-white">{parameter.title}</p>
+                <p className="mt-2 text-sm leading-6 text-zinc-400">{parameter.description}</p>
               </div>
-              <p className="mt-3 text-sm leading-6 text-zinc-400">{parameter.description}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/70 p-5 backdrop-blur-xl">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm font-semibold text-white">A leitura isolada não chega.</p>
-              <p className="mt-1 text-sm text-zinc-400">
-                O passo crítico é ligar estes indicadores à resposta real da ventilação.
+        <div>
+          <div className="mb-3 flex items-center justify-between gap-4">
+            <p className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-500">
+              O que falta fechar
+            </p>
+            <span className="h-px flex-1 bg-gradient-to-r from-air-300/25 to-transparent" />
+          </div>
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+            <div
+              key={ventilationSignal.label}
+              className="rounded-[1.35rem] border border-white/10 bg-graphite-950/55 p-4 backdrop-blur-md"
+            >
+              <div className="flex items-center gap-3">
+                <span className="rounded-full border border-air-300/20 bg-air-400/10 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-air-300">
+                  {ventilationSignal.label}
+                </span>
+                <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-600">
+                  resposta
+                </span>
+              </div>
+              <p className="mt-4 text-base font-semibold text-white">{ventilationSignal.title}</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-400">{ventilationSignal.description}</p>
+            </div>
+            <div className="rounded-[1.35rem] border border-air-300/20 bg-air-400/10 p-4 lg:w-48">
+              <p className="text-sm font-semibold leading-6 text-white">A leitura isolada não chega.</p>
+              <p className="mt-2 text-xs font-bold uppercase tracking-[0.14em] text-air-300">
+                Medir → decidir → atuar
               </p>
             </div>
-            <span className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-zinc-300">
-              Medir → decidir → atuar
-            </span>
           </div>
         </div>
       </div>
