@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Activity,
-  AlertTriangle,
   ArrowRight,
   Brain,
   Building2,
@@ -86,12 +85,37 @@ const heroProblemCards = [
   },
 ];
 
-const diagnosticMetrics = [
-  ['CO₂', '1450 ppm', 'acima do limite configurado'],
-  ['VOCs', 'elevado', 'fontes interiores ativas'],
-  ['Partículas', 'moderado', 'tendência em observação'],
-  ['Humidade', '62%', 'risco de desconforto'],
-  ['Ventilação', 'não adaptativa', 'horário fixo'],
+const diagnosticParameters = [
+  {
+    label: 'CO₂',
+    title: 'Indicador de renovação do ar',
+    description:
+      'Ajuda a perceber se o ar expirado se acumula e se o espaço pode precisar de mais ventilação.',
+  },
+  {
+    label: 'COVs',
+    title: 'Compostos orgânicos voláteis',
+    description:
+      'Podem resultar de materiais, mobiliário, produtos de limpeza ou atividade normal no espaço.',
+  },
+  {
+    label: 'Partículas',
+    title: 'Poeiras e aerossóis',
+    description:
+      'Indicam material suspenso no ar que pode variar com utilização, limpeza e ventilação.',
+  },
+  {
+    label: 'Humidade',
+    title: 'Equilíbrio higrotérmico',
+    description:
+      'Valores demasiado altos ou baixos podem afetar conforto e condições interiores.',
+  },
+  {
+    label: 'Ventilação',
+    title: 'Resposta do edifício',
+    description:
+      'Mostra se a renovação do ar funciona por rotina ou se responde às condições reais.',
+  },
 ];
 
 const problemCards: CardItem[] = [
@@ -599,43 +623,48 @@ function DiagnosticPanel() {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.67rem] font-bold uppercase tracking-[0.2em] text-zinc-400">
-              Sala reunião / Piso 02
+              Qualidade do ar interior
             </p>
             <h2 className="mt-2 text-2xl font-semibold uppercase tracking-[0.08em] text-white">
-              Diagnóstico ambiental
+              O que estes sinais indicam
             </h2>
           </div>
-          <div className="rounded-full border border-amber-300/35 bg-amber-300/10 px-3 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-amber-200">
-            Atenção
+          <div className="rounded-full border border-air-300/30 bg-air-400/10 px-3 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-air-300">
+            Guia rápido
           </div>
         </div>
 
-        <div className="rounded-[1.7rem] border border-amber-300/24 bg-amber-300/10 p-5 backdrop-blur-md">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="mt-1 size-5 shrink-0 text-amber-200" aria-hidden="true" />
-            <div>
-              <p className="font-semibold text-white">Qualidade do ar em degradação</p>
-              <p className="mt-2 text-sm leading-6 text-zinc-300">
-                O ar interior pode degradar-se sem sinais visíveis.
-              </p>
-            </div>
-          </div>
+        <div className="rounded-[1.7rem] border border-air-300/22 bg-air-400/10 p-5 backdrop-blur-md">
+          <p className="font-semibold text-white">Não são apenas números num ecrã.</p>
+          <p className="mt-2 text-sm leading-6 text-zinc-300">
+            Estes parâmetros ajudam a interpretar o estado do ar interior. O valor está em usar
+            estes sinais para decidir quando ventilar, reduzir excesso ou manter a operação.
+          </p>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          {diagnosticMetrics.map(([label, value, state]) => (
+        <div className="grid gap-3">
+          {diagnosticParameters.map((parameter, index) => (
             <div
-              key={label}
+              key={parameter.label}
               className="rounded-[1.35rem] border border-white/10 bg-graphite-950/55 p-4 backdrop-blur-md"
             >
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <div className="flex items-center gap-3">
+                    <span className="grid size-8 place-items-center rounded-full border border-air-300/20 bg-air-400/10 text-[0.65rem] font-bold text-air-300">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-400">
+                      {parameter.label}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-base font-semibold text-white">{parameter.title}</p>
+                </div>
                 <span className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-400">
-                  {label}
+                  Parâmetro
                 </span>
-                <span className="size-2 rounded-full bg-amber-200 shadow-[0_0_16px_rgba(251,191,36,.6)]" />
               </div>
-              <p className="mt-4 font-display text-2xl font-semibold text-white">{value}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-zinc-400">{state}</p>
+              <p className="mt-3 text-sm leading-6 text-zinc-400">{parameter.description}</p>
             </div>
           ))}
         </div>
@@ -643,13 +672,13 @@ function DiagnosticPanel() {
         <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/70 p-5 backdrop-blur-xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm font-semibold text-white">Ventilação não adaptativa</p>
+              <p className="text-sm font-semibold text-white">A leitura isolada não chega.</p>
               <p className="mt-1 text-sm text-zinc-400">
-                Sistema a funcionar por rotina, não por condições reais.
+                O passo crítico é ligar estes indicadores à resposta real da ventilação.
               </p>
             </div>
             <span className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-zinc-300">
-              Dados sem ação
+              Medir → decidir → atuar
             </span>
           </div>
         </div>
