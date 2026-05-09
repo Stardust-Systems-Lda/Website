@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import {
   Activity,
+  AlertTriangle,
   ArrowRight,
-  BarChart3,
+  Brain,
   Building2,
   Check,
   ChevronRight,
@@ -11,6 +12,7 @@ import {
   Cpu,
   EyeOff,
   Fan,
+  FileCheck,
   Gauge,
   History,
   Layers3,
@@ -22,7 +24,9 @@ import {
   SlidersHorizontal,
   Thermometer,
   Waves,
+  Wind,
   X,
+  Zap,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -34,12 +38,14 @@ type CardItem = {
   icon: LucideIcon;
 };
 
-const navItems = [
-  ['Produto', '#produto'],
+type LinkItem = readonly [string, string];
+
+const navItems: LinkItem[] = [
+  ['Problema', '#problema'],
+  ['Solução', '#solucao'],
   ['Funcionamento', '#funcionamento'],
   ['Validação', '#validacao'],
   ['Benefícios', '#beneficios'],
-  ['Mercado', '#mercado'],
   ['Roadmap', '#roadmap'],
   ['Contacto', '#contacto'],
 ];
@@ -47,85 +53,249 @@ const navItems = [
 const footerGroups = [
   {
     title: 'Produto',
-    links: navItems.slice(0, 3),
+    links: [
+      ['Problema', '#problema'],
+      ['Solução', '#solucao'],
+      ['Funcionamento', '#funcionamento'],
+      ['Benefícios', '#beneficios'],
+    ] as LinkItem[],
   },
   {
     title: 'Operação',
-    links: navItems.slice(3, 6),
+    links: [
+      ['Validação', '#validacao'],
+      ['Dashboard', '#dashboard'],
+      ['Roadmap', '#roadmap'],
+      ['Contacto', '#contacto'],
+    ] as LinkItem[],
   },
+];
+
+const heroProblemCards = [
+  {
+    title: 'Invisível',
+    description: 'Não se vê, mas acumula-se em espaços fechados.',
+  },
+  {
+    title: 'Contínuo',
+    description: 'A degradação pode ocorrer ao longo de horas, dias ou meses.',
+  },
+  {
+    title: 'Operacional',
+    description: 'Sem atuação automática, os dados não resolvem o problema.',
+  },
+];
+
+const diagnosticMetrics = [
+  ['CO₂', '1450 ppm', 'acima do limite configurado'],
+  ['VOCs', 'elevado', 'fontes interiores ativas'],
+  ['Partículas', 'moderado', 'tendência em observação'],
+  ['Humidade', '62%', 'risco de desconforto'],
+  ['Ventilação', 'não adaptativa', 'horário fixo'],
 ];
 
 const problemCards: CardItem[] = [
   {
     title: 'Ar interior invisível',
     description:
-      'CO₂, partículas, humidade e VOCs podem degradar o ambiente sem sinais visíveis para quem ocupa o espaço.',
-    icon: Waves,
+      'Poluentes e parâmetros ambientais degradam-se sem sinais imediatos. Quando o desconforto é percebido, o espaço já pode estar mal ventilado há horas.',
+    icon: EyeOff,
   },
   {
-    title: 'Ventilação não adaptativa',
+    title: 'Ventilação estática',
     description:
-      'Muitos edifícios continuam presos a horários fixos ou regras estáticas, mesmo quando a utilização varia ao longo do dia.',
-    icon: Fan,
+      'Horários fixos e regras manuais não acompanham ocupação real, variações ambientais ou necessidades específicas de cada espaço.',
+    icon: Wind,
   },
   {
-    title: 'Dados sem ação',
+    title: 'Sensores sem atuação',
     description:
-      'Dashboards de monitorização ajudam a ver o problema, mas raramente fecham o ciclo até ao controlo real da ventilação.',
-    icon: BarChart3,
+      'Muitos sistemas mostram valores num ecrã, mas não controlam a ventilação. A informação existe, mas não muda o comportamento do edifício.',
+    icon: Activity,
+  },
+  {
+    title: 'Impacto acumulado',
+    description:
+      'A exposição repetida a ambientes interiores mal ventilados pode afetar conforto, bem-estar, concentração e perceção de qualidade do espaço.',
+    icon: Brain,
+  },
+  {
+    title: 'Ineficiência energética',
+    description:
+      'Ventilar de menos prejudica o ar interior. Ventilar em excesso desperdiça energia. O desafio está em ventilar quando é necessário.',
+    icon: Zap,
+  },
+  {
+    title: 'Pressão regulamentar',
+    description:
+      'A qualidade do ar interior e o desempenho energético estão cada vez mais ligados a requisitos de gestão, certificação e operação dos edifícios.',
+    icon: FileCheck,
+  },
+];
+
+const impactItems = [
+  {
+    title: 'Conforto e bem-estar',
+    description:
+      'Parâmetros fora dos limites configurados podem contribuir para desconforto e perceção negativa do espaço.',
+  },
+  {
+    title: 'Concentração e desempenho',
+    description:
+      'Ambientes interiores mal ventilados podem afetar atenção, fadiga e qualidade de utilização ao longo do dia.',
+  },
+  {
+    title: 'Sistema respiratório',
+    description:
+      'Partículas, humidade e COVs reforçam a importância de monitorização contínua e ventilação adequada.',
+  },
+  {
+    title: 'Ocupantes vulneráveis',
+    description:
+      'Crianças, idosos e pessoas com alergias ou asma podem ser mais sensíveis a condições ambientais degradadas.',
+  },
+  {
+    title: 'Operação e custos',
+    description:
+      'A ventilação sem feedback ambiental aumenta a dependência de regras fixas e intervenção manual.',
+  },
+  {
+    title: 'Conformidade e risco',
+    description:
+      'A pressão regulamentar aumenta a necessidade de dados históricos, gestão consistente e evidência operacional.',
+  },
+];
+
+const marketShiftCards: CardItem[] = [
+  {
+    title: 'Preocupação crescente',
+    description:
+      'Empresas, ocupantes e gestores de espaços estão mais atentos à qualidade do ambiente interior.',
+    icon: Activity,
+  },
+  {
+    title: 'Edifícios mais exigentes',
+    description:
+      'Espaços com ocupação variável precisam de ventilação ajustada às condições reais, não apenas a horários.',
+    icon: Building2,
+  },
+  {
+    title: 'Regulamentação mais apertada',
+    description:
+      'A qualidade do ar interior e a eficiência energética são cada vez mais relevantes na operação dos edifícios.',
+    icon: FileCheck,
+  },
+  {
+    title: 'Dados precisam de ação',
+    description:
+      'A próxima etapa não é apenas medir melhor. É transformar dados ambientais em decisões operacionais.',
+    icon: Zap,
+  },
+];
+
+const solutionSteps = [
+  {
+    title: 'Medir',
+    description:
+      'Sensores ambientais monitorizam continuamente CO₂, temperatura, humidade, partículas e COVs.',
+    icon: RadioTower,
+  },
+  {
+    title: 'Interpretar',
+    description:
+      'A lógica local ou local/cloud analisa os dados e determina a necessidade de ventilação.',
+    icon: Cpu,
+  },
+  {
+    title: 'Atuar',
+    description:
+      'O sistema aciona ventilação natural ou mecânica existente, de forma automática ou assistida.',
+    icon: SlidersHorizontal,
   },
 ];
 
 const features: CardItem[] = [
   {
     title: 'Monitorização contínua',
-    description: 'Leitura permanente de CO₂, temperatura, humidade, partículas e VOCs.',
+    description:
+      'Leitura permanente de CO₂, temperatura, humidade, partículas e COVs em espaços interiores.',
     icon: Activity,
   },
   {
     title: 'Controlo automático',
-    description: 'Atuação dinâmica sobre ventilação natural ou mecânica conforme as condições reais.',
+    description:
+      'Execução de lógica de controlo para atuar sobre ventilação conforme as condições reais.',
     icon: SlidersHorizontal,
   },
   {
     title: 'Integração existente',
-    description: 'Ligação a janelas motorizadas, grelhas, ventiladores, VMC ou sistemas HVAC.',
+    description:
+      'Ligação a janelas motorizadas, grelhas, ventiladores, VMC ou sistemas HVAC existentes.',
     icon: Building2,
   },
   {
     title: 'Operação local autónoma',
-    description: 'Lógica local para continuidade operacional, com opção de infraestrutura cloud ou local.',
+    description:
+      'Capacidade de funcionamento local para continuidade operacional, com opção local/cloud.',
     icon: Cpu,
   },
   {
     title: 'Plataforma digital',
-    description: 'Visualização em tempo real, configuração do sistema e acompanhamento histórico.',
+    description:
+      'Visualização em tempo real, histórico de dados e configuração operacional de múltiplos espaços.',
     icon: Gauge,
   },
   {
     title: 'Atualizações OTA',
-    description: 'Evolução de firmware e parâmetros sem intervenções físicas recorrentes.',
+    description:
+      'Evolução de firmware e parâmetros sem intervenções físicas recorrentes no equipamento.',
     icon: RefreshCw,
   },
   {
     title: 'Histórico de dados',
-    description: 'Registo temporal para análise, auditoria técnica e apoio a decisões operacionais.',
+    description:
+      'Registo temporal para auditoria técnica, análise operacional e apoio a decisões de gestão.',
     icon: History,
   },
   {
     title: 'Arquitetura modular',
-    description: 'Unidades e módulos adaptáveis a diferentes zonas, escalas e tipos de edifício.',
+    description:
+      'Unidades e módulos adaptáveis a diferentes zonas, escalas e tipos de edifício.',
     icon: CircuitBoard,
   },
 ];
 
 const benefits = [
-  'Melhor qualidade do ar interior',
-  'Maior conforto e bem-estar dos ocupantes',
-  'Redução de ventilação desnecessária',
-  'Apoio à conformidade regulamentar',
-  'Menor intervenção manual',
-  'Dados históricos para auditoria e análise',
+  {
+    title: 'Melhor qualidade do ar interior',
+    description:
+      'Ajuda a manter os parâmetros ambientais observados e a atuar quando o espaço exige renovação de ar.',
+  },
+  {
+    title: 'Maior conforto e bem-estar dos ocupantes',
+    description:
+      'Reduz a dependência de perceções tardias, apoiando uma gestão mais consistente das condições interiores.',
+  },
+  {
+    title: 'Redução de ventilação desnecessária',
+    description:
+      'Evita funcionamento excessivo quando as condições do espaço não exigem renovação adicional do ar.',
+  },
+  {
+    title: 'Apoio à conformidade regulamentar',
+    description:
+      'Fornece dados e histórico que ajudam equipas técnicas a acompanhar requisitos de qualidade e operação.',
+  },
+  {
+    title: 'Menor intervenção manual',
+    description:
+      'Automatiza respostas repetitivas e permite que equipas de operação atuem com melhor informação.',
+  },
+  {
+    title: 'Dados históricos para auditoria e análise',
+    description:
+      'Regista tendências para perceber padrões, comparar espaços e justificar decisões operacionais.',
+  },
 ];
 
 const customers = [
@@ -161,14 +331,14 @@ const validatedVisuals = [
   {
     title: 'Arquitetura do sistema',
     description:
-      'Do sensor à decisão: observação contínua, inteligência embebida, processamento local/cloud e interface de utilizador.',
+      'Da observação ambiental à decisão local/cloud e à interface operacional para utilizadores técnicos.',
     image: '/assets/renovar-system-architecture.png',
     alt: 'Diagrama validado da arquitetura RenovAR, do sensing e atuação até à interface de utilizador.',
   },
   {
     title: 'Diferença estratégica',
     description:
-      'Privacidade, modelos físicos com inteligência artificial, integração aberta e arquitetura escalável/local.',
+      'Privacidade, modelos físicos, integração aberta e arquitetura preparada para evolução faseada.',
     image: '/assets/renovar-strategic-difference.png',
     alt: 'Mapa estratégico RenovAR com privacidade, modelos físicos, integração simples e arquitetura escalável.',
   },
@@ -184,40 +354,46 @@ const validatedVisuals = [
 const designPillars = [
   {
     title: 'Modularidade e escalabilidade',
-    description: 'Adaptação desde uma sala a edifícios com várias zonas e necessidades distintas.',
+    description:
+      'Permite começar pelo essencial e evoluir por zonas, edifícios ou requisitos operacionais.',
     icon: Layers3,
   },
   {
     title: 'Interoperabilidade',
-    description: 'Integração com sistemas existentes para comunicar, não para isolar.',
+    description:
+      'Integra-se com sistemas existentes para acrescentar decisão, não para isolar a infraestrutura.',
     icon: PlugZap,
   },
   {
     title: 'Privacidade e dados',
-    description: 'Insights úteis sem comprometer a identidade dos ocupantes.',
+    description:
+      'Foca-se em parâmetros ambientais e evolução não-intrusiva, evitando dependência de câmaras.',
     icon: EyeOff,
   },
   {
     title: 'Operação a longo prazo',
-    description: 'Arquitetura preparada para piloto, atualização e operação contínua.',
+    description:
+      'Arquitetura preparada para piloto, manutenção, atualização e operação contínua em edifícios reais.',
     icon: ShieldCheck,
   },
 ];
 
 const realWorldImages = [
   {
-    title: 'Caixa do sensor RenovAR',
+    title: 'Unidade sensora',
     description:
       'Protótipo físico com caixa ventilada, eletrónica visível e instalação em parede para recolha ambiental contínua.',
     image: '/assets/renovar-sensor.jpeg',
     alt: 'Caixa do sensor RenovAR instalada numa parede com grelha frontal e eletrónica visível.',
+    meta: 'Caixa do sensor RenovAR',
   },
   {
-    title: 'Janelas abertas pelo sistema',
+    title: 'Atuação sobre ventilação natural',
     description:
-      'Integração com ventilação natural através de janelas atuadas automaticamente por um sistema RenovAR.',
+      'Integração com janelas atuadas automaticamente por um sistema RenovAR em contexto real.',
     image: '/assets/renovar-janelas-abertas.jpeg',
     alt: 'Janelas interiores abertas automaticamente por um sistema RenovAR.',
+    meta: 'Integração física no edifício',
   },
 ];
 
@@ -229,9 +405,12 @@ function App() {
       <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
       <main>
-        <Hero />
+        <HeroProblem />
         <ProblemSection />
-        <SystemSection />
+        <ImpactSection />
+        <MarketShiftSection />
+        <SolutionIntro />
+        <SystemArchitectureSection />
         <ValidatedMaterialSection />
         <FeaturesSection />
         <RealWorldSection />
@@ -269,12 +448,12 @@ function Header({
           />
         </a>
 
-        <nav aria-label="Navegação principal" className="hidden items-center gap-7 lg:flex">
+        <nav aria-label="Navegação principal" className="hidden items-center gap-6 lg:flex">
           {navItems.map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className="rounded-full text-xs font-medium uppercase tracking-[0.16em] text-zinc-400 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+              className="rounded-full text-xs font-medium uppercase tracking-[0.15em] text-zinc-400 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
             >
               {label}
             </a>
@@ -332,90 +511,84 @@ function Header({
   );
 }
 
-function Hero() {
+function HeroProblem() {
   return (
     <section id="top" className="relative px-5 pb-12 pt-8 sm:pt-10 lg:px-8 lg:pb-20">
-      <div className="mx-auto grid max-w-7xl gap-4 lg:grid-cols-[1.08fr_0.92fr]">
-        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/78 p-6 shadow-insetline sm:p-8 lg:min-h-[560px] lg:p-9">
+      <div className="mx-auto grid max-w-7xl gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/78 p-6 shadow-insetline sm:p-8 lg:min-h-[600px] lg:p-9">
           <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-air-300/30 bg-air-400/10 px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-air-300">
             <span className="size-1.5 rounded-full bg-air-300" />
-            Sistema IoT para qualidade do ar interior
+            Diagnóstico de ar interior
           </div>
 
           <div className="max-w-4xl">
-            <h1 className="font-display text-4xl font-semibold uppercase leading-[0.96] tracking-[0.03em] text-white sm:text-5xl lg:text-6xl xl:text-[4.25rem]">
-              Controlo inteligente da qualidade do ar interior.
+            <h1 className="font-display text-4xl font-semibold uppercase leading-[0.96] tracking-[0.03em] text-white sm:text-5xl lg:text-6xl xl:text-[4.35rem]">
+              Sabe a qualidade do ar que respira?
             </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-300 sm:text-lg">
-              Plataforma modular para monitorizar ambientes interiores e apoiar a ventilação
-              baseada em dados, integrando-se de forma simples em edifícios existentes.
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-200 sm:text-xl">
+              A qualidade do ar interior é invisível, mas afeta conforto, saúde,
+              produtividade e eficiência operacional todos os dias.
+            </p>
+            <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
+              Em muitos edifícios, a ventilação ainda funciona por horários fixos ou regras
+              estáticas. O ar degrada-se, os dados não são usados para decidir e os sistemas
+              raramente atuam em função das condições reais do espaço.
             </p>
           </div>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
-              href="#contacto"
+              href="#problema"
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-air-400 px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-graphite-950 shadow-glow transition hover:bg-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-300 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
             >
-              Pedir demonstração
+              Ver o problema
               <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
             </a>
             <a
-              href="#funcionamento"
+              href="#solucao"
               className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:border-air-300/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
             >
-              Ver funcionamento
+              Como o RenovAR resolve
               <ChevronRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
             </a>
           </div>
 
           <div className="mt-9 grid gap-3 sm:grid-cols-3">
-            {[
-              ['Medir', 'Sensores ambientais em tempo real'],
-              ['Interpretar', 'Lógica local/cloud e modelos de controlo'],
-              ['Atuar', 'Controlo automático da ventilação'],
-            ].map(([title, text]) => (
+            {heroProblemCards.map((card) => (
               <a
-                key={title}
-                href="#funcionamento"
+                key={card.title}
+                href="#problema"
                 className="group rounded-[1.5rem] border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-air-300/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
               >
                 <div className="mb-5 flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
-                    {title}
+                    {card.title}
                   </span>
                   <ArrowRight
                     className="size-4 text-zinc-500 transition group-hover:translate-x-1 group-hover:text-air-300"
                     aria-hidden="true"
                   />
                 </div>
-                <p className="text-sm leading-6 text-zinc-300">{text}</p>
+                <p className="text-sm leading-6 text-zinc-300">{card.description}</p>
               </a>
             ))}
           </div>
         </div>
 
-        <HeroVisual />
+        <DiagnosticPanel />
       </div>
     </section>
   );
 }
 
-function HeroVisual() {
-  const metrics = [
-    ['CO₂', '742 ppm', 'normal'],
-    ['Temperatura', '22.4 °C', 'estável'],
-    ['Humidade', '48%', 'ideal'],
-    ['Partículas', '11 µg/m³', 'baixo'],
-    ['VOCs', '0.31 ppm', 'controlado'],
-  ];
-
+function DiagnosticPanel() {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-800/80 via-graphite-800 to-graphite-950 p-5 shadow-insetline sm:p-6 lg:min-h-[560px]">
+    <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-zinc-800/80 via-graphite-800 to-graphite-950 p-5 shadow-insetline sm:p-6 lg:min-h-[600px]">
       <div className="absolute inset-0 bg-technical-grid bg-[length:44px_44px] opacity-45" />
-      <div className="absolute -right-20 top-20 size-72 rounded-full bg-air-400/15 blur-3xl" />
-      <div className="absolute left-6 top-10 h-[58%] w-[72%] rounded-full border border-air-300/10" />
-      <div className="absolute left-12 top-20 h-[44%] w-[58%] rounded-full border border-white/10" />
+      <div className="absolute -right-20 top-20 size-72 rounded-full bg-air-400/12 blur-3xl" />
+      <div className="absolute bottom-24 left-8 h-44 w-64 rounded-[2rem] border border-white/10 bg-white/[0.02]" />
+      <div className="absolute bottom-40 left-20 h-20 w-20 rounded-full border border-air-300/15" />
+      <div className="absolute left-0 top-24 h-px w-full bg-gradient-to-r from-transparent via-air-300/30 to-transparent" />
 
       <div className="airflow-line" />
       <div className="airflow-line" />
@@ -426,50 +599,58 @@ function HeroVisual() {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.67rem] font-bold uppercase tracking-[0.2em] text-zinc-400">
-              Zona A / Piso 02
+              Sala reunião / Piso 02
             </p>
             <h2 className="mt-2 text-2xl font-semibold uppercase tracking-[0.08em] text-white">
-              Núcleo ambiental
+              Diagnóstico ambiental
             </h2>
           </div>
-          <div className="rounded-full border border-air-300/30 bg-air-400/10 px-3 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-air-300">
-            Auto
+          <div className="rounded-full border border-amber-300/35 bg-amber-300/10 px-3 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-amber-200">
+            Atenção
+          </div>
+        </div>
+
+        <div className="rounded-[1.7rem] border border-amber-300/24 bg-amber-300/10 p-5 backdrop-blur-md">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="mt-1 size-5 shrink-0 text-amber-200" aria-hidden="true" />
+            <div>
+              <p className="font-semibold text-white">Qualidade do ar em degradação</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-300">
+                O ar interior pode degradar-se sem sinais visíveis.
+              </p>
+            </div>
           </div>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
-          {metrics.map(([label, value, state]) => (
+          {diagnosticMetrics.map(([label, value, state]) => (
             <div
               key={label}
-              className="rounded-[1.35rem] border border-white/10 bg-graphite-950/48 p-4 backdrop-blur-md"
+              className="rounded-[1.35rem] border border-white/10 bg-graphite-950/55 p-4 backdrop-blur-md"
             >
               <div className="flex items-center justify-between gap-3">
                 <span className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-400">
                   {label}
                 </span>
-                <span className="size-2 rounded-full bg-air-300 shadow-[0_0_16px_rgba(138,245,207,.8)]" />
+                <span className="size-2 rounded-full bg-amber-200 shadow-[0_0_16px_rgba(251,191,36,.6)]" />
               </div>
               <p className="mt-4 font-display text-2xl font-semibold text-white">{value}</p>
-              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-air-300">{state}</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.14em] text-zinc-400">{state}</p>
             </div>
           ))}
         </div>
 
-        <div className="rounded-[1.6rem] border border-air-300/22 bg-graphite-950/70 p-5 backdrop-blur-xl">
+        <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/70 p-5 backdrop-blur-xl">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm font-semibold text-white">Modo automático ativo</p>
-              <p className="mt-1 text-sm text-zinc-400">Ventilação ajustada em tempo real</p>
+              <p className="text-sm font-semibold text-white">Ventilação não adaptativa</p>
+              <p className="mt-1 text-sm text-zinc-400">
+                Sistema a funcionar por rotina, não por condições reais.
+              </p>
             </div>
-            <div className="flex items-center gap-3">
-              <span className="relative flex size-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-air-300 opacity-60" />
-                <span className="relative inline-flex size-3 rounded-full bg-air-300" />
-              </span>
-              <span className="text-xs font-bold uppercase tracking-[0.16em] text-air-300">
-                Atuação 37%
-              </span>
-            </div>
+            <span className="rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-zinc-300">
+              Dados sem ação
+            </span>
           </div>
         </div>
       </div>
@@ -504,17 +685,95 @@ function SectionHeader({
 
 function ProblemSection() {
   return (
-    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="problema-title">
+    <section id="problema" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="problema-title">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           id="problema-title"
-          eyebrow="Problema operacional"
-          title="Medir o ar não chega quando o edifício continua a reagir tarde."
-          text="Muitos sistemas ainda ventilam por horário, por configuração fixa ou por decisão manual. O RenovAR fecha a lacuna entre dados ambientais e controlo efetivo."
+          eyebrow="Problema"
+          title="O problema não está só no ar. Está na falta de resposta."
+          text="CO₂, partículas, humidade e compostos orgânicos voláteis podem acumular-se em ambientes interiores sem serem percebidos pelos ocupantes. Mesmo quando existem sensores, muitos edifícios continuam sem uma ligação efetiva entre monitorização e ventilação."
         />
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {problemCards.map((card) => (
             <InfoCard key={card.title} {...card} />
+          ))}
+        </div>
+        <div className="mt-4 rounded-[1.7rem] border border-air-300/20 bg-air-400/8 p-5 text-sm leading-7 text-zinc-300">
+          Os dados são apresentados, mas nem sempre são transformados em ação. O problema não
+          está apenas no ar que respiramos. Está na forma como os edifícios respondem a ele.
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ImpactSection() {
+  return (
+    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="impacto-title">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div className="rounded-[2rem] border border-white/10 bg-graphite-900/70 p-6 shadow-insetline sm:p-8 lg:sticky lg:top-28">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">Impacto</p>
+            <h2
+              id="impacto-title"
+              className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
+            >
+              O que não se vê pode afetar todos os dias.
+            </h2>
+            <p className="mt-6 text-base leading-8 text-zinc-400">
+              A qualidade do ar interior influencia a forma como um espaço é sentido, utilizado e
+              gerido. Em edifícios de serviços, escritórios, salas de reunião ou espaços educativos,
+              a acumulação de CO₂, partículas, humidade e COVs pode afetar conforto, concentração
+              e bem-estar.
+            </p>
+            <div className="mt-8 rounded-[1.5rem] border border-air-300/24 bg-air-400/10 p-5">
+              <p className="text-sm font-semibold leading-7 text-white">
+                O problema não está no que vemos. Está no que respiramos, e na forma como o
+                edifício reage.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {impactItems.map((item, index) => (
+              <article
+                key={item.title}
+                className={`rounded-[1.55rem] border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-air-300/30 hover:bg-white/[0.055] ${
+                  index === 0 ? 'sm:col-span-2' : ''
+                }`}
+              >
+                <div className="mb-7 flex items-center justify-between">
+                  <span className="grid size-10 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
+                    <Check className="size-4 text-air-300" aria-hidden="true" />
+                  </span>
+                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
+                    I{String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <h3 className="text-base font-semibold leading-7 text-white">{item.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-zinc-400">{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function MarketShiftSection() {
+  return (
+    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="mudanca-title">
+      <div className="mx-auto max-w-7xl">
+        <SectionHeader
+          id="mudanca-title"
+          eyebrow="Porque agora"
+          title="O mercado está a mudar."
+          text="A próxima etapa não é apenas medir melhor. É transformar dados ambientais em decisões operacionais que ajustam a ventilação quando o espaço precisa."
+        />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {marketShiftCards.map((card) => (
+            <InfoCard key={card.title} {...card} compact />
           ))}
         </div>
       </div>
@@ -522,13 +781,103 @@ function ProblemSection() {
   );
 }
 
-function SystemSection() {
+function SolutionIntro() {
+  return (
+    <section id="solucao" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="solucao-title">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">
+              Solução
+            </p>
+            <h2
+              id="solucao-title"
+              className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
+            >
+              É aqui que entra o RenovAR.
+            </h2>
+          </div>
+          <div className="max-w-3xl lg:justify-self-end">
+            <p className="text-xl font-semibold leading-8 text-white">
+              Um sistema IoT modular que liga monitorização ambiental a controlo real da ventilação.
+            </p>
+            <p className="mt-4 inline-flex rounded-full border border-air-300/25 bg-air-400/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-air-300">
+              RenovAR transforma dados ambientais em controlo real da ventilação.
+            </p>
+            <p className="mt-4 text-base leading-8 text-zinc-400">
+              O RenovAR foi desenvolvido para fechar a lacuna entre saber o que está a acontecer
+              no ar interior e agir sobre a ventilação. Mede parâmetros ambientais, interpreta os
+              dados e atua sobre sistemas existentes, ajudando o edifício a responder às suas
+              condições reais de utilização.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative rounded-[2rem] border border-white/10 bg-graphite-900/70 p-4 shadow-insetline sm:p-6 lg:p-8">
+          <div className="absolute left-[12%] right-[12%] top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-air-300/35 to-transparent lg:block" />
+          <div className="grid gap-4 lg:grid-cols-3">
+            {solutionSteps.map((step, index) => (
+              <article
+                key={step.title}
+                className="relative rounded-[1.65rem] border border-white/10 bg-graphite-950/72 p-6 transition hover:-translate-y-1 hover:border-air-300/35 hover:bg-white/[0.055]"
+              >
+                <div className="mb-8 flex items-center justify-between">
+                  <span className="grid size-12 place-items-center rounded-2xl border border-air-300/25 bg-air-400/10">
+                    <step.icon className="size-5 text-air-300" aria-hidden="true" />
+                  </span>
+                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
+                    0{index + 1}
+                  </span>
+                </div>
+                <h3 className="font-display text-2xl font-semibold uppercase tracking-[0.08em] text-white">
+                  {step.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-zinc-400">{step.description}</p>
+                {index < solutionSteps.length - 1 && (
+                  <ArrowRight
+                    className="absolute -right-4 top-1/2 z-10 hidden size-8 -translate-y-1/2 rounded-full border border-air-300/25 bg-graphite-950 p-1.5 text-air-300 lg:block"
+                    aria-hidden="true"
+                  />
+                )}
+              </article>
+            ))}
+          </div>
+          <div className="mt-4 rounded-[1.45rem] border border-air-300/20 bg-air-400/8 p-5 text-sm font-semibold leading-7 text-white">
+            Não é apenas monitorização. É monitorização com consequência operacional.
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SystemArchitectureSection() {
   const nodes = [
-    ['Unidades sensoras', 'CO₂ NDIR, temperatura, humidade, partículas e VOCs', RadioTower],
-    ['Processamento local', 'Regras, limites, histerese e lógica de segurança', Cpu],
-    ['Plataforma digital', 'Tempo real, histórico e configuração operacional', CloudCog],
-    ['Módulo de controlo', 'Sinais para atuadores, grelhas, janelas, VMC ou HVAC', SlidersHorizontal],
-    ['Ventilação existente', 'Camada operacional sobre a infraestrutura instalada', Fan],
+    [
+      'Unidades sensoras',
+      'Recolha contínua de parâmetros ambientais relevantes para qualidade do ar interior.',
+      RadioTower,
+    ],
+    [
+      'Processamento local',
+      'Execução de lógica de controlo com capacidade de operação autónoma.',
+      Cpu,
+    ],
+    [
+      'Plataforma digital',
+      'Visualização em tempo real, histórico de dados e gestão de múltiplos espaços.',
+      CloudCog,
+    ],
+    [
+      'Módulo de controlo',
+      'Interface entre a decisão do sistema e a atuação física sobre a ventilação.',
+      SlidersHorizontal,
+    ],
+    [
+      'Ventilação existente',
+      'Integração com janelas motorizadas, grelhas, VMC, ventilação mecânica ou HVAC.',
+      Fan,
+    ],
   ] as const;
 
   return (
@@ -540,35 +889,28 @@ function SystemSection() {
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">Funcionamento</p>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">
+              Funcionamento
+            </p>
             <h2
               id="funcionamento-title"
               className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
             >
-              Um sistema modular para medir, decidir e atuar.
+              Da medição à ação: a arquitetura do sistema.
             </h2>
             <p className="mt-6 text-base leading-8 text-zinc-400">
-              O sistema funciona como uma camada operacional sobre edifícios existentes. Não
-              exige substituição integral da infraestrutura: acrescenta inteligência, leitura
-              ambiental e atuação coordenada.
+              O RenovAR funciona como uma camada operacional sobre edifícios existentes. Em vez
+              de substituir a infraestrutura, integra-se com sistemas de ventilação natural ou
+              mecânica e acrescenta capacidade de decisão baseada em dados.
             </p>
             <div className="mt-8 rounded-[1.7rem] border border-white/10 bg-white/[0.035] p-5">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
-                Lógica central
+                Configuração técnica
               </p>
-              <div className="mt-5 flex flex-wrap items-center gap-3 text-sm font-bold uppercase tracking-[0.16em] text-white">
-                <span className="rounded-full border border-air-300/35 bg-air-400/10 px-4 py-2 text-air-300">
-                  Medir
-                </span>
-                <ArrowRight className="size-4 text-zinc-500" aria-hidden="true" />
-                <span className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2">
-                  Interpretar
-                </span>
-                <ArrowRight className="size-4 text-zinc-500" aria-hidden="true" />
-                <span className="rounded-full border border-white/12 bg-white/[0.04] px-4 py-2">
-                  Atuar
-                </span>
-              </div>
+              <p className="mt-4 text-sm leading-7 text-zinc-300">
+                A configuração pode adaptar-se às políticas de IT do cliente, com infraestrutura
+                local, cloud ou abordagem híbrida.
+              </p>
             </div>
           </div>
 
@@ -613,19 +955,19 @@ function ValidatedMaterialSection() {
         <div className="mb-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">
-              Material validado
+              Validação
             </p>
             <h2
               id="validacao-title"
               className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
             >
-              Branding e narrativa técnica alinhados com a documentação RenovAR.
+              Pensado para edifícios reais, não para demonstrações isoladas.
             </h2>
           </div>
           <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
-            A página incorpora imagens e conceitos dos documentos de apresentação: arquitetura
-            modular, integração aberta, privacidade e evolução para inteligência não-intrusiva.
-            As funcionalidades futuras continuam separadas do MVP atual.
+            A solução foi concebida para responder a uma limitação prática dos edifícios: a
+            separação entre medição ambiental, decisão operacional e atuação física. A arquitetura
+            modular permite começar pelo essencial e evoluir sem redesenhar todo o sistema.
           </p>
         </div>
 
@@ -644,12 +986,12 @@ function ValidatedMaterialSection() {
                   loading="lazy"
                   className="aspect-[16/10] h-full w-full object-contain object-center transition duration-500 group-hover:scale-[1.025]"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-graphite-950/60 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-graphite-950/50 to-transparent" />
               </div>
               <div className="p-5 sm:p-6">
                 <div className="mb-5 flex items-center justify-between gap-4">
                   <span className="text-[0.66rem] font-bold uppercase tracking-[0.18em] text-air-300">
-                    Fonte RenovAR
+                    Material interno
                   </span>
                   <ArrowRight
                     className="size-4 text-zinc-600 transition group-hover:translate-x-1 group-hover:text-air-300"
@@ -682,6 +1024,11 @@ function ValidatedMaterialSection() {
             </article>
           ))}
         </div>
+
+        <div className="mt-4 rounded-[1.7rem] border border-white/10 bg-white/[0.035] p-5 text-sm leading-7 text-zinc-400">
+          Funcionalidades como estimativa de ocupação, otimização preditiva e relatórios
+          automáticos fazem parte da evolução futura, não do núcleo atual do MVP.
+        </div>
       </div>
     </section>
   );
@@ -693,9 +1040,9 @@ function FeaturesSection() {
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           id="produto-title"
-          eyebrow="Produto"
-          title="MVP orientado para controlo real, não apenas monitorização."
-          text="As capacidades atuais concentram-se na leitura ambiental contínua, decisão operacional e integração com sistemas de ventilação existentes."
+          eyebrow="MVP atual"
+          title="O que o RenovAR já permite fazer."
+          text="O núcleo funcional do RenovAR já permite monitorizar parâmetros ambientais, executar lógica de controlo e atuar sobre ventilação existente em configurações reais."
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
@@ -720,12 +1067,13 @@ function RealWorldSection() {
               id="sistema-real-title"
               className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
             >
-              Protótipo físico e atuação em edifício.
+              Implementação real. Não apenas mockup.
             </h2>
           </div>
           <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
-            Fotografias reais do hardware e da ventilação natural controlada pelo sistema. A
-            intenção aqui é mostrar implementação concreta, não simulações ou imagens genéricas.
+            O RenovAR já foi materializado em hardware funcional, com unidades de sensorização,
+            módulos de controlo e integração com ventilação natural motorizada. Esta base permite
+            validar o funcionamento em ambientes reais e evoluir para instalações mais robustas.
           </p>
         </div>
 
@@ -745,9 +1093,9 @@ function RealWorldSection() {
               </div>
               <figcaption className="p-4 sm:p-5">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
-                  Fotografia real
+                  {photo.title}
                 </p>
-                <h3 className="mt-3 text-xl font-semibold text-white">{photo.title}</h3>
+                <h3 className="mt-3 text-xl font-semibold text-white">{photo.meta}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{photo.description}</p>
               </figcaption>
             </figure>
@@ -768,18 +1116,22 @@ function BenefitsSection() {
             id="beneficios-title"
             className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
           >
-            Ar melhor. Operação mais eficiente. Edifícios mais inteligentes.
+            Quando o edifício responde ao ar, a operação muda.
           </h2>
-          <p className="mt-6 text-base leading-8 text-zinc-400">
-            O RenovAR ajuda equipas de operação a passar de observação passiva para controlo
-            baseado em condições reais, mantendo uma abordagem técnica e auditável.
+          <p className="mt-6 text-xl font-semibold leading-8 text-white">
+            Ar melhor. Operação mais eficiente. Edifícios mais inteligentes.
+          </p>
+          <p className="mt-5 text-base leading-8 text-zinc-400">
+            Ao ligar monitorização ambiental a atuação sobre ventilação, o RenovAR permite que o
+            edifício deixe de funcionar por pressupostos e passe a responder às condições reais
+            do espaço.
           </p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           {benefits.map((benefit, index) => (
             <div
-              key={benefit}
+              key={benefit.title}
               className="rounded-[1.55rem] border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-air-300/30 hover:bg-white/[0.055]"
             >
               <div className="mb-8 flex items-center justify-between">
@@ -788,7 +1140,8 @@ function BenefitsSection() {
                   B{String(index + 1).padStart(2, '0')}
                 </span>
               </div>
-              <h3 className="text-base font-semibold leading-7 text-white">{benefit}</h3>
+              <h3 className="text-base font-semibold leading-7 text-white">{benefit.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-zinc-400">{benefit.description}</p>
             </div>
           ))}
         </div>
@@ -808,13 +1161,14 @@ function CustomersSection() {
               id="mercado-title"
               className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
             >
-              Foco inicial em edifícios de serviços de pequena e média escala.
+              Para edifícios onde o ar interior importa.
             </h2>
           </div>
           <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
-            A proposta é adequada a edifícios onde a qualidade do ar, o conforto e a operação
-            eficiente importam, mas onde uma renovação integral da infraestrutura pode ser
-            excessiva ou pouco faseada.
+            O foco inicial do RenovAR está em edifícios de serviços de pequena e média escala,
+            onde a ocupação variável, a ausência de automação avançada e a necessidade de eficiência
+            tornam a gestão da ventilação particularmente relevante. O cliente pode ser o
+            proprietário, a entidade gestora ou a organização responsável pela operação do espaço.
           </p>
         </div>
 
@@ -843,13 +1197,17 @@ function CustomersSection() {
 
 function DashboardPreview() {
   return (
-    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="dashboard-title">
+    <section
+      id="dashboard"
+      className="px-5 py-16 lg:px-8 lg:py-24"
+      aria-labelledby="dashboard-title"
+    >
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           id="dashboard-title"
           eyebrow="Interface operacional"
-          title="Dashboard desenhado para decisão e acompanhamento técnico."
-          text="Uma vista de produto que combina estado ambiental, atuação e histórico sem transformar o sistema num painel passivo."
+          title="Dados que orientam decisões."
+          text="A dashboard combina estado ambiental, atuação, tendências e recomendações para apoiar operação técnica, não apenas visualização passiva."
         />
 
         <div className="rounded-[2rem] border border-white/10 bg-graphite-900/80 p-4 shadow-insetline sm:p-6 lg:p-8">
@@ -879,13 +1237,16 @@ function DashboardPreview() {
           </div>
 
           <div className="grid gap-4 lg:grid-cols-12">
-            <MetricPanel className="lg:col-span-3" label="CO₂" value="742" unit="ppm" status="Normal" icon={Gauge} />
+            <MetricPanel className="lg:col-span-3" label="CO₂" value="742" unit="ppm" status="Espaço dentro dos limites configurados" icon={Gauge} />
             <MetricPanel className="lg:col-span-3" label="Temperatura" value="22.4" unit="°C" status="Estável" icon={Thermometer} />
             <MetricPanel className="lg:col-span-3" label="Humidade" value="48" unit="%" status="Ideal" icon={Waves} />
-            <MetricPanel className="lg:col-span-3" label="VOCs" value="0.31" unit="ppm" status="Controlado" icon={ShieldCheck} />
+            <MetricPanel className="lg:col-span-3" label="VOCs" value="0.31" unit="ppm" status="Qualidade do ar em observação" icon={ShieldCheck} />
+            <MetricPanel className="lg:col-span-3" label="Partículas" value="11" unit="µg/m³" status="Baixo" icon={Activity} />
 
-            <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/72 p-5 lg:col-span-4">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">Estado da ventilação</p>
+            <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/72 p-5 lg:col-span-3">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
+                Estado da ventilação
+              </p>
               <div className="mt-6 flex items-end justify-between gap-5">
                 <div>
                   <p className="font-display text-4xl font-semibold text-white">37%</p>
@@ -898,14 +1259,17 @@ function DashboardPreview() {
               <div className="mt-7 h-2 rounded-full bg-white/8">
                 <div className="h-full w-[37%] rounded-full bg-air-400 shadow-glow" />
               </div>
+              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-air-300">
+                Modo automático ativo
+              </p>
             </div>
 
-            <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/72 p-5 lg:col-span-5">
+            <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/72 p-5 lg:col-span-4">
               <div className="mb-8 flex items-center justify-between gap-4">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
                   Histórico 24h
                 </p>
-                <span className="text-xs font-semibold text-air-300">CO₂ / atuação</span>
+                <span className="text-xs font-semibold text-air-300">Tendência CO₂ / atuação</span>
               </div>
               <div className="chart-bars grid h-36 grid-cols-12 items-end gap-2" aria-label="Gráfico temporal de qualidade do ar">
                 {[44, 52, 48, 68, 76, 71, 62, 54, 59, 49, 42, 38].map((height, index) => (
@@ -914,15 +1278,16 @@ function DashboardPreview() {
               </div>
             </div>
 
-            <div className="rounded-[1.6rem] border border-air-300/22 bg-air-400/10 p-5 lg:col-span-3">
+            <div className="rounded-[1.6rem] border border-air-300/22 bg-air-400/10 p-5 lg:col-span-5">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
                 Ação recomendada
               </p>
               <h3 className="mt-5 text-xl font-semibold leading-7 text-white">
-                Manter modo automático e reduzir atuação quando CO₂ estabilizar.
+                Ventilação recomendada até estabilização da tendência CO₂.
               </h3>
               <p className="mt-4 text-sm leading-6 text-zinc-300">
-                Tendência de descida nos últimos 18 minutos. Sem intervenção manual necessária.
+                Última atuação há 18 minutos. Tendência de descida observada. Sem intervenção
+                manual necessária.
               </p>
             </div>
           </div>
@@ -939,8 +1304,8 @@ function RoadmapSection() {
         <SectionHeader
           id="roadmap-title"
           eyebrow="Roadmap"
-          title="Capacidades atuais separadas da evolução futura."
-          text="A comunicação do produto distingue claramente o MVP operacional dos desenvolvimentos planeados para fases posteriores."
+          title="Atual no essencial. Evolutivo no potencial."
+          text="A evolução futura será construída sobre a base já existente, sem apresentar estas capacidades como funcionalidades atuais."
         />
 
         <div className="grid gap-4 lg:grid-cols-2">
@@ -961,16 +1326,25 @@ function FinalCta() {
           <div className="relative z-10 grid gap-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.72fr)] lg:items-stretch">
             <div className="flex flex-col justify-between gap-8 py-1 lg:py-4">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">Contacto</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">
+                  Contacto
+                </p>
                 <h2
                   id="contacto-title"
                   className="mt-4 max-w-4xl font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
                 >
-                  Transforme dados ambientais em controlo real da ventilação.
+                  Não basta saber que o ar está mau. É preciso fazer o edifício reagir.
                 </h2>
                 <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-300">
-                  Fale connosco para avaliar a aplicação do RenovAR no seu edifício.
+                  Fale connosco para avaliar como o RenovAR pode ser aplicado ao seu edifício,
+                  ao seu sistema de ventilação e às suas necessidades operacionais.
                 </p>
+                <a
+                  href={`mailto:${contactEmail}`}
+                  className="mt-5 inline-flex rounded-full border border-air-300/25 bg-air-400/10 px-4 py-2 text-sm font-semibold text-air-300 transition hover:border-air-300/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
+                >
+                  {contactEmail}
+                </a>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <a
@@ -998,10 +1372,10 @@ function FinalCta() {
               />
               <figcaption className="p-4 sm:p-5">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-air-300">
-                  Equipa RenovAR
+                  Protótipo funcional
                 </p>
                 <p className="mt-3 max-w-md text-sm leading-6 text-zinc-300">
-                  Protótipo e demonstração do sistema em contexto académico e técnico.
+                  Equipa RenovAR junto ao protótipo em contexto académico e técnico.
                 </p>
               </figcaption>
             </figure>
@@ -1035,10 +1409,10 @@ function Footer() {
             </a>
             <p className="mt-5 max-w-xl text-sm leading-7 text-zinc-300">
               Sistema IoT modular para monitorização da qualidade do ar interior e controlo
-              automático da ventilação em edifícios de serviços.
+              automático da ventilação existente.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {['MVP IoT', 'Operação local/cloud', 'Ventilação existente'].map((label) => (
+              {['MVP IoT', 'Operação local/cloud', 'Ventilação existente', 'Monitorização + atuação'].map((label) => (
                 <span
                   key={label}
                   className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-[0.67rem] font-bold uppercase tracking-[0.16em] text-zinc-400"
