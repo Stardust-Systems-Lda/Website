@@ -26,6 +26,8 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
+const contactEmail = 'stardust.systems7@gmail.com';
+
 type CardItem = {
   title: string;
   description: string;
@@ -40,6 +42,17 @@ const navItems = [
   ['Mercado', '#mercado'],
   ['Roadmap', '#roadmap'],
   ['Contacto', '#contacto'],
+];
+
+const footerGroups = [
+  {
+    title: 'Produto',
+    links: navItems.slice(0, 3),
+  },
+  {
+    title: 'Operação',
+    links: navItems.slice(3, 6),
+  },
 ];
 
 const problemCards: CardItem[] = [
@@ -961,14 +974,14 @@ function FinalCta() {
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <a
-                  href="mailto:contacto@renovar.pt?subject=Pedido%20de%20demonstra%C3%A7%C3%A3o%20RenovAR"
+                  href={`mailto:${contactEmail}?subject=Pedido%20de%20demonstra%C3%A7%C3%A3o%20RenovAR`}
                   className="group inline-flex items-center justify-center gap-2 rounded-full bg-air-400 px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-graphite-950 shadow-glow transition hover:bg-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-300 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
                 >
                   Pedir demonstração
                   <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
                 </a>
                 <a
-                  href="mailto:contacto@renovar.pt"
+                  href={`mailto:${contactEmail}`}
                   className="inline-flex items-center justify-center rounded-full border border-white/14 bg-white/[0.04] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:border-air-300/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
                 >
                   Contactar equipa
@@ -1001,35 +1014,94 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="border-t border-white/10 px-5 py-10 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_auto]">
-        <div>
-          <img
-            src="/assets/renovar-logo.png"
-            alt="RenovAR"
-            className="h-14 w-auto object-contain drop-shadow-[0_0_18px_rgba(67,230,178,0.14)]"
-          />
-          <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-400">
-            Sistema IoT modular para monitorização da qualidade do ar interior e controlo
-            automático da ventilação em edifícios de serviços.
-          </p>
-          <p className="mt-5 text-sm text-zinc-500">Contacto: contacto@renovar.pt</p>
+    <footer className="relative overflow-hidden border-t border-white/10 bg-graphite-950 px-5 py-12 lg:px-8 lg:py-16">
+      <div className="absolute inset-0 bg-technical-grid bg-[length:56px_56px] opacity-25" />
+      <div className="absolute -left-24 top-0 size-72 rounded-full bg-air-400/10 blur-3xl" />
+      <div className="absolute bottom-0 right-0 size-96 rounded-full bg-air-600/8 blur-3xl" />
+
+      <div className="relative z-10 mx-auto max-w-7xl">
+        <div className="grid gap-10 lg:grid-cols-[1.12fr_0.88fr_0.9fr] lg:items-start">
+          <div>
+            <a
+              href="#top"
+              className="inline-flex rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+              aria-label="RenovAR, voltar ao início"
+            >
+              <img
+                src="/assets/renovar-logo.png"
+                alt="RenovAR"
+                className="h-16 w-auto object-contain drop-shadow-[0_0_20px_rgba(67,230,178,0.16)]"
+              />
+            </a>
+            <p className="mt-5 max-w-xl text-sm leading-7 text-zinc-300">
+              Sistema IoT modular para monitorização da qualidade do ar interior e controlo
+              automático da ventilação em edifícios de serviços.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {['MVP IoT', 'Operação local/cloud', 'Ventilação existente'].map((label) => (
+                <span
+                  key={label}
+                  className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-[0.67rem] font-bold uppercase tracking-[0.16em] text-zinc-400"
+                >
+                  {label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <nav
+            aria-label="Navegação do rodapé"
+            className="grid gap-8 sm:grid-cols-2 lg:justify-self-center"
+          >
+            {footerGroups.map((group) => (
+              <div key={group.title}>
+                <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-air-300">
+                  {group.title}
+                </p>
+                <div className="mt-4 grid gap-3">
+                  {group.links.map(([label, href]) => (
+                    <a
+                      key={href}
+                      href={href}
+                      className="text-sm font-medium text-zinc-400 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
+                    >
+                      {label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </nav>
+
+          <address className="not-italic lg:justify-self-end lg:text-right">
+            <p className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-air-300">
+              Contacto direto
+            </p>
+            <a
+              href={`mailto:${contactEmail}`}
+              className="mt-4 inline-flex max-w-full rounded-full border border-air-300/28 bg-air-400/10 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-air-300/50 hover:bg-air-400/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
+            >
+              <span className="truncate">{contactEmail}</span>
+            </a>
+            <p className="mt-4 max-w-sm text-sm leading-6 text-zinc-500 lg:ml-auto">
+              Para demonstrações, pilotos ou avaliação técnica em edifícios de serviços.
+            </p>
+          </address>
         </div>
 
-        <div className="grid gap-3 text-sm text-zinc-400 sm:grid-cols-3 lg:text-right">
-          {navItems.map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="rounded-full transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
-            >
-              {label}
-            </a>
-          ))}
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-zinc-600 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} RenovAR. Todos os direitos reservados.</p>
+          <a
+            href="#contacto"
+            className="group inline-flex items-center gap-2 font-bold uppercase tracking-[0.14em] text-zinc-500 transition hover:text-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
+          >
+            Pedir demonstração
+            <ArrowRight
+              className="size-4 transition group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </a>
         </div>
-      </div>
-      <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-6 text-sm text-zinc-600">
-        © {new Date().getFullYear()} RenovAR. Todos os direitos reservados.
       </div>
     </footer>
   );
