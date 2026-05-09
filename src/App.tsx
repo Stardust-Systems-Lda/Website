@@ -191,6 +191,23 @@ const designPillars = [
   },
 ];
 
+const realWorldImages = [
+  {
+    title: 'Caixa do sensor RenovAR',
+    description:
+      'Protótipo físico com caixa ventilada, eletrónica visível e instalação em parede para recolha ambiental contínua.',
+    image: '/assets/renovar-sensor.jpeg',
+    alt: 'Caixa do sensor RenovAR instalada numa parede com grelha frontal e eletrónica visível.',
+  },
+  {
+    title: 'Janelas abertas pelo sistema',
+    description:
+      'Integração com ventilação natural através de janelas atuadas automaticamente por um sistema RenovAR.',
+    image: '/assets/renovar-janelas-abertas.jpeg',
+    alt: 'Janelas interiores abertas automaticamente por um sistema RenovAR.',
+  },
+];
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -204,6 +221,7 @@ function App() {
         <SystemSection />
         <ValidatedMaterialSection />
         <FeaturesSection />
+        <RealWorldSection />
         <BenefitsSection />
         <CustomersSection />
         <DashboardPreview />
@@ -676,6 +694,57 @@ function FeaturesSection() {
   );
 }
 
+function RealWorldSection() {
+  return (
+    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="sistema-real-title">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">
+              Sistema real
+            </p>
+            <h2
+              id="sistema-real-title"
+              className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
+            >
+              Protótipo físico e atuação em edifício.
+            </h2>
+          </div>
+          <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
+            Fotografias reais do hardware e da ventilação natural controlada pelo sistema. A
+            intenção aqui é mostrar implementação concreta, não simulações ou imagens genéricas.
+          </p>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          {realWorldImages.map((photo) => (
+            <figure
+              key={photo.title}
+              className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] p-3 shadow-insetline"
+            >
+              <div className="grid min-h-[320px] place-items-center rounded-[1.45rem] bg-zinc-100 p-2 sm:min-h-[420px]">
+                <img
+                  src={photo.image}
+                  alt={photo.alt}
+                  loading="lazy"
+                  className="max-h-[520px] w-full rounded-[1.15rem] object-contain"
+                />
+              </div>
+              <figcaption className="p-4 sm:p-5">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+                  Fotografia real
+                </p>
+                <h3 className="mt-3 text-xl font-semibold text-white">{photo.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-zinc-400">{photo.description}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function BenefitsSection() {
   return (
     <section id="beneficios" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="beneficios-title">
@@ -907,21 +976,18 @@ function FinalCta() {
               </div>
             </div>
 
-            <figure className="relative min-h-[280px] overflow-hidden rounded-[1.6rem] border border-white/12 bg-graphite-950/48 shadow-insetline">
+            <figure className="overflow-hidden rounded-[1.6rem] border border-white/12 bg-white/[0.035] p-3 shadow-insetline">
               <img
                 src="/assets/renovar-equipa.jpeg"
                 alt="Equipa RenovAR junto ao protótipo de ventilação inteligente"
                 loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover object-center"
+                className="w-full rounded-[1.15rem] bg-zinc-100 object-contain"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-graphite-950/88 via-graphite-950/12 to-transparent" />
-              <figcaption
-                className="absolute inset-x-0 bottom-0 p-5 sm:p-6"
-              >
-                <p className="inline-flex rounded-full border border-air-300/28 bg-air-400/12 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.16em] text-air-300 backdrop-blur-md">
+              <figcaption className="p-4 sm:p-5">
+                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-air-300">
                   Equipa RenovAR
                 </p>
-                <p className="mt-3 max-w-md text-sm font-medium leading-6 text-white">
+                <p className="mt-3 max-w-md text-sm leading-6 text-zinc-300">
                   Protótipo e demonstração do sistema em contexto académico e técnico.
                 </p>
               </figcaption>
