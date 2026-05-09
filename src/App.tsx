@@ -537,65 +537,73 @@ function Header({
 
 function HeroProblem() {
   return (
-    <section id="top" className="relative px-5 pb-12 pt-8 sm:pt-10 lg:px-8 lg:pb-20">
-      <div className="mx-auto grid max-w-7xl items-start gap-4 lg:grid-cols-[1.02fr_0.98fr]">
-        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/78 p-6 shadow-insetline sm:p-8 lg:p-9">
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-air-300/30 bg-air-400/10 px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-air-300">
-            <span className="size-1.5 rounded-full bg-air-300" />
-            Diagnóstico de ar interior
-          </div>
+    <section id="top" className="relative overflow-hidden px-5 pb-8 pt-8 sm:pt-10 lg:px-8 lg:pb-12">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-air-400/[0.045] via-transparent to-transparent" />
+      <div className="mx-auto grid max-w-7xl items-stretch gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+        <div className="relative flex h-full overflow-hidden rounded-[2rem] border border-white/10 bg-graphite-900/78 p-6 shadow-insetline sm:p-8 lg:p-9">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-air-400/[0.055] to-transparent" />
+          <div className="pointer-events-none absolute bottom-8 left-8 right-8 h-px bg-gradient-to-r from-transparent via-air-300/20 to-transparent" />
 
-          <div className="max-w-4xl">
-            <h1 className="font-display text-4xl font-semibold uppercase leading-[0.96] tracking-[0.03em] text-white sm:text-5xl lg:text-6xl xl:text-[4.35rem]">
-              Sabe a qualidade do ar que respira?
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-200 sm:text-xl">
-              A qualidade do ar interior é invisível, mas afeta conforto, saúde,
-              produtividade e eficiência operacional todos os dias.
-            </p>
-            <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
-              Em muitos edifícios, a ventilação ainda funciona por horários fixos ou regras
-              estáticas. O ar degrada-se, os dados não são usados para decidir e os sistemas
-              raramente atuam em função das condições reais do espaço.
-            </p>
-          </div>
+          <div className="relative z-10 flex w-full flex-col">
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-air-300/30 bg-air-400/10 px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-air-300">
+              <span className="size-1.5 rounded-full bg-air-300" />
+              Diagnóstico de ar interior
+            </div>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a
-              href="#problema"
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-air-400 px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-graphite-950 shadow-glow transition hover:bg-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-300 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
-            >
-              Ver o problema
-              <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
-            </a>
-            <a
-              href="#solucao"
-              className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:border-air-300/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
-            >
-              Como o RenovAR resolve
-              <ChevronRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
-            </a>
-          </div>
+            <div className="max-w-4xl">
+              <h1 className="font-display text-4xl font-semibold uppercase leading-[0.96] tracking-[0.03em] text-white sm:text-5xl lg:text-6xl xl:text-[4.35rem]">
+                Sabe a qualidade do ar que respira?
+              </h1>
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-200 sm:text-xl">
+                A qualidade do ar interior é invisível, mas afeta conforto, saúde,
+                produtividade e eficiência operacional todos os dias.
+              </p>
+              <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
+                Em muitos edifícios, a ventilação ainda funciona por horários fixos ou regras
+                estáticas. O ar degrada-se, os dados não são usados para decidir e os sistemas
+                raramente atuam em função das condições reais do espaço.
+              </p>
+            </div>
 
-          <div className="mt-9 grid gap-3 sm:grid-cols-3">
-            {heroProblemCards.map((card) => (
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                key={card.title}
                 href="#problema"
-                className="group rounded-[1.5rem] border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-air-300/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-air-400 px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-graphite-950 shadow-glow transition hover:bg-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-300 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
               >
-                <div className="mb-5 flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
-                    {card.title}
-                  </span>
-                  <ArrowRight
-                    className="size-4 text-zinc-500 transition group-hover:translate-x-1 group-hover:text-air-300"
-                    aria-hidden="true"
-                  />
-                </div>
-                <p className="text-sm leading-6 text-zinc-300">{card.description}</p>
+                Ver o problema
+                <ArrowRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
               </a>
-            ))}
+              <a
+                href="#solucao"
+                className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:border-air-300/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+              >
+                Como o RenovAR resolve
+                <ChevronRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
+              </a>
+            </div>
+
+            <div className="mt-8 rounded-[1.65rem] border border-white/10 bg-graphite-950/44 p-3 backdrop-blur-md">
+              <div className="grid gap-3 sm:grid-cols-3">
+                {heroProblemCards.map((card) => (
+                  <a
+                    key={card.title}
+                    href="#problema"
+                    className="group rounded-[1.25rem] border border-white/8 bg-white/[0.035] p-4 transition hover:-translate-y-1 hover:border-air-300/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
+                  >
+                    <div className="mb-4 flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+                        {card.title}
+                      </span>
+                      <ArrowRight
+                        className="size-4 text-zinc-500 transition group-hover:translate-x-1 group-hover:text-air-300"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <p className="text-sm leading-6 text-zinc-300">{card.description}</p>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
