@@ -404,7 +404,6 @@ const designPillars = [
 
 const realWorldImages = [
   {
-    title: 'Unidade sensora',
     description:
       'Protótipo físico com caixa ventilada, eletrónica visível e instalação em parede para leitura contínua do ar.',
     image: '/assets/renovar-sensor.jpeg',
@@ -412,7 +411,6 @@ const realWorldImages = [
     meta: 'Caixa do sensor RenovAR',
   },
   {
-    title: 'Atuação sobre ventilação natural',
     description:
       'Integração com janelas abertas automaticamente por um sistema RenovAR em contexto real.',
     image: '/assets/renovar-janelas-abertas.jpeg',
@@ -585,15 +583,9 @@ function HeroProblem() {
                     href="#problema"
                     className="group rounded-[1.25rem] border border-white/8 bg-white/[0.035] p-4 transition hover:-translate-y-1 hover:border-air-300/35 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
                   >
-                    <div className="mb-4 flex items-center justify-between">
-                      <span className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
-                        {card.title}
-                      </span>
-                      <ArrowRight
-                        className="size-4 text-zinc-500 transition group-hover:translate-x-1 group-hover:text-air-300"
-                        aria-hidden="true"
-                      />
-                    </div>
+                    <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+                      {card.title}
+                    </p>
                     <p className="text-sm leading-6 text-zinc-300">{card.description}</p>
                   </a>
                 ))}
@@ -656,7 +648,7 @@ function DiagnosticPanel() {
             <span className="h-px flex-1 bg-gradient-to-r from-air-300/25 to-transparent" />
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
-            {airSignals.map((parameter, index) => (
+            {airSignals.map((parameter) => (
               <div
                 key={parameter.label}
                 className="rounded-[1.35rem] border border-white/10 bg-graphite-950/55 p-4 backdrop-blur-md"
@@ -664,9 +656,6 @@ function DiagnosticPanel() {
                 <div className="flex items-center justify-between gap-3">
                   <span className="rounded-full border border-air-300/20 bg-air-400/10 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-air-300">
                     {parameter.label}
-                  </span>
-                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-600">
-                    0{index + 1}
                   </span>
                 </div>
                 <p className="mt-4 text-base font-semibold text-white">{parameter.title}</p>
@@ -691,9 +680,6 @@ function DiagnosticPanel() {
               <div className="flex items-center gap-3">
                 <span className="rounded-full border border-air-300/20 bg-air-400/10 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-air-300">
                   {ventilationSignal.label}
-                </span>
-                <span className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-zinc-600">
-                  resposta
                 </span>
               </div>
               <p className="mt-4 text-base font-semibold text-white">{ventilationSignal.title}</p>
@@ -796,12 +782,9 @@ function ImpactSection() {
                   index === 0 ? 'sm:col-span-2' : ''
                 }`}
               >
-                <div className="mb-7 flex items-center justify-between">
+                <div className="mb-7">
                   <span className="grid size-10 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
                     <Check className="size-4 text-air-300" aria-hidden="true" />
-                  </span>
-                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
-                    I{String(index + 1).padStart(2, '0')}
                   </span>
                 </div>
                 <h3 className="text-base font-semibold leading-7 text-white">{item.title}</h3>
@@ -870,29 +853,20 @@ function SolutionIntro() {
         <div className="relative rounded-[2rem] border border-white/10 bg-graphite-900/70 p-4 shadow-insetline sm:p-6 lg:p-8">
           <div className="absolute left-[12%] right-[12%] top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-transparent via-air-300/35 to-transparent lg:block" />
           <div className="grid gap-4 lg:grid-cols-3">
-            {solutionSteps.map((step, index) => (
+            {solutionSteps.map((step) => (
               <article
                 key={step.title}
                 className="relative rounded-[1.65rem] border border-white/10 bg-graphite-950/72 p-6 transition hover:-translate-y-1 hover:border-air-300/35 hover:bg-white/[0.055]"
               >
-                <div className="mb-8 flex items-center justify-between">
+                <div className="mb-8">
                   <span className="grid size-12 place-items-center rounded-2xl border border-air-300/25 bg-air-400/10">
                     <step.icon className="size-5 text-air-300" aria-hidden="true" />
-                  </span>
-                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
-                    0{index + 1}
                   </span>
                 </div>
                 <h3 className="font-display text-2xl font-semibold uppercase tracking-[0.08em] text-white">
                   {step.title}
                 </h3>
                 <p className="mt-4 text-sm leading-7 text-zinc-400">{step.description}</p>
-                {index < solutionSteps.length - 1 && (
-                  <ArrowRight
-                    className="absolute -right-4 top-1/2 z-10 hidden size-8 -translate-y-1/2 rounded-full border border-air-300/25 bg-graphite-950 p-1.5 text-air-300 lg:block"
-                    aria-hidden="true"
-                  />
-                )}
               </article>
             ))}
           </div>
@@ -978,12 +952,9 @@ function SystemArchitectureSection() {
                     index === 4 ? 'md:col-span-2' : ''
                   }`}
                 >
-                  <div className="mb-8 flex items-center justify-between">
+                  <div className="mb-8">
                     <span className="grid size-11 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
                       <Icon className="size-5 text-air-300" aria-hidden="true" />
-                    </span>
-                    <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-500">
-                      0{index + 1}
                     </span>
                   </div>
                   <h3 className="text-lg font-semibold text-white">{title}</h3>
@@ -1043,15 +1014,6 @@ function ValidatedMaterialSection() {
                 <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-graphite-950/50 to-transparent" />
               </div>
               <div className="p-5 sm:p-6">
-                <div className="mb-5 flex items-center justify-between gap-4">
-                  <span className="text-[0.66rem] font-bold uppercase tracking-[0.18em] text-air-300">
-                    Material interno
-                  </span>
-                  <ArrowRight
-                    className="size-4 text-zinc-600 transition group-hover:translate-x-1 group-hover:text-air-300"
-                    aria-hidden="true"
-                  />
-                </div>
                 <h3 className="text-xl font-semibold text-white">{visual.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{visual.description}</p>
               </div>
@@ -1065,12 +1027,9 @@ function ValidatedMaterialSection() {
               key={title}
               className="rounded-[1.6rem] border border-white/10 bg-white/[0.035] p-5 transition hover:border-air-300/30 hover:bg-white/[0.055]"
             >
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-6">
                 <span className="grid size-10 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
                   <Icon className="size-5 text-air-300" aria-hidden="true" />
-                </span>
-                <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
-                  Pilar
                 </span>
               </div>
               <h3 className="text-base font-semibold leading-7 text-white">{title}</h3>
@@ -1134,7 +1093,7 @@ function RealWorldSection() {
         <div className="grid gap-4 lg:grid-cols-2">
           {realWorldImages.map((photo) => (
             <figure
-              key={photo.title}
+              key={photo.meta}
               className="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035] p-3 shadow-insetline"
             >
               <div className="grid min-h-[320px] place-items-center rounded-[1.45rem] bg-zinc-100 p-2 sm:min-h-[420px]">
@@ -1146,10 +1105,7 @@ function RealWorldSection() {
                 />
               </div>
               <figcaption className="p-4 sm:p-5">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
-                  {photo.title}
-                </p>
-                <h3 className="mt-3 text-xl font-semibold text-white">{photo.meta}</h3>
+                <h3 className="text-xl font-semibold text-white">{photo.meta}</h3>
                 <p className="mt-3 text-sm leading-6 text-zinc-400">{photo.description}</p>
               </figcaption>
             </figure>
@@ -1183,16 +1139,13 @@ function BenefitsSection() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          {benefits.map((benefit, index) => (
+          {benefits.map((benefit) => (
             <div
               key={benefit.title}
               className="rounded-[1.55rem] border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-air-300/30 hover:bg-white/[0.055]"
             >
-              <div className="mb-8 flex items-center justify-between">
+              <div className="mb-8">
                 <Check className="size-5 text-air-300" aria-hidden="true" />
-                <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
-                  B{String(index + 1).padStart(2, '0')}
-                </span>
               </div>
               <h3 className="text-base font-semibold leading-7 text-white">{benefit.title}</h3>
               <p className="mt-3 text-sm leading-6 text-zinc-400">{benefit.description}</p>
@@ -1234,11 +1187,8 @@ function CustomersSection() {
                 index === 6 ? 'lg:col-span-2' : ''
               }`}
             >
-              <div className="mb-7 flex items-center justify-between">
+              <div className="mb-7">
                 <Building2 className="size-5 text-air-300" aria-hidden="true" />
-                <span className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-zinc-600">
-                  Sector
-                </span>
               </div>
               <h3 className="text-lg font-semibold text-white">{customer}</h3>
             </div>
@@ -1542,14 +1492,10 @@ function InfoCard({ title, description, icon: Icon, compact = false }: CardItem 
         compact ? 'p-5' : 'p-6 sm:p-7'
       }`}
     >
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8">
         <span className="grid size-11 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
           <Icon className="size-5 text-air-300" aria-hidden="true" />
         </span>
-        <ArrowRight
-          className="size-4 text-zinc-600 transition group-hover:translate-x-1 group-hover:text-air-300"
-          aria-hidden="true"
-        />
       </div>
       <h3 className="text-lg font-semibold text-white">{title}</h3>
       <p className="mt-3 text-sm leading-6 text-zinc-400">{description}</p>
