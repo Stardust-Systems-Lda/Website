@@ -72,49 +72,49 @@ const footerGroups = [
 
 const heroProblemCards = [
   {
-    title: 'Invisível',
-    description: 'Não se vê, mas acumula-se em espaços fechados.',
+    title: 'O ar não avisa',
+    description: 'Pode piorar sem cheiro, cor ou sinal evidente.',
   },
   {
-    title: 'Contínuo',
-    description: 'A qualidade do ar pode piorar ao longo de horas, dias ou meses.',
+    title: 'Ventilação fixa',
+    description: 'Muitos edifícios ventilam por horário, não por necessidade.',
   },
   {
-    title: 'Operacional',
-    description: 'Sem resposta automática, os dados ficam por usar.',
+    title: 'Resposta em falta',
+    description: 'Sem ligação à ventilação, a leitura fica sem consequência.',
   },
 ];
 
 const diagnosticParameters = [
   {
     label: 'CO₂',
-    title: 'Ar pouco renovado',
+    title: 'Renovação do ar',
     description:
-      'Quando sobe, pode indicar que há muitas pessoas no espaço ou pouca entrada de ar novo.',
+      'Quando sobe, pode indicar que a ocupação aumentou e que o ar novo não está a acompanhar.',
   },
   {
     label: 'COVs',
-    title: 'Cheiros e químicos no ar',
+    title: 'Fontes interiores',
     description:
-      'Podem vir de produtos de limpeza, mobiliário, tintas, equipamentos ou materiais interiores.',
+      'Materiais, produtos de limpeza, mobiliário e equipamentos podem libertar compostos para o ar.',
   },
   {
     label: 'Partículas',
-    title: 'Poeira e pequenas partículas',
+    title: 'Matéria suspensa',
     description:
-      'Indicam poeiras e outras partículas no ar, que podem aumentar com limpeza, circulação de pessoas ou pouca ventilação.',
+      'Poeiras, circulação de pessoas e atividades no espaço alteram a carga de partículas no ar.',
   },
   {
     label: 'Humidade',
-    title: 'Ar demasiado seco ou húmido',
+    title: 'Conforto do espaço',
     description:
-      'Ajuda a perceber se o espaço está demasiado seco ou húmido e se precisa de mais renovação de ar.',
+      'Valores muito baixos ou altos afetam conforto e ajudam a perceber se o ambiente precisa de ajuste.',
   },
   {
     label: 'Ventilação',
-    title: 'Como o edifício responde',
+    title: 'A resposta do edifício',
     description:
-      'O essencial é saber se a ventilação responde ao estado real do espaço ou se funciona apenas por horário.',
+      'O ponto crítico é transformar estes sinais numa ação proporcional sobre janelas, grelhas, VMC ou AVAC.',
   },
 ];
 
@@ -545,23 +545,18 @@ function HeroProblem() {
           <div className="pointer-events-none absolute bottom-8 left-8 right-8 h-px bg-gradient-to-r from-transparent via-air-300/20 to-transparent" />
 
           <div className="relative z-10 flex w-full flex-col">
-            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-air-300/30 bg-air-400/10 px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-air-300">
-              <span className="size-1.5 rounded-full bg-air-300" />
-              Diagnóstico de ar interior
-            </div>
-
             <div className="max-w-4xl">
               <h1 className="font-display text-4xl font-semibold uppercase leading-[0.96] tracking-[0.03em] text-white sm:text-5xl lg:text-6xl xl:text-[4.35rem]">
                 Sabe a qualidade do ar que respira?
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-200 sm:text-xl">
-                A qualidade do ar interior é invisível, mas afeta conforto, saúde,
-                produtividade e eficiência operacional todos os dias.
+                Em espaços fechados, o ar pode perder qualidade muito antes de alguém notar.
+                CO₂, partículas, humidade e COVs acumulam-se enquanto o edifício continua a
+                ventilar sempre da mesma forma.
               </p>
               <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
-                Em muitos edifícios, a ventilação ainda funciona por horários fixos ou regras
-                estáticas. O ar piora, os dados não são usados para decidir e os sistemas
-                raramente atuam em função das condições reais do espaço.
+                O problema não é só medir a qualidade do ar. É fazer com que essa leitura chegue à
+                ventilação existente e ajude o espaço a reagir quando precisa de ar novo.
               </p>
             </div>
 
@@ -577,7 +572,7 @@ function HeroProblem() {
                 href="#solucao"
                 className="group inline-flex items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.03] px-6 py-3.5 text-sm font-bold uppercase tracking-[0.13em] text-white transition hover:border-air-300/40 hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
               >
-                Como o RenovAR resolve
+                Como o RenovAR atua
                 <ChevronRight className="size-4 transition group-hover:translate-x-1" aria-hidden="true" />
               </a>
             </div>
@@ -634,29 +629,29 @@ function DiagnosticPanel() {
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.67rem] font-bold uppercase tracking-[0.2em] text-zinc-400">
-              Qualidade do ar interior
+              Leitura operacional
             </p>
             <h2 className="mt-2 text-2xl font-semibold uppercase tracking-[0.08em] text-white">
-              O que estes sinais indicam
+              Do sinal à resposta
             </h2>
           </div>
           <div className="rounded-full border border-air-300/30 bg-air-400/10 px-3 py-1.5 text-[0.66rem] font-bold uppercase tracking-[0.16em] text-air-300">
-            Guia rápido
+            Ar + Ventilação
           </div>
         </div>
 
         <div className="rounded-[1.7rem] border border-air-300/22 bg-air-400/10 p-5 backdrop-blur-md">
-          <p className="font-semibold text-white">Não são apenas números num ecrã.</p>
+          <p className="font-semibold text-white">Os indicadores só são úteis quando orientam uma resposta.</p>
           <p className="mt-2 text-sm leading-6 text-zinc-300">
-            Estes sinais ajudam a perceber o estado do ar interior. O importante é usá-los para
-            decidir quando ventilar, evitar ventilar em excesso ou manter a operação.
+            O RenovAR lê sinais do ar interior e usa-os para apoiar decisões sobre a ventilação:
+            aumentar ar novo, evitar funcionamento desnecessário ou manter o espaço estável.
           </p>
         </div>
 
         <div>
           <div className="mb-3 flex items-center justify-between gap-4">
             <p className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-500">
-              Sinais do ar
+              O que é lido
             </p>
             <span className="h-px flex-1 bg-gradient-to-r from-air-300/25 to-transparent" />
           </div>
@@ -684,7 +679,7 @@ function DiagnosticPanel() {
         <div>
           <div className="mb-3 flex items-center justify-between gap-4">
             <p className="text-[0.67rem] font-bold uppercase tracking-[0.18em] text-zinc-500">
-              O que falta fechar
+              O que tem de acontecer
             </p>
             <span className="h-px flex-1 bg-gradient-to-r from-air-300/25 to-transparent" />
           </div>
@@ -705,9 +700,9 @@ function DiagnosticPanel() {
               <p className="mt-2 text-sm leading-6 text-zinc-400">{ventilationSignal.description}</p>
             </div>
             <div className="rounded-[1.35rem] border border-air-300/20 bg-air-400/10 p-4 lg:min-w-[16.5rem]">
-              <p className="text-sm font-semibold leading-6 text-white">A leitura isolada não chega.</p>
+              <p className="text-sm font-semibold leading-6 text-white">Medir não chega.</p>
               <p className="mt-2 whitespace-nowrap text-[0.68rem] font-bold uppercase tracking-[0.1em] text-air-300 sm:text-xs">
-                Medir → decidir → atuar
+                Medir → interpretar → atuar
               </p>
             </div>
           </div>
