@@ -21,8 +21,6 @@ import {
   RefreshCw,
   ShieldCheck,
   SlidersHorizontal,
-  Thermometer,
-  Waves,
   Wind,
   X,
   Zap,
@@ -1200,6 +1198,36 @@ function CustomersSection() {
 }
 
 function DashboardPreview() {
+  const integrationLayers = [
+    {
+      title: 'Ar interior',
+      description: 'CO₂, partículas, humidade, temperatura e COVs como base de leitura ambiental.',
+      icon: Gauge,
+    },
+    {
+      title: 'Ventilação e AVAC',
+      description: 'Janelas motorizadas, grelhas, VMC ou sistemas mecânicos existentes.',
+      icon: Fan,
+    },
+    {
+      title: 'Iluminação',
+      description: 'Luzes e circuitos que podem ser cruzados com horários, presença ou regras do edifício.',
+      icon: Zap,
+    },
+    {
+      title: 'Tomadas e cargas',
+      description: 'Tomadas, equipamentos e consumos auxiliares ligados à operação diária dos espaços.',
+      icon: PlugZap,
+    },
+  ];
+
+  const platformFlow = [
+    'Recolher sinais do edifício',
+    'Cruzar regras de operação',
+    'Acionar ou recomendar respostas',
+    'Registar histórico para análise',
+  ];
+
   return (
     <section
       id="dashboard"
@@ -1210,89 +1238,79 @@ function DashboardPreview() {
         <SectionHeader
           id="dashboard-title"
           eyebrow="Interface operacional"
-          title="Dados que orientam decisões."
-          text="A interface junta estado do ar, atuação, tendências e recomendações para apoiar equipas técnicas, não apenas para mostrar gráficos."
+          title="Uma camada visual para coordenar o edifício."
+          text="A plataforma não se limita a mostrar valores de qualidade do ar. A mesma lógica pode organizar sinais de ventilação, iluminação, tomadas e outros sistemas ligados ao espaço."
         />
 
-        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/80 p-4 shadow-insetline sm:p-6 lg:p-8">
-          <div className="mb-6 flex flex-col gap-4 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
-                RenovAR Control / Edifício Norte
-              </p>
-              <h3 className="mt-2 text-2xl font-semibold uppercase tracking-[0.08em] text-white">
-                Zona Open Space 2
-              </h3>
-            </div>
-            <div className="flex w-full max-w-xs rounded-full border border-white/10 bg-graphite-950 p-1">
-              <button
-                type="button"
-                className="flex-1 rounded-full bg-air-400 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-graphite-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-300"
-              >
-                Auto
-              </button>
-              <button
-                type="button"
-                className="flex-1 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
-              >
-                Manual
-              </button>
-            </div>
-          </div>
-
-          <div className="grid gap-4 lg:grid-cols-12">
-            <MetricPanel className="lg:col-span-3" label="CO₂" value="742" unit="ppm" status="Espaço dentro dos limites configurados" icon={Gauge} />
-            <MetricPanel className="lg:col-span-3" label="Temperatura" value="22.4" unit="°C" status="Estável" icon={Thermometer} />
-            <MetricPanel className="lg:col-span-3" label="Humidade" value="48" unit="%" status="Ideal" icon={Waves} />
-            <MetricPanel className="lg:col-span-3" label="VOCs" value="0.31" unit="ppm" status="Qualidade do ar em observação" icon={ShieldCheck} />
-            <MetricPanel className="lg:col-span-3" label="Partículas" value="11" unit="µg/m³" status="Baixo" icon={Activity} />
-
-            <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/72 p-5 lg:col-span-3">
+        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-graphite-900/80 p-4 shadow-insetline sm:p-6 lg:p-8">
+          <div className="absolute inset-0 bg-technical-grid bg-[length:54px_54px] opacity-30" />
+          <div className="absolute -right-24 top-10 size-80 rounded-full bg-air-400/10 blur-3xl" />
+          <div className="relative z-10 grid gap-5 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
+            <div className="rounded-[1.7rem] border border-white/10 bg-graphite-950/62 p-5 sm:p-6">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
-                Estado da ventilação
+                Visão conceptual da plataforma
               </p>
-              <div className="mt-6 flex items-end justify-between gap-5">
-                <div>
-                  <p className="font-display text-4xl font-semibold text-white">37%</p>
-                  <p className="mt-2 text-sm text-zinc-400">Abertura equivalente</p>
-                </div>
-                <div className="grid size-20 place-items-center rounded-full border border-air-300/24 bg-air-400/10">
-                  <Fan className="size-9 text-air-300" aria-hidden="true" />
-                </div>
-              </div>
-              <div className="mt-7 h-2 rounded-full bg-white/8">
-                <div className="h-full w-[37%] rounded-full bg-air-400 shadow-glow" />
-              </div>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-air-300">
-                Modo automático ativo
+              <h3 className="mt-4 max-w-xl text-2xl font-semibold uppercase tracking-[0.07em] text-white">
+                Um ponto de leitura para vários sistemas do espaço.
+              </h3>
+              <p className="mt-4 text-sm leading-7 text-zinc-400">
+                Esta pré-visualização mostra a lógica de integração da interface. Não representa
+                uma análise em tempo real nem comandos clicáveis.
               </p>
-            </div>
 
-            <div className="rounded-[1.6rem] border border-white/10 bg-graphite-950/72 p-5 lg:col-span-4">
-              <div className="mb-8 flex items-center justify-between gap-4">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
-                  Histórico 24h
-                </p>
-                <span className="text-xs font-semibold text-air-300">Tendência CO₂ / atuação</span>
+              <div className="mt-8 rounded-[1.5rem] border border-air-300/22 bg-air-400/10 p-5">
+                <div className="flex items-center gap-4">
+                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl border border-air-300/25 bg-graphite-950/60">
+                    <CircuitBoard className="size-6 text-air-300" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-white">RenovAR Control Layer</p>
+                    <p className="mt-1 text-xs leading-5 text-zinc-400">
+                      Camada de decisão para monitorização, interoperabilidade e atuação técnica.
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="chart-bars grid h-36 grid-cols-12 items-end gap-2" aria-label="Gráfico temporal de qualidade do ar">
-                {[44, 52, 48, 68, 76, 71, 62, 54, 59, 49, 42, 38].map((height, index) => (
-                  <span key={index} style={{ height: `${height}%` }} />
+
+              <div className="mt-6 grid gap-3">
+                {platformFlow.map((item) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3"
+                  >
+                    <span className="size-2 rounded-full bg-air-300 shadow-glow" />
+                    <span className="text-sm text-zinc-300">{item}</span>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-[1.6rem] border border-air-300/22 bg-air-400/10 p-5 lg:col-span-5">
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
-                Ação recomendada
-              </p>
-              <h3 className="mt-5 text-xl font-semibold leading-7 text-white">
-                Manter ventilação até a tendência de CO₂ estabilizar.
-              </h3>
-              <p className="mt-4 text-sm leading-6 text-zinc-300">
-                Última atuação há 18 minutos. Tendência de descida observada. Sem intervenção
-                manual necessária.
-              </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {integrationLayers.map(({ title, description, icon: Icon }) => (
+                <article
+                  key={title}
+                  className="rounded-[1.55rem] border border-white/10 bg-white/[0.035] p-5"
+                >
+                  <div className="mb-7">
+                    <span className="grid size-11 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
+                      <Icon className="size-5 text-air-300" aria-hidden="true" />
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-white">{title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-zinc-400">{description}</p>
+                </article>
+              ))}
+
+              <div className="rounded-[1.55rem] border border-air-300/22 bg-air-400/10 p-5 sm:col-span-2">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+                  Interoperabilidade
+                </p>
+                <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-white">
+                  O objetivo é que a qualidade do ar deixe de estar isolada: a plataforma pode
+                  cruzar sensores, regras e sistemas auxiliares para apoiar uma operação mais
+                  coordenada do edifício.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -1500,38 +1518,6 @@ function InfoCard({ title, description, icon: Icon, compact = false }: CardItem 
       <h3 className="text-lg font-semibold text-white">{title}</h3>
       <p className="mt-3 text-sm leading-6 text-zinc-400">{description}</p>
     </article>
-  );
-}
-
-function MetricPanel({
-  label,
-  value,
-  unit,
-  status,
-  icon: Icon,
-  className,
-}: {
-  label: string;
-  value: string;
-  unit: string;
-  status: string;
-  icon: LucideIcon;
-  className?: string;
-}) {
-  return (
-    <div className={`rounded-[1.6rem] border border-white/10 bg-graphite-950/72 p-5 ${className ?? ''}`}>
-      <div className="mb-8 flex items-center justify-between">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">{label}</p>
-        <Icon className="size-5 text-air-300" aria-hidden="true" />
-      </div>
-      <div className="flex items-end gap-2">
-        <p className="font-display text-4xl font-semibold text-white">{value}</p>
-        <p className="pb-1 text-sm font-semibold uppercase tracking-[0.12em] text-zinc-500">{unit}</p>
-      </div>
-      <p className="mt-4 inline-flex rounded-full border border-air-300/25 bg-air-400/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-air-300">
-        {status}
-      </p>
-    </div>
   );
 }
 
