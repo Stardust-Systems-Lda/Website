@@ -108,7 +108,7 @@ const diagnosticParameters = [
     label: 'Humidade',
     title: 'Conforto do espaço',
     description:
-      'Valores muito baixos ou altos afetam conforto e ajudam a perceber se o ambiente precisa de ajuste.',
+      'Valores muito baixos ou altos mudam a sensação do espaço e ajudam a perceber se o ambiente precisa de ajuste.',
   },
   {
     label: 'Ventilação',
@@ -138,9 +138,9 @@ const problemCards: CardItem[] = [
     icon: Activity,
   },
   {
-    title: 'Impacto acumulado',
+    title: 'Ocupação variável',
     description:
-      'Passar muitas horas em espaços mal ventilados pode afetar conforto, bem-estar, concentração e perceção de qualidade do espaço.',
+      'Salas cheias, teletrabalho e usos intermitentes mudam a necessidade de ar ao longo do dia.',
     icon: Brain,
   },
   {
@@ -150,23 +150,23 @@ const problemCards: CardItem[] = [
     icon: Zap,
   },
   {
-    title: 'Pressão regulamentar',
+    title: 'Gestão pouco documentada',
     description:
-      'A qualidade do ar interior e o desempenho energético estão cada vez mais ligados a requisitos de gestão, certificação e operação dos edifícios.',
+      'Sem histórico e resposta consistente, torna-se mais difícil demonstrar como o edifício acompanha a qualidade do ar.',
     icon: FileCheck,
   },
 ];
 
 const impactItems = [
   {
-    title: 'Conforto e bem-estar',
+    title: 'Experiência do espaço',
     description:
-      'Quando o ar sai dos limites definidos, o espaço pode tornar-se desconfortável e menos agradável de usar.',
+      'Ar pesado, seco ou húmido torna o espaço menos agradável e mais difícil de manter estável.',
   },
   {
-    title: 'Concentração e desempenho',
+    title: 'Atenção ao longo do dia',
     description:
-      'Espaços mal ventilados podem afetar atenção, fadiga e a forma como o espaço é usado ao longo do dia.',
+      'Quando a ventilação não acompanha a utilização real, podem surgir fadiga e quebra de concentração.',
   },
   {
     title: 'Sistema respiratório',
@@ -186,7 +186,7 @@ const impactItems = [
   {
     title: 'Conformidade e risco',
     description:
-      'A pressão regulamentar aumenta a necessidade de histórico, gestão consistente e registos de operação.',
+      'Histórico e registos ajudam equipas técnicas a acompanhar requisitos e justificar decisões de operação.',
   },
 ];
 
@@ -758,13 +758,13 @@ function ImpactSection() {
               id="impacto-title"
               className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
             >
-              O que não se vê pode afetar todos os dias.
+              O que não se vê pesa no dia a dia.
             </h2>
             <p className="mt-6 text-base leading-8 text-zinc-400">
               A qualidade do ar interior influencia a forma como um espaço é sentido, usado e
               gerido. Em edifícios de serviços, escritórios, salas de reunião ou espaços educativos,
-              a acumulação de CO₂, partículas, humidade e COVs pode afetar conforto, concentração
-              e bem-estar.
+              a acumulação de CO₂, partículas, humidade e COVs reflete-se na utilização diária do
+              espaço, na atenção das pessoas e na exigência de gestão técnica.
             </p>
             <div className="mt-8 rounded-[1.5rem] border border-air-300/24 bg-air-400/10 p-5">
               <p className="text-sm font-semibold leading-7 text-white">
@@ -804,7 +804,7 @@ function MarketShiftSection() {
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           id="mudanca-title"
-          eyebrow="Porque agora"
+          eyebrow="Porquê agora"
           title="O mercado está a mudar."
           text="A próxima etapa não é apenas medir melhor. É usar dados ambientais para ajustar a ventilação quando o espaço precisa de ar novo."
         />
@@ -882,7 +882,7 @@ function SolutionIntro() {
 function SystemArchitectureSection() {
   const nodes = [
     [
-      'Unidades sensoras',
+      'Unidades de sensorização',
       'Recolha contínua de dados essenciais sobre a qualidade do ar interior.',
       RadioTower,
     ],
@@ -1084,7 +1084,7 @@ function RealWorldSection() {
             </h2>
           </div>
           <p className="max-w-3xl text-base leading-8 text-zinc-400 lg:justify-self-end">
-            O RenovAR já existe em hardware funcional, com unidades sensoras, módulos de controlo
+            O RenovAR já existe em hardware funcional, com unidades de sensorização, módulos de controlo
             e integração com ventilação natural motorizada. Esta base permite validar o
             funcionamento em ambientes reais e evoluir para instalações mais robustas.
           </p>
