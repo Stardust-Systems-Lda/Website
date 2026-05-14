@@ -47,6 +47,8 @@ const navItems: LinkItem[] = [
   ['Contacto', '#contacto'],
 ];
 
+const trackedSectionIds = navItems.map(([, href]) => href.slice(1));
+
 const footerGroups = [
   {
     title: 'Produto',
@@ -80,6 +82,33 @@ const heroProblemCards = [
   {
     title: 'Resposta em falta',
     description: 'Sem ligação à ventilação, a leitura fica sem consequência.',
+  },
+];
+
+const quickPathItems = [
+  {
+    label: '01',
+    title: 'Problema',
+    text: 'Perceber porque medir, sozinho, não chega.',
+    href: '#problema',
+  },
+  {
+    label: '02',
+    title: 'Solução',
+    text: 'Ver como o RenovAR liga leitura e atuação.',
+    href: '#solucao',
+  },
+  {
+    label: '03',
+    title: 'Sistema',
+    text: 'Entender a arquitetura e a integração no edifício.',
+    href: '#funcionamento',
+  },
+  {
+    label: '04',
+    title: 'Prova',
+    text: 'Ver materiais validados e implementação real.',
+    href: '#validacao',
   },
 ];
 
@@ -392,14 +421,18 @@ const realWorldImages = [
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const activeSection = useActiveSection(trackedSectionIds);
 
   return (
     <div className="renovar-shell min-h-screen bg-graphite-950 text-white">
+      <a href="#conteudo" className="skip-link">
+        Saltar para o conteúdo
+      </a>
       <ScrollProgress />
       <div className="renovar-dot-field" aria-hidden="true" />
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} activeSection={activeSection} />
 
-      <main className="relative z-10">
+      <main id="conteudo" className="relative z-10">
         <HeroProblem />
         <ProblemSection />
         <ImpactSection />
@@ -417,6 +450,39 @@ function App() {
       <Footer />
     </div>
   );
+}
+
+function useActiveSection(sectionIds: string[]) {
+  const [activeSection, setActiveSection] = useState(sectionIds[0] ?? '');
+
+  useEffect(() => {
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    if (sections.length === 0) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntry = entries.find((entry) => entry.isIntersecting);
+        if (visibleEntry?.target.id) {
+          setActiveSection(visibleEntry.target.id);
+        }
+      },
+      {
+        rootMargin: '-28% 0px -56% 0px',
+        threshold: 0,
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, [sectionIds]);
+
+  return activeSection;
 }
 
 function ScrollProgress() {
@@ -450,9 +516,11 @@ function ScrollProgress() {
 function Header({
   menuOpen,
   setMenuOpen,
+  activeSection,
 }: {
   menuOpen: boolean;
   setMenuOpen: (value: boolean) => void;
+  activeSection: string;
 }) {
   return (
     <header className="fixed left-0 right-0 top-0 z-50 px-4 pt-4">
@@ -470,16 +538,27 @@ function Header({
         </a>
 
         <nav aria-label="Navegação principal" className="hidden items-center gap-5 lg:flex">
-          {navItems.map(([label, href]) => (
-            <a
-              key={href}
-              href={href}
-              className="group relative rounded-full text-[0.68rem] font-bold uppercase tracking-[0.18em] text-zinc-500 transition hover:text-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
-            >
-              {label}
-              <span className="absolute -bottom-2 left-0 h-px w-0 bg-air-300 transition-all duration-300 group-hover:w-full" />
-            </a>
-          ))}
+          {navItems.map(([label, href]) => {
+            const isActive = activeSection === href.slice(1);
+
+            return (
+              <a
+                key={href}
+                href={href}
+                aria-current={isActive ? 'location' : undefined}
+                className={`group relative rounded-full text-[0.68rem] font-bold uppercase tracking-[0.18em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950 ${
+                  isActive ? 'text-white' : 'text-zinc-500 hover:text-air-300'
+                }`}
+              >
+                {label}
+                <span
+                  className={`absolute -bottom-2 left-0 h-px bg-air-300 transition-all duration-300 group-hover:w-full ${
+                    isActive ? 'w-full' : 'w-0'
+                  }`}
+                />
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
@@ -509,16 +588,25 @@ function Header({
           className="mx-auto mt-3 max-w-7xl rounded-[1.75rem] border border-white/12 bg-graphite-900/96 px-5 py-5 shadow-2xl backdrop-blur-2xl lg:hidden"
         >
           <nav className="mx-auto grid max-w-7xl gap-2" aria-label="Navegação móvel">
-            {navItems.map(([label, href]) => (
-              <a
-                key={href}
-                href={href}
-                onClick={() => setMenuOpen(false)}
-                className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-3 text-sm font-medium uppercase tracking-[0.14em] text-zinc-300 transition hover:border-air-300/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
-              >
-                {label}
-              </a>
-            ))}
+            {navItems.map(([label, href]) => {
+              const isActive = activeSection === href.slice(1);
+
+              return (
+                <a
+                  key={href}
+                  href={href}
+                  aria-current={isActive ? 'location' : undefined}
+                  onClick={() => setMenuOpen(false)}
+                  className={`rounded-2xl border px-4 py-3 text-sm font-medium uppercase tracking-[0.14em] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 ${
+                    isActive
+                      ? 'border-air-300/35 bg-air-400/10 text-white'
+                      : 'border-white/8 bg-white/[0.03] text-zinc-300 hover:border-air-300/40 hover:text-white'
+                  }`}
+                >
+                  {label}
+                </a>
+              );
+            })}
             <a
               href="#contacto"
               onClick={() => setMenuOpen(false)}
@@ -558,7 +646,7 @@ function HeroProblem() {
                 CO₂, partículas, humidade e COVs acumulam-se enquanto o edifício continua a
                 ventilar sempre da mesma forma.
               </p>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-400">
+              <p className="mt-5 max-w-2xl text-base leading-8 text-zinc-300">
                 O problema não é só medir a qualidade do ar. É fazer com que essa leitura chegue à
                 ventilação existente e ajude o espaço a reagir quando precisa de ar novo.
               </p>
@@ -602,7 +690,37 @@ function HeroProblem() {
 
         <DiagnosticPanel />
       </div>
+      <QuickPath />
     </section>
+  );
+}
+
+function QuickPath() {
+  return (
+    <nav
+      aria-label="Percurso recomendado na página"
+      className="relative z-10 mx-auto mt-4 max-w-7xl rounded-[1.7rem] border border-white/10 bg-graphite-950/58 p-3 shadow-insetline backdrop-blur-xl"
+    >
+      <div className="grid gap-3 md:grid-cols-4">
+        {quickPathItems.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="group rounded-[1.25rem] border border-white/8 bg-white/[0.025] p-4 transition hover:-translate-y-0.5 hover:border-air-300/35 hover:bg-white/[0.055] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400"
+          >
+            <span className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-air-300">
+              {item.label}
+            </span>
+            <span className="mt-3 block text-sm font-semibold uppercase tracking-[0.08em] text-white">
+              {item.title}
+            </span>
+            <span className="mt-2 block text-sm leading-6 text-zinc-300">
+              {item.text}
+            </span>
+          </a>
+        ))}
+      </div>
+    </nav>
   );
 }
 
@@ -665,7 +783,7 @@ function DiagnosticPanel() {
                   </span>
                 </div>
                 <p className="mt-4 text-base font-semibold text-white">{parameter.title}</p>
-                <p className="mt-2 text-sm leading-6 text-zinc-400">{parameter.description}</p>
+                <p className="mt-2 text-sm leading-6 text-zinc-300">{parameter.description}</p>
               </div>
             ))}
           </div>
@@ -689,7 +807,7 @@ function DiagnosticPanel() {
                 </span>
               </div>
               <p className="mt-4 text-base font-semibold text-white">{ventilationSignal.title}</p>
-              <p className="mt-2 text-sm leading-6 text-zinc-400">{ventilationSignal.description}</p>
+              <p className="mt-2 text-sm leading-6 text-zinc-300">{ventilationSignal.description}</p>
             </div>
             <div className="rounded-[1.35rem] border border-air-300/20 bg-air-400/10 p-4 lg:min-w-[16.5rem]">
               <p className="text-sm font-semibold leading-6 text-white">Medir não chega.</p>
@@ -724,7 +842,7 @@ function SectionHeader({
       >
         {title}
       </h2>
-      {text && <p className="mt-5 text-base leading-8 text-zinc-400 sm:text-lg">{text}</p>}
+      {text && <p className="mt-5 text-base leading-8 text-zinc-300 sm:text-lg">{text}</p>}
     </div>
   );
 }
@@ -1269,7 +1387,7 @@ function DashboardPreview() {
                 <h3 className="mt-4 max-w-xl text-2xl font-semibold uppercase leading-tight tracking-[0.07em] text-white sm:text-3xl">
                   A interface não é o produto todo. É a forma de o edifício ganhar contexto.
                 </h3>
-                <p className="mt-5 text-sm leading-7 text-zinc-400">
+                <p className="mt-5 text-sm leading-7 text-zinc-300">
                   Esta secção é uma representação de produto e interoperabilidade, não uma análise
                   em tempo real. Mostra como o RenovAR pode organizar sinais e sistemas diferentes
                   sem reduzir tudo a um ecrã de números.
@@ -1284,7 +1402,7 @@ function DashboardPreview() {
                     </span>
                     <div>
                       <p className="text-sm font-semibold text-white">{item.title}</p>
-                      <p className="mt-1 text-sm leading-6 text-zinc-500">{item.description}</p>
+                      <p className="mt-1 text-sm leading-6 text-zinc-400">{item.description}</p>
                     </div>
                   </div>
                 ))}
@@ -1349,7 +1467,7 @@ function DashboardPreview() {
                           </span>
                         </div>
                         <h4 className="text-base font-semibold text-white">{title}</h4>
-                        <p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p>
+                        <p className="mt-2 text-sm leading-6 text-zinc-300">{description}</p>
                       </article>
                     ))}
                   </div>
