@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Activity,
   ArrowRight,
@@ -185,33 +185,6 @@ const impactItems = [
     title: 'Conformidade e risco',
     description:
       'Histórico e registos ajudam equipas técnicas a acompanhar requisitos e justificar decisões de operação.',
-  },
-];
-
-const marketShiftCards: CardItem[] = [
-  {
-    title: 'Preocupação crescente',
-    description:
-      'Empresas, ocupantes e gestores de espaços estão mais atentos à qualidade do ambiente interior.',
-    icon: Activity,
-  },
-  {
-    title: 'Edifícios mais exigentes',
-    description:
-      'Espaços com ocupação variável precisam de ventilação ajustada às condições reais, não apenas a horários.',
-    icon: Building2,
-  },
-  {
-    title: 'Regulamentação mais apertada',
-    description:
-      'A qualidade do ar interior e a eficiência energética são cada vez mais relevantes na operação dos edifícios.',
-    icon: FileCheck,
-  },
-  {
-    title: 'Dados que pedem resposta',
-    description:
-      'A próxima etapa não é apenas medir melhor. É usar os dados para orientar decisões de operação.',
-    icon: Zap,
   },
 ];
 
@@ -422,19 +395,19 @@ function App() {
 
   return (
     <div className="renovar-shell min-h-screen bg-graphite-950 text-white">
+      <ScrollProgress />
+      <div className="renovar-dot-field" aria-hidden="true" />
       <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
-      <main>
+      <main className="relative z-10">
         <HeroProblem />
         <ProblemSection />
         <ImpactSection />
-        <MarketShiftSection />
         <SolutionIntro />
         <SystemArchitectureSection />
         <ValidatedMaterialSection />
         <FeaturesSection />
         <RealWorldSection />
-        <BenefitsSection />
         <CustomersSection />
         <DashboardPreview />
         <RoadmapSection />
@@ -446,6 +419,34 @@ function App() {
   );
 }
 
+function ScrollProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const updateProgress = () => {
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0);
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+
+    return () => {
+      window.removeEventListener('scroll', updateProgress);
+      window.removeEventListener('resize', updateProgress);
+    };
+  }, []);
+
+  return (
+    <div
+      className="scroll-progress-bar"
+      style={{ width: `${progress}%` }}
+      aria-hidden="true"
+    />
+  );
+}
+
 function Header({
   menuOpen,
   setMenuOpen,
@@ -454,8 +455,8 @@ function Header({
   setMenuOpen: (value: boolean) => void;
 }) {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-graphite-950/82 backdrop-blur-2xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+    <header className="fixed left-0 right-0 top-0 z-50 px-4 pt-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/12 bg-graphite-950/72 px-4 py-3 shadow-[0_18px_70px_rgba(0,0,0,0.36)] backdrop-blur-2xl lg:px-5">
         <a
           href="#top"
           className="group inline-flex items-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
@@ -464,18 +465,19 @@ function Header({
           <img
             src="/assets/renovar-logo.png"
             alt="RenovAR"
-            className="h-10 w-auto object-contain drop-shadow-[0_0_18px_rgba(67,230,178,0.16)] sm:h-12"
+            className="h-9 w-auto object-contain drop-shadow-[0_0_18px_rgba(67,230,178,0.16)] sm:h-10"
           />
         </a>
 
-        <nav aria-label="Navegação principal" className="hidden items-center gap-6 lg:flex">
+        <nav aria-label="Navegação principal" className="hidden items-center gap-5 lg:flex">
           {navItems.map(([label, href]) => (
             <a
               key={href}
               href={href}
-              className="rounded-full text-xs font-medium uppercase tracking-[0.15em] text-zinc-400 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
+              className="group relative rounded-full text-[0.68rem] font-bold uppercase tracking-[0.18em] text-zinc-500 transition hover:text-air-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-air-400 focus-visible:ring-offset-4 focus-visible:ring-offset-graphite-950"
             >
               {label}
+              <span className="absolute -bottom-2 left-0 h-px w-0 bg-air-300 transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -504,7 +506,7 @@ function Header({
       {menuOpen && (
         <div
           id="mobile-menu"
-          className="border-t border-white/10 bg-graphite-900/96 px-5 py-5 shadow-2xl lg:hidden"
+          className="mx-auto mt-3 max-w-7xl rounded-[1.75rem] border border-white/12 bg-graphite-900/96 px-5 py-5 shadow-2xl backdrop-blur-2xl lg:hidden"
         >
           <nav className="mx-auto grid max-w-7xl gap-2" aria-label="Navegação móvel">
             {navItems.map(([label, href]) => (
@@ -533,9 +535,15 @@ function Header({
 
 function HeroProblem() {
   return (
-    <section id="top" className="relative overflow-hidden px-5 pb-8 pt-8 sm:pt-10 lg:px-8 lg:pb-12">
+    <section id="top" className="relative overflow-hidden px-5 pb-8 pt-28 sm:pt-32 lg:px-8 lg:pb-10">
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-air-400/[0.045] via-transparent to-transparent" />
-      <div className="mx-auto grid max-w-7xl items-stretch gap-4 lg:grid-cols-[1.02fr_0.98fr]">
+      <img
+        src="/assets/renovar-logo.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-24 hidden w-[42rem] -translate-x-1/2 opacity-[0.045] blur-[1px] saturate-50 lg:block"
+      />
+      <div className="relative z-10 mx-auto grid max-w-7xl items-stretch gap-4 lg:grid-cols-[1.02fr_0.98fr]">
         <div className="relative flex h-full overflow-hidden rounded-[2rem] border border-white/10 bg-graphite-900/78 p-6 shadow-insetline sm:p-8 lg:p-9">
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-air-400/[0.055] to-transparent" />
           <div className="pointer-events-none absolute bottom-8 left-8 right-8 h-px bg-gradient-to-r from-transparent via-air-300/20 to-transparent" />
@@ -708,7 +716,7 @@ function SectionHeader({
   text?: string;
 }) {
   return (
-    <div className="mx-auto mb-10 max-w-3xl text-center lg:mb-14">
+    <div className="mx-auto mb-8 max-w-3xl text-center lg:mb-10">
       <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">{eyebrow}</p>
       <h2
         id={id}
@@ -723,7 +731,7 @@ function SectionHeader({
 
 function ProblemSection() {
   return (
-    <section id="problema" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="problema-title">
+    <section id="problema" className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="problema-title">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           id="problema-title"
@@ -747,7 +755,7 @@ function ProblemSection() {
 
 function ImpactSection() {
   return (
-    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="impacto-title">
+    <section className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="impacto-title">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div className="rounded-[2rem] border border-white/10 bg-graphite-900/70 p-6 shadow-insetline sm:p-8 lg:sticky lg:top-28">
@@ -796,29 +804,9 @@ function ImpactSection() {
   );
 }
 
-function MarketShiftSection() {
-  return (
-    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="mudanca-title">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeader
-          id="mudanca-title"
-          eyebrow="Porquê agora"
-          title="O mercado está a mudar."
-          text="A próxima etapa não é apenas medir melhor. É usar dados ambientais para ajustar a ventilação quando o espaço precisa de ar novo."
-        />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {marketShiftCards.map((card) => (
-            <InfoCard key={card.title} {...card} compact />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SolutionIntro() {
   return (
-    <section id="solucao" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="solucao-title">
+    <section id="solucao" className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="solucao-title">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
@@ -909,7 +897,7 @@ function SystemArchitectureSection() {
   return (
     <section
       id="funcionamento"
-      className="px-5 py-16 lg:px-8 lg:py-24"
+      className="px-5 py-12 lg:px-8 lg:py-20"
       aria-labelledby="funcionamento-title"
     >
       <div className="mx-auto max-w-7xl">
@@ -971,7 +959,7 @@ function ValidatedMaterialSection() {
   return (
     <section
       id="validacao"
-      className="px-5 py-16 lg:px-8 lg:py-24"
+      className="px-5 py-12 lg:px-8 lg:py-20"
       aria-labelledby="validacao-title"
     >
       <div className="mx-auto max-w-7xl">
@@ -1047,18 +1035,73 @@ function ValidatedMaterialSection() {
 
 function FeaturesSection() {
   return (
-    <section id="produto" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="produto-title">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeader
-          id="produto-title"
-          eyebrow="MVP atual"
-          title="O que o RenovAR já permite fazer."
-          text="Na base atual, o RenovAR já consegue acompanhar o estado do ar, executar regras de controlo e atuar sobre ventilação existente em cenários reais."
-        />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature) => (
-            <InfoCard key={feature.title} {...feature} compact />
-          ))}
+    <section id="beneficios" className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="beneficios-title">
+      <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[0.86fr_1.14fr] lg:items-start">
+        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/70 p-6 shadow-insetline sm:p-8 lg:sticky lg:top-28">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">
+            MVP + impacto
+          </p>
+          <h2
+            id="beneficios-title"
+            className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
+          >
+            O que já faz. O que muda na operação.
+          </h2>
+          <p className="mt-5 text-base leading-8 text-zinc-400">
+            O núcleo atual do RenovAR já junta monitorização, lógica de controlo e atuação sobre
+            ventilação existente. O valor está em reduzir a distância entre saber o estado do ar e
+            fazer o edifício responder.
+          </p>
+          <div className="mt-7 grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+            {['Medir', 'Interpretar', 'Atuar'].map((step) => (
+              <div
+                key={step}
+                className="rounded-2xl border border-air-300/20 bg-air-400/8 px-4 py-3 text-sm font-bold uppercase tracking-[0.16em] text-air-300"
+              >
+                {step}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.035] p-5 shadow-insetline sm:p-6">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+              Funcionalidades atuais
+            </p>
+            <div className="mt-5 grid gap-3">
+              {features.map(({ title, description, icon: Icon }) => (
+                <div key={title} className="flex gap-4 rounded-[1.25rem] border border-white/8 bg-graphite-950/48 p-4">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl border border-air-300/20 bg-air-400/10">
+                    <Icon className="size-4 text-air-300" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">{title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-zinc-400">{description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-air-400/10 to-white/[0.03] p-5 shadow-insetline sm:p-6">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+              Benefícios práticos
+            </p>
+            <div className="mt-5 grid gap-3">
+              {benefits.map((benefit) => (
+                <div key={benefit.title} className="rounded-[1.25rem] border border-white/8 bg-graphite-950/42 p-4">
+                  <div className="flex items-start gap-3">
+                    <Check className="mt-1 size-4 shrink-0 text-air-300" aria-hidden="true" />
+                    <div>
+                      <h3 className="text-sm font-semibold text-white">{benefit.title}</h3>
+                      <p className="mt-1 text-sm leading-6 text-zinc-400">{benefit.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1067,7 +1110,7 @@ function FeaturesSection() {
 
 function RealWorldSection() {
   return (
-    <section className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="sistema-real-title">
+    <section className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="sistema-real-title">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
@@ -1114,50 +1157,9 @@ function RealWorldSection() {
   );
 }
 
-function BenefitsSection() {
-  return (
-    <section id="beneficios" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="beneficios-title">
-      <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-        <div className="rounded-[2rem] border border-white/10 bg-graphite-900/70 p-6 shadow-insetline sm:p-8 lg:sticky lg:top-28">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-air-300">Benefícios</p>
-          <h2
-            id="beneficios-title"
-            className="mt-4 font-display text-3xl font-semibold uppercase leading-tight tracking-[0.04em] text-white sm:text-4xl lg:text-5xl"
-          >
-            Quando o edifício responde ao ar, a operação muda.
-          </h2>
-          <p className="mt-6 text-xl font-semibold leading-8 text-white">
-            Ar melhor. Operação mais eficiente. Edifícios mais inteligentes.
-          </p>
-          <p className="mt-5 text-base leading-8 text-zinc-400">
-            Ao ligar monitorização ambiental a atuação sobre ventilação, o RenovAR permite que o
-            edifício deixe de funcionar por horários e suposições e passe a responder às condições reais
-            do espaço.
-          </p>
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          {benefits.map((benefit) => (
-            <div
-              key={benefit.title}
-              className="rounded-[1.55rem] border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-air-300/30 hover:bg-white/[0.055]"
-            >
-              <div className="mb-8">
-                <Check className="size-5 text-air-300" aria-hidden="true" />
-              </div>
-              <h3 className="text-base font-semibold leading-7 text-white">{benefit.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-zinc-400">{benefit.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function CustomersSection() {
   return (
-    <section id="mercado" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="mercado-title">
+    <section id="mercado" className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="mercado-title">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
@@ -1243,7 +1245,7 @@ function DashboardPreview() {
   return (
     <section
       id="dashboard"
-      className="px-5 py-16 lg:px-8 lg:py-24"
+      className="px-5 py-12 lg:px-8 lg:py-20"
       aria-labelledby="dashboard-title"
     >
       <div className="mx-auto max-w-7xl">
@@ -1383,7 +1385,7 @@ function DashboardPreview() {
 
 function RoadmapSection() {
   return (
-    <section id="roadmap" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="roadmap-title">
+    <section id="roadmap" className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="roadmap-title">
       <div className="mx-auto max-w-7xl">
         <SectionHeader
           id="roadmap-title"
@@ -1403,7 +1405,7 @@ function RoadmapSection() {
 
 function FinalCta() {
   return (
-    <section id="contacto" className="px-5 py-16 lg:px-8 lg:py-24" aria-labelledby="contacto-title">
+    <section id="contacto" className="px-5 py-12 lg:px-8 lg:py-20" aria-labelledby="contacto-title">
       <div className="mx-auto max-w-7xl">
         <div className="relative overflow-hidden rounded-[2rem] border border-air-300/24 bg-gradient-to-br from-air-400/20 via-graphite-800 to-graphite-950 p-6 shadow-glow sm:p-8 lg:p-10">
           <div className="absolute inset-0 bg-technical-grid bg-[length:48px_48px] opacity-35" />

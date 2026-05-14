@@ -16,6 +16,10 @@ html {
   scroll-behavior: smooth;
 }
 
+section {
+  scroll-margin-top: 7rem;
+}
+
 body {
   min-width: 320px;
   margin: 0;
@@ -64,6 +68,40 @@ a {
   opacity: 0.18;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   mix-blend-mode: soft-light;
+}
+
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(67, 230, 178, 0.2), rgba(138, 245, 207, 0.95));
+  box-shadow: 0 0 18px rgba(67, 230, 178, 0.4);
+  transition: width 120ms linear;
+}
+
+.renovar-dot-field {
+  position: fixed;
+  inset: -12%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: radial-gradient(circle, rgba(138, 245, 207, 0.55) 1px, transparent 1.3px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(circle at 50% 20%, black, transparent 68%);
+  animation: rotate-dot-field 44s linear infinite;
+}
+
+@keyframes rotate-dot-field {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+
+  to {
+    transform: rotate(360deg) scale(1.08);
+  }
 }
 
 .airflow-line {
