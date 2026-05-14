@@ -97,7 +97,7 @@ const diagnosticParameters = [
       'Materiais, produtos de limpeza, mobiliário e equipamentos podem libertar compostos para o ar.',
   },
   {
-    label: 'Partículas',
+    label: 'Partículas em Suspensão (PM)',
     title: 'Matéria suspensa',
     description:
       'Poeiras, circulação de pessoas e atividades no espaço alteram a carga de partículas no ar.',
@@ -1201,31 +1201,43 @@ function DashboardPreview() {
   const integrationLayers = [
     {
       title: 'Ar interior',
-      description: 'CO₂, partículas, humidade, temperatura e COVs como base de leitura ambiental.',
+      description: 'CO₂, partículas, temperatura, humidade e COVs como sinais ambientais do espaço.',
       icon: Gauge,
     },
     {
       title: 'Ventilação e AVAC',
-      description: 'Janelas motorizadas, grelhas, VMC ou sistemas mecânicos existentes.',
+      description: 'Janelas motorizadas, grelhas, VMC ou sistemas mecânicos que já existem no edifício.',
       icon: Fan,
     },
     {
       title: 'Iluminação',
-      description: 'Luzes e circuitos que podem ser cruzados com horários, presença ou regras do edifício.',
+      description: 'Luzes e circuitos que podem entrar na mesma lógica de operação do espaço.',
       icon: Zap,
     },
     {
       title: 'Tomadas e cargas',
-      description: 'Tomadas, equipamentos e consumos auxiliares ligados à operação diária dos espaços.',
+      description: 'Tomadas, equipamentos e cargas auxiliares que ajudam a perceber como o espaço é usado.',
       icon: PlugZap,
     },
   ];
 
   const platformFlow = [
-    'Recolher sinais do edifício',
-    'Cruzar regras de operação',
-    'Acionar ou recomendar respostas',
-    'Registar histórico para análise',
+    {
+      title: 'Ler sinais',
+      description: 'Recolher dados relevantes de sensores, equipamentos e módulos instalados.',
+    },
+    {
+      title: 'Aplicar regras',
+      description: 'Cruzar limites, horários, modos de utilização e prioridades técnicas.',
+    },
+    {
+      title: 'Coordenar respostas',
+      description: 'Apoiar decisões ou acionar sistemas quando a configuração o permite.',
+    },
+    {
+      title: 'Guardar contexto',
+      description: 'Manter histórico útil para análise, manutenção e melhoria da operação.',
+    },
   ];
 
   return (
@@ -1238,78 +1250,128 @@ function DashboardPreview() {
         <SectionHeader
           id="dashboard-title"
           eyebrow="Interface operacional"
-          title="Uma camada visual para coordenar o edifício."
-          text="A plataforma não se limita a mostrar valores de qualidade do ar. A mesma lógica pode organizar sinais de ventilação, iluminação, tomadas e outros sistemas ligados ao espaço."
+          title="Uma interface para ligar sistemas do edifício."
+          text="A plataforma dá contexto aos sinais do espaço e pode juntar qualidade do ar, ventilação, iluminação, tomadas e outros sistemas numa leitura operacional comum."
         />
 
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-graphite-900/80 p-4 shadow-insetline sm:p-6 lg:p-8">
-          <div className="absolute inset-0 bg-technical-grid bg-[length:54px_54px] opacity-30" />
-          <div className="absolute -right-24 top-10 size-80 rounded-full bg-air-400/10 blur-3xl" />
-          <div className="relative z-10 grid gap-5 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
-            <div className="rounded-[1.7rem] border border-white/10 bg-graphite-950/62 p-5 sm:p-6">
+        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-graphite-900/82 p-4 shadow-insetline sm:p-6 lg:p-8">
+          <div className="absolute inset-0 bg-technical-grid bg-[length:58px_58px] opacity-25" />
+          <div className="absolute -left-20 top-10 size-72 rounded-full bg-air-400/10 blur-3xl" />
+          <div className="absolute -right-24 bottom-0 size-96 rounded-full bg-air-300/8 blur-3xl" />
+          <div className="relative z-10 grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-stretch">
+            <div className="flex flex-col justify-between rounded-[2rem] border border-white/10 bg-graphite-950/68 p-5 sm:p-7">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
-                Visão conceptual da plataforma
+                Visão conceptual
               </p>
-              <h3 className="mt-4 max-w-xl text-2xl font-semibold uppercase tracking-[0.07em] text-white">
-                Um ponto de leitura para vários sistemas do espaço.
-              </h3>
-              <p className="mt-4 text-sm leading-7 text-zinc-400">
-                Esta pré-visualização mostra a lógica de integração da interface. Não representa
-                uma análise em tempo real nem comandos clicáveis.
-              </p>
-
-              <div className="mt-8 rounded-[1.5rem] border border-air-300/22 bg-air-400/10 p-5">
-                <div className="flex items-center gap-4">
-                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl border border-air-300/25 bg-graphite-950/60">
-                    <CircuitBoard className="size-6 text-air-300" aria-hidden="true" />
-                  </span>
-                  <div>
-                    <p className="text-sm font-semibold text-white">RenovAR Control Layer</p>
-                    <p className="mt-1 text-xs leading-5 text-zinc-400">
-                      Camada de decisão para monitorização, interoperabilidade e atuação técnica.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h3 className="mt-4 max-w-xl text-2xl font-semibold uppercase leading-tight tracking-[0.07em] text-white sm:text-3xl">
+                  A interface não é o produto todo. É a forma de o edifício ganhar contexto.
+                </h3>
+                <p className="mt-5 text-sm leading-7 text-zinc-400">
+                  Esta secção é uma representação de produto e interoperabilidade, não uma análise
+                  em tempo real. Mostra como o RenovAR pode organizar sinais e sistemas diferentes
+                  sem reduzir tudo a um ecrã de números.
+                </p>
               </div>
 
-              <div className="mt-6 grid gap-3">
-                {platformFlow.map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3"
-                  >
-                    <span className="size-2 rounded-full bg-air-300 shadow-glow" />
-                    <span className="text-sm text-zinc-300">{item}</span>
+              <div className="mt-8 space-y-4">
+                {platformFlow.map((item, index) => (
+                  <div key={item.title} className="grid gap-4 border-t border-white/10 pt-4 sm:grid-cols-[3rem_1fr]">
+                    <span className="font-display text-sm font-semibold text-air-300/80">
+                      0{index + 1}
+                    </span>
+                    <div>
+                      <p className="text-sm font-semibold text-white">{item.title}</p>
+                      <p className="mt-1 text-sm leading-6 text-zinc-500">{item.description}</p>
+                    </div>
                   </div>
                 ))}
               </div>
+
+              <div className="mt-8 rounded-[1.6rem] border border-air-300/22 bg-air-400/10 p-5">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+                  Representação conceptual
+                </p>
+                <p className="mt-3 text-sm leading-6 text-zinc-300">
+                  Os módulos abaixo indicam áreas que a plataforma pode integrar. Não correspondem
+                  a leituras ao vivo, comandos diretos ou estados finais de uma instalação.
+                </p>
+              </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              {integrationLayers.map(({ title, description, icon: Icon }) => (
-                <article
-                  key={title}
-                  className="rounded-[1.55rem] border border-white/10 bg-white/[0.035] p-5"
-                >
-                  <div className="mb-7">
-                    <span className="grid size-11 place-items-center rounded-2xl border border-air-300/22 bg-air-400/10">
-                      <Icon className="size-5 text-air-300" aria-hidden="true" />
-                    </span>
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-graphite-950/58 p-5 sm:p-7">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(68,229,181,0.12),transparent_36%)]" />
+              <div className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-air-300/20 to-transparent lg:block" />
+              <div className="relative z-10">
+                <div className="mb-5 flex flex-col gap-4 border-b border-white/10 pb-5 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-500">
+                      Mapa de interoperabilidade
+                    </p>
+                    <h3 className="mt-3 text-xl font-semibold uppercase tracking-[0.06em] text-white">
+                      Sistemas dentro da mesma lógica operacional.
+                    </h3>
                   </div>
-                  <h3 className="text-lg font-semibold text-white">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-zinc-400">{description}</p>
-                </article>
-              ))}
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
+                    Pré-visualização conceptual
+                  </p>
+                </div>
 
-              <div className="rounded-[1.55rem] border border-air-300/22 bg-air-400/10 p-5 sm:col-span-2">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
-                  Interoperabilidade
-                </p>
-                <p className="mt-4 max-w-3xl text-base font-semibold leading-7 text-white">
-                  O objetivo é que a qualidade do ar deixe de estar isolada: a plataforma pode
-                  cruzar sensores, regras e sistemas auxiliares para apoiar uma operação mais
-                  coordenada do edifício.
-                </p>
+                <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+                  <div className="relative min-h-[260px] rounded-[1.7rem] border border-air-300/18 bg-air-400/8 p-6">
+                    <div className="absolute inset-6 rounded-full border border-air-300/12" />
+                    <div className="absolute inset-12 rounded-full border border-white/8" />
+                    <div className="absolute left-1/2 top-1/2 size-36 -translate-x-1/2 -translate-y-1/2 rounded-full border border-air-300/35 bg-graphite-950/80 shadow-glow" />
+                    <div className="relative z-10 flex min-h-[212px] items-center justify-center text-center">
+                      <div>
+                        <span className="mx-auto grid size-14 place-items-center rounded-2xl border border-air-300/25 bg-graphite-950/70">
+                          <CircuitBoard className="size-6 text-air-300" aria-hidden="true" />
+                        </span>
+                        <p className="mt-4 text-sm font-semibold text-white">RenovAR</p>
+                        <p className="mt-1 text-xs uppercase tracking-[0.18em] text-air-300">
+                          camada de decisão
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {integrationLayers.map(({ title, description, icon: Icon }) => (
+                      <article
+                        key={title}
+                        className="rounded-[1.35rem] border border-white/10 bg-white/[0.035] p-4"
+                      >
+                        <div className="mb-5">
+                          <span className="grid size-10 place-items-center rounded-xl border border-air-300/22 bg-air-400/10">
+                            <Icon className="size-5 text-air-300" aria-hidden="true" />
+                          </span>
+                        </div>
+                        <h4 className="text-base font-semibold text-white">{title}</h4>
+                        <p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.78fr]">
+                  <div className="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-air-300">
+                      Interoperabilidade
+                    </p>
+                    <p className="mt-3 text-sm leading-7 text-zinc-300">
+                      A qualidade do ar deixa de estar isolada. Pode ser relacionada com outros
+                      sinais do edifício para apoiar uma operação mais coordenada.
+                    </p>
+                  </div>
+                  <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.035] p-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-500">
+                      Escala possível
+                    </p>
+                    <p className="mt-3 text-sm leading-7 text-zinc-300">
+                      Do controlo de ventilação a uma camada mais ampla de automação técnica.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
