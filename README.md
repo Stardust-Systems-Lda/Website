@@ -29,11 +29,12 @@ As alterações devem entrar numa branch própria e ser revistas num Pull Reques
 ## Estrutura
 
 - `src/App.tsx`: conteúdo, navegação, exploração das etapas e perguntas frequentes.
-- `src/index.css`: estilos responsivos, tipografia e movimento reduzido.
-- `tailwind.config.ts`: cores oficiais e fonte institucional.
+- `src/SystemDiagram.tsx` e `src/schematic.css`: fluxo de dados, comando da ventilação e nova medição, com destaque da etapa selecionada.
+- `src/index.css`: estilos responsivos, tipografia, movimento reduzido, reset explícito e variáveis de marca, sem dependência de Tailwind.
 - `public/assets`: elementos oficiais de marca e fotografias do protótipo.
 - `public/assets/fonts`: Montserrat Regular/Bold, alojadas localmente, com a licença SIL OFL.
 - `index.html`: metadados, idioma, favicon e carregamento das fontes.
+- `public/_headers`: política de conteúdo e cabeçalhos HTTP para Cloudflare Pages.
 
 ## Marca e conteúdo
 
@@ -41,12 +42,27 @@ A apresentação segue o Manual de Normas Gráficas RenovAR v3.1: Montserrat, az
 
 As fotografias identificam o protótipo; a antiga fotografia da equipa foi removida. A equipa publicada é Afonso Mota, Gabriel Conceição e Nuno Ferreira.
 
-O conteúdo distingue as capacidades do MVP em TRL 4, a preparação de pilotos e as capacidades futuras. A integração com equipamentos depende de avaliação técnica e não se publica uma percentagem de poupança energética sem medição em contexto real.
+O conteúdo apresenta o funcionamento do sistema e o protótipo testado em ambiente controlado (TRL 4), com uma ação principal de avaliação de pilotos. A integração é definida por edifício. A página não inclui projeções de desempenho, testemunhos inventados ou funcionalidades futuras como oferta atual.
+
+## Segurança
+
+O site é estático, sem recolha de formulários, scripts de terceiros, cookies da aplicação ou credenciais no cliente. As fontes e imagens são servidas pela mesma origem.
+
+A política CSP permite apenas os recursos locais usados pelo site e não permite código inline/eval, objetos ou enquadramento por outros sites. Os cabeçalhos também limitam permissões do browser e ativam `nosniff`, política de referência e HSTS, sem alargar HSTS a outros subdomínios. Os cabeçalhos de `public/_headers` são aplicados pelo Cloudflare Pages; o preview padrão do Vite não os aplica.
+
+As ferramentas Vite/plugin React, PostCSS e Autoprefixer foram atualizadas. Tailwind foi removido por não ser usado na interface, reduzindo a cadeia de dependências.
 
 ## Verificação antes de publicar
 
 - Executar `npm run build`.
 - Rever a página em computador e telemóvel, incluindo 320 px.
 - Verificar navegação por teclado, menu, etapas de funcionamento e perguntas frequentes.
+- Executar `npm audit` e verificar o carregamento/interações com os cabeçalhos CSP do alojamento.
 - Confirmar que imagens e fontes carregam e que a fotografia antiga da equipa não consta de `dist`.
 - Rever o diff para excluir credenciais, ficheiros grandes e alterações não relacionadas.
+
+## Referências de conceção
+
+A revisão usa investigação de escrita e navegação da [Nielsen Norman Group](https://www.nngroup.com/articles/concise-scannable-and-objective-how-to-write-for-the-web/), exemplos de organização de produto da [Airthings](https://www.airthings.com/business/solution-overview) e [WindowMaster](https://www.windowmaster.com/control-systems/natural-and-hybrid-ventilation/nv-embedded/), e documentação de desempenho do [web.dev](https://web.dev/learn/performance/lazy-load-images-and-iframe-elements). As referências orientam a estrutura; os factos publicados são da RenovAR.
+
+Os cabeçalhos seguem a [documentação Cloudflare Pages](https://developers.cloudflare.com/pages/configuration/headers/) e o [OWASP HTTP Headers Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html).

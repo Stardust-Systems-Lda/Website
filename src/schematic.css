@@ -1,0 +1,462 @@
+.control-schematic {
+  position: relative;
+  width: 100%;
+  max-width: 550px;
+  padding: 24px 20px 20px;
+  margin: 0 auto;
+  border: 1px solid #c8dce8;
+  border-radius: 8px;
+  background: #f7fbfd;
+}
+.schematic-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 700;
+  gap: 16px;
+  margin-bottom: 21px;
+}
+.schematic-step {
+  color: var(--slate);
+  font-size: 10px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.schematic-content {
+  position: relative;
+  z-index: 1;
+  margin-left: 16px;
+}
+.schematic-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.schematic-node {
+  border: 1.5px solid #c7d8e5;
+  background: #fff;
+  border-radius: 5px;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.schematic-node.is-highlighted {
+  border-color: var(--blue);
+  background: #edf7fc;
+  box-shadow: 0 0 0 1px var(--blue);
+}
+.schematic-inputs .schematic-node {
+  padding: 14px;
+  min-height: 144px;
+}
+.schematic-inputs svg {
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+.schematic-node h4 {
+  color: var(--navy);
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+.schematic-node p {
+  color: var(--slate);
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 4px;
+}
+.schematic-node span {
+  display: block;
+  font-size: 10px;
+  line-height: 1.65;
+  color: var(--slate);
+  margin-top: 7px;
+}
+.data-junction {
+  position: relative;
+  height: 42px;
+  color: var(--slate);
+}
+.data-junction svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.data-junction path {
+  stroke: #7b96b0;
+  stroke-width: 1.5;
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+.data-junction.is-highlighted path {
+  stroke: var(--blue);
+}
+.data-junction > span {
+  position: absolute;
+  left: calc(50% + 13px);
+  bottom: 2px;
+  font-size: 10px;
+  background: #f7fbfd;
+  padding-inline: 3px;
+}
+.controller-node {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 18px;
+}
+.controller-node > svg {
+  color: var(--blue);
+}
+.controller-node h4 {
+  font-size: 15px;
+}
+.controller-node span {
+  font-size: 10px;
+  color: var(--navy);
+}
+.command-junction {
+  position: relative;
+  height: 43px;
+}
+.command-junction::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  border-left: 2px solid var(--navy);
+}
+.command-junction::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 3px);
+  bottom: 2px;
+  width: 7px;
+  height: 7px;
+  border-bottom: 2px solid var(--navy);
+  border-right: 2px solid var(--navy);
+  transform: rotate(45deg);
+}
+.command-junction span {
+  position: absolute;
+  left: calc(50% + 13px);
+  top: 14px;
+  font-size: 10px;
+  color: var(--slate);
+}
+.command-junction.is-highlighted::before,
+.command-junction.is-highlighted::after {
+  border-color: var(--blue);
+}
+.ventilation-node {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  padding: 18px;
+}
+.schematic-window {
+  position: relative;
+  width: 75px;
+  height: 67px;
+  border: 2px solid var(--navy);
+  border-top-width: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+  padding: 4px;
+  flex-shrink: 0;
+  perspective: 200px;
+}
+.schematic-window .window-motor {
+  position: absolute;
+  height: 4px;
+  width: 22px;
+  background: var(--blue);
+  top: -8px;
+  left: 23px;
+  margin: 0;
+}
+.schematic-window .window-pane {
+  display: block;
+  background: #bdeff7;
+  border: 1px solid #6ca7c7;
+  margin: 0;
+  height: 100%;
+  transition: transform 0.3s;
+}
+.schematic-window .pane-right {
+  transform-origin: left center;
+}
+.schematic-window > svg {
+  position: absolute;
+  left: -9px;
+  top: 27px;
+  color: var(--blue);
+  background: #fff;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.phase-3 .schematic-window .pane-right {
+  transform: rotateY(-30deg);
+}
+.phase-3 .schematic-window > svg {
+  opacity: 1;
+}
+.feedback-loop {
+  position: absolute;
+  left: 12px;
+  top: 139px;
+  bottom: 73px;
+  width: calc(50% - 12px);
+  border-left: 2px dashed #77cde0;
+  border-bottom: 2px dashed #77cde0;
+  border-radius: 0 0 0 14px;
+}
+.feedback-loop::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  border-top: 2px dashed #77cde0;
+}
+.feedback-loop::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 18px;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #77cde0;
+  border-right: 2px solid #77cde0;
+  transform: rotate(45deg);
+}
+.feedback-loop.is-highlighted,
+.feedback-loop.is-highlighted::before,
+.feedback-loop.is-highlighted::after {
+  border-color: var(--blue);
+}
+.feedback-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 21px;
+  background: #f7fbfd;
+  font-size: 11px;
+  color: var(--slate);
+  position: relative;
+  width: fit-content;
+  padding-inline: 8px;
+  margin-inline: auto;
+}
+.feedback-caption svg {
+  color: var(--blue);
+}
+.feedback-caption::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -22px;
+  height: 16px;
+  border-left: 1.5px dashed #77cde0;
+}
+.feedback-caption::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 3px);
+  top: -10px;
+  width: 7px;
+  height: 7px;
+  border-bottom: 1.5px solid #77cde0;
+  border-right: 1.5px solid #77cde0;
+  transform: rotate(45deg);
+}
+.feedback-caption.is-highlighted::before,
+.feedback-caption.is-highlighted::after {
+  border-color: var(--blue);
+}
+.feedback-caption.is-highlighted {
+  color: var(--navy);
+  font-weight: 700;
+}
+.schematic-key {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 17px;
+  border-top: 1px solid #d9e5ec;
+  margin-top: 20px;
+  padding-top: 14px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--slate);
+}
+.schematic-key > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.schematic-key i {
+  width: 14px;
+  border-top: 1px solid #7b96b0;
+}
+.schematic-key .key-command {
+  border-top: 2px solid var(--navy);
+}
+.schematic-key .key-feedback {
+  border-top: 2px dashed #77cde0;
+}
+@media (max-width: 900px) and (min-width: 701px) {
+  .control-schematic {
+    padding-inline: 15px;
+  }
+  .schematic-content {
+    margin-left: 19px;
+  }
+  .schematic-inputs {
+    gap: 10px;
+  }
+  .schematic-inputs .schematic-node {
+    padding: 11px;
+    min-height: 172px;
+  }
+  .controller-node {
+    padding: 14px;
+    gap: 12px;
+  }
+  .controller-node h4 {
+    font-size: 13px;
+  }
+  .ventilation-node {
+    padding: 14px;
+    gap: 14px;
+  }
+  .schematic-window {
+    width: 59px;
+    height: 61px;
+  }
+}
+@media (max-width: 700px) {
+  .control-schematic {
+    max-width: 470px;
+    padding: 20px 16px 18px;
+  }
+  .schematic-content {
+    margin-left: 16px;
+  }
+  .schematic-heading {
+    font-size: 12px;
+  }
+  .schematic-inputs {
+    gap: 10px;
+  }
+  .schematic-inputs .schematic-node {
+    padding: 12px;
+    min-height: 158px;
+  }
+  .schematic-node h4 {
+    font-size: 12px;
+  }
+  .schematic-inputs .schematic-node span {
+    font-size: 10px;
+  }
+  .controller-node {
+    padding: 16px;
+    gap: 12px;
+  }
+  .controller-node h4 {
+    font-size: 14px;
+  }
+  .ventilation-node {
+    padding: 16px;
+    gap: 18px;
+  }
+  .feedback-loop {
+    left: 10px;
+    top: 138px;
+    bottom: 71px;
+  }
+  .feedback-loop::before {
+    width: 23px;
+  }
+  .feedback-loop::after {
+    left: 17px;
+  }
+}
+@media (max-width: 360px) {
+  .control-schematic {
+    padding: 18px 12px 16px;
+  }
+  .schematic-heading {
+    font-size: 11px;
+    gap: 8px;
+  }
+  .schematic-inputs {
+    gap: 8px;
+  }
+  .schematic-inputs .schematic-node {
+    padding: 10px;
+    min-height: 180px;
+  }
+  .schematic-node h4 {
+    font-size: 11px;
+  }
+  .schematic-node p {
+    font-size: 10px;
+  }
+  .schematic-node span {
+    font-size: 9px;
+  }
+  .controller-node {
+    padding: 12px;
+    gap: 9px;
+  }
+  .controller-node > svg {
+    width: 23px;
+  }
+  .controller-node h4 {
+    font-size: 12px;
+  }
+  .controller-node span {
+    font-size: 9px;
+  }
+  .ventilation-node {
+    gap: 13px;
+    padding: 13px;
+  }
+  .schematic-window {
+    width: 55px;
+    height: 59px;
+  }
+  .schematic-window .window-motor {
+    left: 14px;
+  }
+  .feedback-caption {
+    font-size: 10px;
+    gap: 7px;
+  }
+  .schematic-key {
+    gap: 11px;
+    font-size: 9px;
+  }
+  .schematic-key i {
+    width: 11px;
+  }
+  .feedback-loop {
+    left: 9px;
+  }
+  .feedback-loop::before {
+    width: 20px;
+  }
+  .feedback-loop::after {
+    left: 14px;
+  }
+}

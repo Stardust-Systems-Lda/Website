@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import SystemDiagram from "./SystemDiagram";
 import {
   ArrowDown,
   ArrowRight,
@@ -21,7 +22,7 @@ const pilotHref = `mailto:${contactEmail}?subject=${encodeURIComponent("Interess
 const navigation = [
   { label: "Como funciona", href: "#funcionamento" },
   { label: "O sistema", href: "#solucao" },
-  { label: "Desenvolvimento", href: "#validacao" },
+  { label: "Pilotos", href: "#validacao" },
   { label: "Equipa", href: "#equipa" },
 ];
 
@@ -29,35 +30,35 @@ const steps = [
   {
     name: "Monitorizar",
     title: "Conhecer o ar do espaço.",
-    text: "O sistema recolhe CO₂, temperatura, humidade relativa, partículas e compostos orgânicos voláteis. Os dados em tempo real e o histórico ajudam a perceber como o ambiente varia.",
+    text: "Os sensores acompanham continuamente a qualidade do ar. As leituras em tempo real e o histórico permitem perceber como o ambiente evolui ao longo da utilização do espaço.",
     detail: "Sensores ambientais",
     icon: Radio,
   },
   {
     name: "Interpretar",
-    title: "Dar contexto às medições.",
-    text: "Uma medição isolada não conta a história toda. A RenovAR relaciona as condições interiores e exteriores para avaliar se a renovação do ar é adequada naquele momento.",
+    title: "Relacionar interior e exterior.",
+    text: "As condições no espaço são analisadas em conjunto com as condições exteriores. Esta comparação dá contexto às medições e ajuda a escolher o momento de ventilar.",
     detail: "Interior + exterior",
     icon: Activity,
   },
   {
     name: "Decidir",
     title: "Escolher quando ventilar.",
-    text: "A decisão segue uma ordem de prioridades: conforto térmico, qualidade do ar e eficiência energética. O sistema determina se deve ventilar e qual a opção adequada às condições disponíveis.",
+    text: "O controlador decide se deve ventilar e qual a ação adequada. A decisão considera o conforto térmico, a qualidade do ar e a eficiência energética, por esta ordem.",
     detail: "Prioridades definidas",
     icon: SlidersHorizontal,
   },
   {
     name: "Atuar",
     title: "Passar dos dados à ação.",
-    text: "O protótipo pode comandar a abertura e o fecho de janelas motorizadas. A ligação a equipamentos de ventilação ou climatização depende de uma avaliação técnica de cada instalação.",
+    text: "O controlador envia comandos de abertura e fecho às janelas motorizadas. A configuração de atuação é definida de acordo com os meios de ventilação disponíveis no edifício.",
     detail: "Ventilação no edifício",
     icon: Wind,
   },
   {
     name: "Medir",
     title: "Acompanhar o que mudou.",
-    text: "Depois da atuação, as medições continuam. Esse acompanhamento permite observar a evolução do ambiente e apoiar os ajustes do sistema e a validação em cada espaço.",
+    text: "As novas leituras mostram a evolução do ambiente e alimentam a decisão seguinte. O ciclo mantém-se em funcionamento, com registo dos dados para acompanhamento e ajuste.",
     detail: "Medição contínua",
     icon: Activity,
   },
@@ -65,29 +66,29 @@ const steps = [
 
 const questions = [
   {
-    question: "Para que espaços está a ser desenvolvido?",
+    question: "A que espaços se destina a RenovAR?",
     answer:
-      "A RenovAR dirige-se a edifícios existentes, sobretudo espaços de serviços de pequena e média dimensão, como escritórios, salas de reunião, espaços de ensino e comércio. A adequação e a instalação são avaliadas caso a caso.",
+      "A RenovAR destina-se a edifícios de serviços de pequena e média dimensão, como escritórios, salas de reunião, espaços de ensino e comércio. O sistema é pensado para espaços existentes, com ocupação variável e diferentes meios de ventilação.",
   },
   {
     question: "É preciso substituir a ventilação existente?",
     answer:
-      "O objetivo é aproveitar os meios de ventilação disponíveis no edifício. Pode ser necessário motorizar janelas ou adaptar interfaces de controlo. Não existe uma compatibilidade universal: cada equipamento e cada espaço precisam de avaliação técnica.",
+      "A instalação parte dos meios disponíveis no edifício. A equipa avalia as janelas e os equipamentos de ventilação, identifica as adaptações necessárias e define uma configuração adequada ao espaço.",
   },
   {
     question: "O sistema depende sempre da internet?",
     answer:
-      "O protótipo inclui comunicação Wi-Fi, operação local e ligação à cloud. A autonomia local permite manter as funções de controlo previstas para a instalação quando não há ligação à internet; as funções remotas dependem da conectividade.",
+      "O controlo é executado localmente. A comunicação Wi-Fi permite a ligação à plataforma, o acompanhamento remoto e as atualizações. O acesso remoto e os serviços cloud precisam de ligação à internet.",
   },
   {
-    question: "Já existe uma poupança energética comprovada?",
+    question: "Como é considerada a eficiência energética?",
     answer:
-      "A eficiência energética é uma prioridade da decisão, mas ainda não publicamos uma percentagem de poupança comprovada. Esse resultado precisa de ser medido em contexto real, tendo em conta o edifício, o equipamento e as condições de utilização.",
+      "O controlador relaciona as condições interiores e exteriores para decidir quando ventilar. A eficiência energética entra nessa decisão depois do conforto térmico e da qualidade do ar. Nos pilotos, o desempenho será acompanhado nas condições de utilização de cada edifício.",
   },
   {
-    question: "Já está disponível como produto comercial?",
+    question: "Como posso avaliar um piloto?",
     answer:
-      "A RenovAR está na fase de MVP funcional, com validação em ambiente controlado (TRL 4). A próxima etapa é a validação através de pilotos em espaços reais. A versão atual não é apresentada como um produto industrializado ou certificado.",
+      "Envie uma mensagem para geral@renovar-systems.com com o tipo de espaço, a localização e os meios de ventilação existentes. A equipa analisa consigo as condições da instalação e os objetivos de acompanhamento do piloto.",
   },
 ];
 
@@ -159,40 +160,42 @@ function App() {
               </a>
             ))}
             <a className="nav-contact" href="#contacto" onClick={followAnchor}>
-              Vamos conversar <ArrowUpRight size={16} aria-hidden="true" />
+              Avaliar um piloto <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </nav>
         </div>
       </header>
 
-      <main id="conteudo">
+      <main id="conteudo" tabIndex={-1}>
         <section id="top" className="hero">
           <div className="container hero-grid">
             <div className="hero-copy">
               <p className="eyebrow">
-                <span className="line-mark" /> Qualidade do ar · Ventilação
-                inteligente
+                <span className="line-mark" /> Monitorização e controlo da
+                ventilação
               </p>
               <h1>
                 O ar muda.
                 <br />O edifício <span>responde.</span>
               </h1>
               <p className="hero-description">
-                Ligamos a monitorização do ar ao controlo da ventilação, para
-                ajudar os espaços existentes a responder às condições de cada
-                momento.
+                A RenovAR liga sensores ambientais ao controlo da ventilação de
+                edifícios existentes, considerando as condições interiores e
+                exteriores.
               </p>
               <div className="hero-actions">
-                <a className="button button-primary" href="#funcionamento">
-                  Conheça o sistema <ArrowRight size={18} aria-hidden="true" />
+                <a className="button button-primary" href="#contacto">
+                  Avaliar um piloto{" "}
+                  <ArrowUpRight size={18} aria-hidden="true" />
                 </a>
-                <a className="text-link" href="#contacto">
-                  Fale connosco <ArrowUpRight size={17} aria-hidden="true" />
+                <a className="text-link" href="#funcionamento">
+                  Ver como funciona <ArrowDown size={17} aria-hidden="true" />
                 </a>
               </div>
               <a className="hero-stage" href="#validacao">
-                <span className="status-dot" /> MVP funcional · Em
-                desenvolvimento <ArrowUpRight size={14} aria-hidden="true" />
+                <span className="status-dot" /> Protótipo funcional · Preparação
+                de pilotos
+                <ArrowUpRight size={14} aria-hidden="true" />
               </a>
             </div>
             <figure className="hero-visual">
@@ -214,7 +217,6 @@ function App() {
                   Ventilação natural motorizada
                   <small>Fotografia do protótipo em funcionamento</small>
                 </span>
-                <ArrowUpRight size={22} aria-hidden="true" />
               </figcaption>
             </figure>
           </div>
@@ -253,6 +255,11 @@ function App() {
                 também conta. A RenovAR liga as medições às condições do
                 edifício e aos meios de ventilação disponíveis.
               </p>
+              <ul className="space-types" aria-label="Exemplos de aplicação">
+                <li>Escritórios</li>
+                <li>Espaços de ensino</li>
+                <li>Comércio</li>
+              </ul>
             </div>
           </div>
         </section>
@@ -265,12 +272,12 @@ function App() {
                 <h2>
                   Um ciclo completo.
                   <br />
-                  Uma decisão com contexto.
+                  Da medição à ventilação.
                 </h2>
               </div>
               <p>
-                Da primeira medição ao acompanhamento do resultado, cada etapa
-                tem uma função.
+                Explore as cinco etapas. O sistema mede, decide, atua e volta a
+                medir para orientar a próxima decisão.
               </p>
             </div>
             <div
@@ -305,40 +312,7 @@ function App() {
                   {step.detail}
                 </span>
               </div>
-              <div
-                className="system-diagram"
-                role="img"
-                aria-label="Esquema conceptual: condições exteriores e interiores informam o controlo da ventilação no edifício"
-              >
-                <span className="diagram-label outside-label">
-                  <Wind size={15} aria-hidden="true" /> Exterior
-                </span>
-                <div
-                  className={`diagram-air ${activeStep === 3 ? "is-flowing" : ""}`}
-                  aria-hidden="true"
-                >
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <div className="diagram-building">
-                  <div className="diagram-roof" />
-                  <div className="diagram-window">
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-                  <span className="diagram-label inside-label">
-                    <Activity size={15} aria-hidden="true" /> Interior
-                  </span>
-                  <div className="diagram-controller">
-                    <span className="status-dot" />
-                    RenovAR<small>Medição + controlo</small>
-                  </div>
-                </div>
-                <p className="diagram-note">Esquema de funcionamento</p>
-              </div>
+              <SystemDiagram activeStep={activeStep} />
             </div>
             <div id="beneficios" className="priorities">
               <div className="priority-intro">
@@ -407,7 +381,7 @@ function App() {
                 <div>
                   <SlidersHorizontal size={22} aria-hidden="true" />
                   <div>
-                    <h3>Controlo com escolha</h3>
+                    <h3>Controlo local</h3>
                     <p>
                       Modos automático, assistido e manual, com autonomia de
                       operação local.
@@ -417,10 +391,10 @@ function App() {
                 <div>
                   <Activity size={22} aria-hidden="true" />
                   <div>
-                    <h3>Acompanhamento contínuo</h3>
+                    <h3>Plataforma de acompanhamento</h3>
                     <p>
-                      Dados em tempo real e histórico, comunicação Wi-Fi e
-                      funções locais e na cloud.
+                      Leituras em tempo real e histórico, com comunicação Wi-Fi
+                      e acesso remoto através da cloud.
                     </p>
                   </div>
                 </div>
@@ -437,25 +411,26 @@ function App() {
           <div className="container">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">04 — Desenvolvimento</p>
+                <p className="eyebrow">04 — Pilotos</p>
                 <h2>
-                  Um protótipo real.
-                  <br />O próximo passo é no terreno.
+                  Do protótipo
+                  <br />
+                  ao seu espaço.
                 </h2>
               </div>
               <p>
-                O produto está em desenvolvimento. Apresentamos o que existe
-                hoje e o que ainda precisa de validação.
+                Estamos a preparar pilotos em edifícios existentes para
+                acompanhar o sistema em condições reais de utilização.
               </p>
             </div>
             <div className="development-grid">
               <div className="current-stage">
                 <span className="stage-label">
-                  <span className="status-dot" /> Estado atual
+                  <span className="status-dot" /> Tecnologia em funcionamento
                 </span>
-                <h3>MVP funcional</h3>
+                <h3>Protótipo funcional</h3>
                 <p className="trl-label">
-                  TRL 4 <span>Validação em ambiente controlado</span>
+                  TRL 4 <span>Testado em ambiente controlado</span>
                 </p>
                 <ul>
                   <li>
@@ -471,31 +446,30 @@ function App() {
                     Operação local e acompanhamento dos dados
                   </li>
                 </ul>
-                <p className="stage-note">
-                  As fotografias mostram o protótipo. Não representam uma
-                  instalação comercial nem uma prova de poupança energética.
-                </p>
               </div>
               <div className="next-stage">
-                <p className="eyebrow">A seguir</p>
-                <h3>Validar em espaços reais.</h3>
+                <p className="eyebrow">Trabalhe connosco</p>
+                <h3>Vamos conhecer o seu edifício.</h3>
                 <p>
-                  Estamos a preparar a fase de pilotos para avaliar o
-                  funcionamento, a instalação e os resultados em condições reais
-                  de utilização.
+                  O ponto de partida é o espaço: como é utilizado, como ventila
+                  e o que pretende melhorar. A partir daí, definimos a
+                  configuração e os objetivos de acompanhamento.
                 </p>
                 <a className="text-link" href={pilotHref}>
-                  Tenho interesse num piloto{" "}
+                  Avaliar um piloto{" "}
                   <ArrowUpRight size={18} aria-hidden="true" />
                 </a>
-                <div id="roadmap" className="roadmap">
-                  <h4>Em estudo para fases futuras</h4>
-                  <p>
-                    Controlo preditivo, inferência de ocupação e novas
-                    integrações de comunicação. Estas capacidades não são
-                    apresentadas como funcionalidades validadas da versão atual.
-                  </p>
-                </div>
+                <ol id="roadmap" className="pilot-steps">
+                  <li>
+                    <span>01</span>Analisar o espaço e a ventilação existente
+                  </li>
+                  <li>
+                    <span>02</span>Definir a instalação e o acompanhamento
+                  </li>
+                  <li>
+                    <span>03</span>Observar o sistema em utilização real
+                  </li>
+                </ol>
               </div>
             </div>
           </div>
@@ -546,13 +520,12 @@ function App() {
             <div>
               <p className="eyebrow">06 — Perguntas frequentes</p>
               <h2>
-                Antes de
-                <br />
-                abrir a janela.
+                Respostas para
+                <br />o seu projeto.
               </h2>
               <p className="body-copy">
-                Algumas respostas sobre a aplicação, os limites e a fase atual
-                do sistema.
+                Aplicação, instalação e funcionamento, explicados de forma
+                direta.
               </p>
             </div>
             <div className="faq-list">
@@ -572,19 +545,19 @@ function App() {
         <section id="contacto" className="contact-section">
           <div className="container contact-grid">
             <div>
-              <p className="eyebrow">Vamos conversar</p>
+              <p className="eyebrow">Avaliar um piloto</p>
               <h2>
                 O seu espaço pode
                 <br />
                 ser o próximo passo.
               </h2>
               <p>
-                Quer conhecer o sistema, explorar uma parceria ou avaliar um
-                piloto? Conte-nos como é o seu espaço e o que procura melhorar.
+                Conte-nos o tipo de espaço, a localização e como é feita a
+                ventilação. A equipa ajuda a avaliar uma configuração adequada
+                ao seu edifício.
               </p>
-              <a className="button button-white" href={contactHref}>
-                Falar com a RenovAR{" "}
-                <ArrowUpRight size={19} aria-hidden="true" />
+              <a className="button button-white" href={pilotHref}>
+                Avaliar um piloto <ArrowUpRight size={19} aria-hidden="true" />
               </a>
             </div>
             <div className="contact-address">
