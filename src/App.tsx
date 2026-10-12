@@ -488,36 +488,47 @@ function App() {
           <div className="container">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">05 — A equipa</p>
+                <p className="eyebrow">05 — Os fundadores</p>
                 <h2>Quem está a construir a RenovAR.</h2>
               </div>
               <p>
-                Do desenvolvimento técnico à instalação, uma equipa com
-                responsabilidades complementares.
+                Três fundadores que ligam o desenvolvimento do produto à
+                organização da empresa e à execução no terreno.
               </p>
             </div>
             <div className="team-list">
               <article>
                 <span className="member-number">01 /</span>
                 <h3>Afonso Mota</h3>
-                <p>Direção técnica e estratégia</p>
+                <p className="member-role">Direção técnica e estratégia</p>
+                <p className="member-bio">
+                  Define a arquitetura do produto e orienta o desenvolvimento
+                  do firmware, dos algoritmos de controlo e da integração
+                  digital. Coordena as decisões técnicas e a evolução do produto.
+                </p>
               </article>
               <article>
                 <span className="member-number">02 /</span>
                 <h3>Gabriel Conceição</h3>
-                <p>
+                <p className="member-role">
                   Operações, negócio e comunicação
-                  <br />
-                  Coordenação das instalações
+                </p>
+                <p className="member-bio">
+                  Acompanha as operações e o desenvolvimento do negócio,
+                  assegurando a documentação, a comunicação e as relações
+                  externas. Coordena as instalações e a apresentação da marca
+                  RenovAR.
                 </p>
               </article>
               <article>
                 <span className="member-number">03 /</span>
                 <h3>Nuno Ferreira</h3>
-                <p>
-                  Eletrónica e prototipagem
-                  <br />
-                  Modelação 3D e execução das instalações
+                <p className="member-role">Eletrónica e prototipagem física</p>
+                <p className="member-bio">
+                  Desenvolve a eletrónica e as placas de circuito, integra
+                  sensores e dá forma aos protótipos através de modelação e
+                  impressão 3D. Acompanha a prototipagem física e a execução
+                  técnica das instalações.
                 </p>
               </article>
             </div>

@@ -784,6 +784,17 @@ h3 {
   line-height: 1.8;
   color: var(--slate);
 }
+.team-list .member-role {
+  color: var(--heading);
+  font-weight: 700;
+  line-height: 1.65;
+  min-height: 2.5em;
+}
+.team-list .member-bio {
+  margin-top: 13px;
+  font-size: 13px;
+  max-width: 44ch;
+}
 .faq {
   padding-top: 0;
 }
@@ -1423,6 +1434,9 @@ h3 {
   .team-list p {
     grid-column: 2;
     font-size: 12px;
+  }
+  .team-list .member-role {
+    min-height: 0;
   }
   .faq {
     padding-top: 0;
