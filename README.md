@@ -1,106 +1,52 @@
 # RenovAR Website
 
-Landing page responsiva para o RenovAR, um sistema IoT modular para monitorização da qualidade do ar interior e controlo automático da ventilação em edifícios de serviços.
-
-## Stack
-
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- lucide-react
-
-## Requisitos
-
-- Node.js 22 recomendado
-- npm
+Site institucional da RenovAR Systems, com informação sobre o sistema de monitorização do ar e controlo da ventilação, o MVP funcional, a fase de desenvolvimento e a equipa atual.
 
 ## Desenvolvimento
 
-Instalar dependências:
+Requisitos: Node.js 22 ou superior e npm.
 
-```bash
-npm install
-```
-
-Correr servidor local:
-
-```bash
+```sh
+npm ci
 npm run dev
 ```
 
-Por defeito, o Vite fica disponível em:
+O servidor de desenvolvimento fica disponível em `http://127.0.0.1:5173`.
 
-```txt
-http://127.0.0.1:5173
-```
-
-## Build de produção
-
-```bash
+```sh
 npm run build
-```
-
-O output é gerado em:
-
-```txt
-dist/
-```
-
-## Preview local do build
-
-Usar o preview do Vite:
-
-```bash
 npm run preview
 ```
 
-Ou servir diretamente a pasta `dist`:
+O build executa a verificação TypeScript e gera `dist/`. O preview serve o build em `http://127.0.0.1:4173`. Também é possível usar `npm run serve:dist`.
 
-```bash
-npm run serve:dist
-```
+## Publicação
 
-## Deploy recomendado
+O domínio `renovar-systems.com` está associado ao projeto `renovar` no Cloudflare Pages. A integração Git usa a branch `main` do repositório `Stardust-Systems-Lda/Website`, com `npm run build` e diretório de saída `dist`.
 
-Para manter o custo o mais próximo possível de zero, a opção recomendada é Cloudflare Pages.
+As alterações devem entrar numa branch própria e ser revistas num Pull Request. A publicação automática depende da integração nessa branch de produção e do sucesso do build no Cloudflare.
 
-Configuração:
+## Estrutura
 
-```txt
-Framework preset: Vite
-Build command: npm run build
-Build output directory: dist
-Node version: 22
-```
+- `src/App.tsx`: conteúdo, navegação, exploração das etapas e perguntas frequentes.
+- `src/index.css`: estilos responsivos, tipografia e movimento reduzido.
+- `tailwind.config.ts`: cores oficiais e fonte institucional.
+- `public/assets`: elementos oficiais de marca e fotografias do protótipo.
+- `public/assets/fonts`: Montserrat Regular/Bold, alojadas localmente, com a licença SIL OFL.
+- `index.html`: metadados, idioma, favicon e carregamento das fontes.
 
-## Estrutura principal
+## Marca e conteúdo
 
-```txt
-src/
-  App.tsx       Página principal e componentes da landing page
-  index.css     Tailwind e estilos globais
-  main.tsx      Entrada React
-scripts/
-  serve-dist.mjs Servidor estático simples para preview local do build
-```
+A apresentação segue o Manual de Normas Gráficas RenovAR v3.1: Montserrat, azul-marinho `#002262`, azul `#0571D0` e ciano `#0EBDE4` como acento. Os ficheiros oficiais de marca são usados sem redesenho. As fontes WOFF2 conservam os glifos das fontes institucionais, com compressão para a web.
 
-## Conteúdo
+As fotografias identificam o protótipo; a antiga fotografia da equipa foi removida. A equipa publicada é Afonso Mota, Gabriel Conceição e Nuno Ferreira.
 
-O site comunica o RenovAR como uma camada operacional inteligente para edifícios existentes:
+O conteúdo distingue as capacidades do MVP em TRL 4, a preparação de pilotos e as capacidades futuras. A integração com equipamentos depende de avaliação técnica e não se publica uma percentagem de poupança energética sem medição em contexto real.
 
-- Monitorização contínua de qualidade do ar interior
-- Medição de CO₂, temperatura, humidade, partículas e VOCs
-- Interpretação local/cloud
-- Controlo automático de ventilação natural ou mecânica
-- Dashboard técnico para visualização em tempo real e histórico
-- Separação clara entre MVP atual e roadmap futuro
+## Verificação antes de publicar
 
-## Scripts
-
-```txt
-npm run dev        Ambiente de desenvolvimento
-npm run build      Build de produção
-npm run preview    Preview Vite do build
-npm run serve:dist Servidor estático local para dist/
-```
+- Executar `npm run build`.
+- Rever a página em computador e telemóvel, incluindo 320 px.
+- Verificar navegação por teclado, menu, etapas de funcionamento e perguntas frequentes.
+- Confirmar que imagens e fontes carregam e que a fotografia antiga da equipa não consta de `dist`.
+- Rever o diff para excluir credenciais, ficheiros grandes e alterações não relacionadas.
