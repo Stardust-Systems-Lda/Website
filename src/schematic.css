@@ -4,15 +4,15 @@
   max-width: 550px;
   padding: 24px 20px 20px;
   margin: 0 auto;
-  border: 1px solid #c8dce8;
+  border: 1px solid var(--schematic-border);
   border-radius: 8px;
-  background: #f7fbfd;
+  background: var(--schematic-bg);
 }
 .schematic-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--navy);
+  color: var(--heading);
   font-size: 12px;
   font-weight: 700;
   gap: 16px;
@@ -35,8 +35,8 @@
   gap: 14px;
 }
 .schematic-node {
-  border: 1.5px solid #c7d8e5;
-  background: #fff;
+  border: 1.5px solid var(--node-border);
+  background: var(--node-bg);
   border-radius: 5px;
   transition:
     border-color 0.2s,
@@ -45,7 +45,7 @@
 }
 .schematic-node.is-highlighted {
   border-color: var(--blue);
-  background: #edf7fc;
+  background: var(--node-selected);
   box-shadow: 0 0 0 1px var(--blue);
 }
 .schematic-inputs .schematic-node {
@@ -57,7 +57,7 @@
   margin-bottom: 10px;
 }
 .schematic-node h4 {
-  color: var(--navy);
+  color: var(--heading);
   font-size: 12px;
   line-height: 1.5;
   font-weight: 700;
@@ -89,7 +89,7 @@
   overflow: visible;
 }
 .data-junction path {
-  stroke: #7b96b0;
+  stroke: var(--data-line);
   stroke-width: 1.5;
   fill: none;
   vector-effect: non-scaling-stroke;
@@ -102,7 +102,7 @@
   left: calc(50% + 13px);
   bottom: 2px;
   font-size: 10px;
-  background: #f7fbfd;
+  background: var(--schematic-bg);
   padding-inline: 3px;
 }
 .controller-node {
@@ -119,7 +119,7 @@
 }
 .controller-node span {
   font-size: 10px;
-  color: var(--navy);
+  color: var(--heading);
 }
 .command-junction {
   position: relative;
@@ -131,7 +131,7 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  border-left: 2px solid var(--navy);
+  border-left: 2px solid var(--heading);
 }
 .command-junction::after {
   content: "";
@@ -140,8 +140,8 @@
   bottom: 2px;
   width: 7px;
   height: 7px;
-  border-bottom: 2px solid var(--navy);
-  border-right: 2px solid var(--navy);
+  border-bottom: 2px solid var(--heading);
+  border-right: 2px solid var(--heading);
   transform: rotate(45deg);
 }
 .command-junction span {
@@ -165,7 +165,7 @@
   position: relative;
   width: 75px;
   height: 67px;
-  border: 2px solid var(--navy);
+  border: 2px solid var(--heading);
   border-top-width: 5px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -185,8 +185,8 @@
 }
 .schematic-window .window-pane {
   display: block;
-  background: #bdeff7;
-  border: 1px solid #6ca7c7;
+  background: var(--pane-bg);
+  border: 1px solid var(--pane-border);
   margin: 0;
   height: 100%;
   transition: transform 0.3s;
@@ -199,7 +199,7 @@
   left: -9px;
   top: 27px;
   color: var(--blue);
-  background: #fff;
+  background: var(--node-bg);
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -215,8 +215,8 @@
   top: 139px;
   bottom: 73px;
   width: calc(50% - 12px);
-  border-left: 2px dashed #77cde0;
-  border-bottom: 2px dashed #77cde0;
+  border-left: 2px dashed var(--feedback-line);
+  border-bottom: 2px dashed var(--feedback-line);
   border-radius: 0 0 0 14px;
 }
 .feedback-loop::before {
@@ -225,7 +225,7 @@
   top: 0;
   left: 0;
   width: 24px;
-  border-top: 2px dashed #77cde0;
+  border-top: 2px dashed var(--feedback-line);
 }
 .feedback-loop::after {
   content: "";
@@ -234,8 +234,8 @@
   left: 18px;
   width: 7px;
   height: 7px;
-  border-top: 2px solid #77cde0;
-  border-right: 2px solid #77cde0;
+  border-top: 2px solid var(--feedback-line);
+  border-right: 2px solid var(--feedback-line);
   transform: rotate(45deg);
 }
 .feedback-loop.is-highlighted,
@@ -249,7 +249,7 @@
   justify-content: center;
   gap: 9px;
   margin-top: 21px;
-  background: #f7fbfd;
+  background: var(--schematic-bg);
   font-size: 11px;
   color: var(--slate);
   position: relative;
@@ -266,7 +266,7 @@
   left: 50%;
   top: -22px;
   height: 16px;
-  border-left: 1.5px dashed #77cde0;
+  border-left: 1.5px dashed var(--feedback-line);
 }
 .feedback-caption::after {
   content: "";
@@ -275,8 +275,8 @@
   top: -10px;
   width: 7px;
   height: 7px;
-  border-bottom: 1.5px solid #77cde0;
-  border-right: 1.5px solid #77cde0;
+  border-bottom: 1.5px solid var(--feedback-line);
+  border-right: 1.5px solid var(--feedback-line);
   transform: rotate(45deg);
 }
 .feedback-caption.is-highlighted::before,
@@ -284,7 +284,7 @@
   border-color: var(--blue);
 }
 .feedback-caption.is-highlighted {
-  color: var(--navy);
+  color: var(--heading);
   font-weight: 700;
 }
 .schematic-key {
@@ -292,7 +292,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 17px;
-  border-top: 1px solid #d9e5ec;
+  border-top: 1px solid var(--line);
   margin-top: 20px;
   padding-top: 14px;
   font-size: 10px;
@@ -306,13 +306,13 @@
 }
 .schematic-key i {
   width: 14px;
-  border-top: 1px solid #7b96b0;
+  border-top: 1px solid var(--data-line);
 }
 .schematic-key .key-command {
-  border-top: 2px solid var(--navy);
+  border-top: 2px solid var(--heading);
 }
 .schematic-key .key-feedback {
-  border-top: 2px dashed #77cde0;
+  border-top: 2px dashed var(--feedback-line);
 }
 @media (max-width: 900px) and (min-width: 701px) {
   .control-schematic {

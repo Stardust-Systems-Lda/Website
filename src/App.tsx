@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import SystemDiagram from "./SystemDiagram";
+import ThemeToggle from "./ThemeToggle";
 import {
   ArrowDown,
   ArrowRight,
@@ -129,26 +130,20 @@ function App() {
             onClick={followAnchor}
           >
             <img
+              className="brand-light"
               src="/assets/renovar-simbolo.png"
               alt=""
               width="64"
               height="64"
             />
-            <span>
-              RenovAR <span className="brand-systems">Systems</span>
-            </span>
+            <img
+              className="brand-dark"
+              src="/assets/renovar-simbolo-branco.png"
+              alt=""
+              width="64"
+              height="64"
+            />
           </a>
-          <button
-            ref={menuButton}
-            className="menu-toggle"
-            type="button"
-            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={menuOpen}
-            aria-controls="navegacao"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
           <nav
             id="navegacao"
             className={`navigation ${menuOpen ? "is-open" : ""}`}
@@ -163,6 +158,20 @@ function App() {
               Avaliar um piloto <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </nav>
+          <div className="header-controls">
+            <ThemeToggle />
+            <button
+              ref={menuButton}
+              className="menu-toggle"
+              type="button"
+              aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={menuOpen}
+              aria-controls="navegacao"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -577,8 +586,8 @@ function App() {
       </main>
 
       <footer className="site-footer">
-        <div className="container">
-          <div className="footer-top">
+        <div className="footer-brand-band">
+          <div className="container footer-top">
             <img
               className="footer-signature"
               src="/assets/renovar-assinatura.png"
@@ -587,29 +596,29 @@ function App() {
               height="2000"
               loading="lazy"
             />
-            <div className="footer-mobile-brand">
+            <div
+              className="footer-mobile-brand"
+              role="img"
+              aria-label="RenovAR Systems"
+            >
               <img
                 src="/assets/renovar-simbolo.png"
                 alt=""
                 width="64"
                 height="64"
               />
-              <div>
-                <strong>RenovAR Systems</strong>
-                <p>Breathe Better, Live Better</p>
-              </div>
             </div>
             <a className="text-link" href="#top">
               Voltar ao início <ArrowUpRight size={17} aria-hidden="true" />
             </a>
           </div>
-          <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} RenovAR Systems</p>
-            <p>Qualidade do ar e ventilação inteligente.</p>
-            <a href={contactHref}>
-              Contacto <ArrowUpRight size={13} aria-hidden="true" />
-            </a>
-          </div>
+        </div>
+        <div className="container footer-bottom">
+          <p>© {new Date().getFullYear()} RenovAR Systems</p>
+          <p>Qualidade do ar e ventilação inteligente.</p>
+          <a href={contactHref}>
+            Contacto <ArrowUpRight size={13} aria-hidden="true" />
+          </a>
         </div>
       </footer>
     </>
