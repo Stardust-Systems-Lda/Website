@@ -435,12 +435,6 @@ h3 {
 .photo-caption > svg {
   margin-left: auto;
 }
-.caption-number {
-  color: var(--blue);
-  font-size: 12px;
-  align-self: flex-start;
-  padding-top: 2px;
-}
 .photo-caption small {
   display: block;
   font-size: 9px;
@@ -771,13 +765,9 @@ h3 {
   border-top: 1px solid var(--line);
   padding-top: 25px;
 }
-.member-number {
-  font-size: 10px;
-  color: var(--blue);
-}
 .team-list h3 {
   font-size: 21px;
-  margin-block: 29px 12px;
+  margin-block: 0 12px;
 }
 .team-list p {
   font-size: 12px;
@@ -1419,20 +1409,13 @@ h3 {
     gap: 24px;
   }
   .team-list article {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    gap: 0 13px;
     padding-top: 22px;
-  }
-  .member-number {
-    padding-top: 5px;
   }
   .team-list h3 {
     margin: 0 0 10px;
     font-size: 22px;
   }
   .team-list p {
-    grid-column: 2;
     font-size: 12px;
   }
   .team-list .member-role {

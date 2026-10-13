@@ -221,7 +221,6 @@ function App() {
                 <Wind size={22} />
               </div>
               <figcaption className="photo-caption">
-                <span className="caption-number">01 /</span>
                 <span>
                   Ventilação natural motorizada
                   <small>Fotografia do protótipo em funcionamento</small>
@@ -248,7 +247,7 @@ function App() {
 
         <section id="problema" className="problem section-space">
           <div className="container problem-grid">
-            <p className="eyebrow">01 — O ponto de partida</p>
+            <p className="eyebrow">O ponto de partida</p>
             <div>
               <h2>
                 Saber como está o ar
@@ -277,7 +276,7 @@ function App() {
           <div className="container">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">02 — Como funciona</p>
+                <p className="eyebrow">Como funciona</p>
                 <h2>
                   Um ciclo completo.
                   <br />
@@ -312,7 +311,7 @@ function App() {
             <div id="cycle-panel" className="cycle-panel">
               <div className="cycle-copy" aria-live="polite" aria-atomic="true">
                 <p className="eyebrow">
-                  0{activeStep + 1} / {step.name}
+                  {step.name}
                 </p>
                 <h3>{step.title}</h3>
                 <p>{step.text}</p>
@@ -360,12 +359,12 @@ function App() {
                 loading="lazy"
               />
               <figcaption>
-                <span>02 / Sensor ambiental</span>
+                <span>Sensor ambiental</span>
                 <span>Protótipo funcional</span>
               </figcaption>
             </figure>
             <div className="product-copy">
-              <p className="eyebrow">03 — O sistema</p>
+              <p className="eyebrow">O sistema</p>
               <h2>
                 Tecnologia que se liga
                 <br />
@@ -420,7 +419,7 @@ function App() {
           <div className="container">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">04 — Pilotos</p>
+                <p className="eyebrow">Pilotos</p>
                 <h2>
                   Do protótipo
                   <br />
@@ -488,7 +487,7 @@ function App() {
           <div className="container">
             <div className="section-heading">
               <div>
-                <p className="eyebrow">05 — Os fundadores</p>
+                <p className="eyebrow">Os fundadores</p>
                 <h2>Quem está a construir a RenovAR.</h2>
               </div>
               <p>
@@ -498,7 +497,6 @@ function App() {
             </div>
             <div className="team-list">
               <article>
-                <span className="member-number">01 /</span>
                 <h3>Afonso Mota</h3>
                 <p className="member-role">Direção técnica e estratégia</p>
                 <p className="member-bio">
@@ -508,7 +506,6 @@ function App() {
                 </p>
               </article>
               <article>
-                <span className="member-number">02 /</span>
                 <h3>Gabriel Conceição</h3>
                 <p className="member-role">
                   Operações, negócio e comunicação
@@ -521,7 +518,6 @@ function App() {
                 </p>
               </article>
               <article>
-                <span className="member-number">03 /</span>
                 <h3>Nuno Ferreira</h3>
                 <p className="member-role">Eletrónica e prototipagem física</p>
                 <p className="member-bio">
@@ -538,7 +534,7 @@ function App() {
         <section id="perguntas" className="faq section-space">
           <div className="container faq-grid">
             <div>
-              <p className="eyebrow">06 — Perguntas frequentes</p>
+              <p className="eyebrow">Perguntas frequentes</p>
               <h2>
                 Respostas para
                 <br />o seu projeto.
