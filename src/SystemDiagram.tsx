@@ -11,72 +11,69 @@ type SystemDiagramProps = { activeStep: number };
 
 export default function SystemDiagram({ activeStep }: SystemDiagramProps) {
   const inputActive = activeStep === 0 || activeStep === 1;
+
   return (
     <figure
       className={`control-schematic phase-${activeStep}`}
       aria-label="Sensores interiores e condições exteriores informam o controlador RenovAR. O controlador comanda as janelas motorizadas. Novas medições alimentam a decisão seguinte."
     >
       <div className="schematic-heading">
-        <span>Dados ligados à ação</span>
-        <span className="schematic-step">0{activeStep + 1} / 05</span>
+        <span>O ciclo de controlo</span>
+        <span className="schematic-step" aria-hidden="true">
+          0{activeStep + 1} / 05
+        </span>
       </div>
-      <div
-        className={`feedback-loop ${activeStep === 4 ? "is-highlighted" : ""}`}
-        aria-hidden="true"
-      />
+
       <div className="schematic-content">
         <div className="schematic-inputs">
           <div
             className={`schematic-node sensor-node ${inputActive || activeStep === 4 ? "is-highlighted" : ""}`}
           >
-            <Radio size={22} aria-hidden="true" />
-            <h4>Ar interior</h4>
-            <p>Sensores ambientais</p>
-            <span>
-              Qualidade do ar
-              <br />
-              Temperatura e humidade
-            </span>
+            <div className="schematic-node-heading">
+              <Radio size={21} aria-hidden="true" />
+              <h4>Ar interior</h4>
+            </div>
+            <p>Qualidade do ar, temperatura e humidade.</p>
           </div>
           <div
             className={`schematic-node exterior-node ${activeStep === 1 ? "is-highlighted" : ""}`}
           >
-            <Thermometer size={22} aria-hidden="true" />
-            <h4>Condições exteriores</h4>
-            <p>Contexto para ventilar</p>
-            <span>
-              Referência exterior
-              <br />
-              para a decisão
-            </span>
+            <div className="schematic-node-heading">
+              <Thermometer size={21} aria-hidden="true" />
+              <h4>Condições exteriores</h4>
+            </div>
+            <p>Referência para decidir quando ventilar.</p>
           </div>
         </div>
+
         <div
-          className={`data-junction ${activeStep === 1 ? "is-highlighted" : ""}`}
+          className={`data-junction ${inputActive ? "is-highlighted" : ""}`}
           aria-hidden="true"
         >
-          <svg viewBox="0 0 100 40" preserveAspectRatio="none">
-            <path d="M24 0V13Q24 20 31 20H69Q76 20 76 13V0M50 20V38" />
-            <path d="M48.5 32L50 38L51.5 32" />
+          <svg viewBox="0 0 100 48" preserveAspectRatio="none">
+            <path d="M24 0V17Q24 22 29 22H71Q76 22 76 17V0M50 22V45" />
+            <path d="M48.5 38L50 45L51.5 38" />
           </svg>
           <span>Dados</span>
         </div>
+
         <div
           className={`schematic-node controller-node ${activeStep === 1 || activeStep === 2 ? "is-highlighted" : ""}`}
         >
-          <CircuitBoard size={29} aria-hidden="true" />
+          <CircuitBoard size={28} aria-hidden="true" />
           <div>
             <h4>Controlador RenovAR</h4>
-            <p>Compara condições. Decide quando ventilar.</p>
-            <span>Conforto térmico → qualidade do ar → eficiência energética</span>
+            <p>Relaciona as condições. Decide quando ventilar.</p>
           </div>
         </div>
+
         <div
           className={`command-junction ${activeStep === 2 || activeStep === 3 ? "is-highlighted" : ""}`}
           aria-hidden="true"
         >
           <span>Comando</span>
         </div>
+
         <div
           className={`schematic-node ventilation-node ${activeStep === 3 ? "is-highlighted" : ""}`}
         >
@@ -87,19 +84,23 @@ export default function SystemDiagram({ activeStep }: SystemDiagramProps) {
             <Wind size={21} />
           </div>
           <div>
-            <h4>Ventilação</h4>
-            <p>Janelas motorizadas</p>
-            <span>Comando de abertura e fecho</span>
+            <h4>Janelas motorizadas</h4>
+            <p>Abertura e fecho para renovar o ar.</p>
           </div>
         </div>
-        <figcaption
-          className={`feedback-caption ${activeStep === 4 ? "is-highlighted" : ""}`}
+
+        <div
+          className={`feedback-loop ${activeStep === 4 ? "is-highlighted" : ""}`}
         >
-          <RefreshCw size={15} aria-hidden="true" />
-          Nova medição. Próxima decisão.
-        </figcaption>
+          <RefreshCw size={21} aria-hidden="true" />
+          <div className="feedback-caption">
+            <h4>Nova medição</h4>
+            <p>As leituras orientam a próxima decisão.</p>
+          </div>
+        </div>
       </div>
-      <div className="schematic-key" aria-label="Legenda">
+
+      <figcaption className="schematic-key" aria-label="Legenda">
         <span>
           <i className="key-data" aria-hidden="true" />
           Dados
@@ -110,9 +111,9 @@ export default function SystemDiagram({ activeStep }: SystemDiagramProps) {
         </span>
         <span>
           <i className="key-feedback" aria-hidden="true" />
-          Nova medição
+          Retorno
         </span>
-      </div>
+      </figcaption>
     </figure>
   );
 }
