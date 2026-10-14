@@ -1,0 +1,35 @@
+{
+  "site": "https://renovar-systems.com",
+  "email": "geral@renovar-systems.com",
+  "pessoas": [
+    {
+      "id": "afonso",
+      "nome": "Afonso Mota",
+      "primeiroNome": "Afonso",
+      "apelido": "Mota",
+      "funcao": "Direção técnica e estratégia",
+      "email": "afonso@renovar-systems.com",
+      "telefone": "+351 935 908 027"
+    },
+    {
+      "id": "gabriel",
+      "nome": "Gabriel Conceição",
+      "primeiroNome": "Gabriel",
+      "apelido": "Conceição",
+      "funcao": "Operações, negócio e comunicação",
+      "email": "gabriel@renovar-systems.com",
+      "telefone": "+351 962 912 862"
+    },
+    {
+      "id": "nuno",
+      "nome": "Nuno Ferreira",
+      "primeiroNome": "Nuno",
+      "apelido": "Ferreira",
+      "funcao": "Eletrónica e prototipagem física",
+      "email": "nuno@renovar-systems.com",
+      "telefone": "+351 915 136 367"
+    }
+  ],
+  "redes": [],
+  "recursos": []
+}

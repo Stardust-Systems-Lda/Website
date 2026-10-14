@@ -13,6 +13,11 @@ const types = {
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8',
+  '.vcf': 'text/vcard; charset=utf-8',
+  '.png': 'image/png',
+  '.jpeg': 'image/jpeg',
+  '.ico': 'image/x-icon',
+  '.woff2': 'font/woff2',
 };
 
 function resolvePath(urlPath) {
@@ -22,6 +27,11 @@ function resolvePath(urlPath) {
 
   if (existsSync(candidate) && statSync(candidate).isFile()) {
     return candidate;
+  }
+
+  if (existsSync(candidate) && statSync(candidate).isDirectory()) {
+    const index = join(candidate, 'index.html');
+    if (existsSync(index)) return index;
   }
 
   return join(root, 'index.html');

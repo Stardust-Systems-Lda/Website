@@ -28,6 +28,26 @@ As alterações devem entrar numa branch própria e ser revistas num Pull Reques
 
 ## Estrutura
 
+### Página de links e contactos
+
+`https://renovar-systems.com/links/` reúne o site principal, avaliação de pilotos, email geral e contactos dos três fundadores. O rodapé da landing page inclui uma ligação para esta página. Os links `/links/#afonso`, `/links/#gabriel` e `/links/#nuno` abrem diretamente o contacto respetivo e podem ser usados em assinaturas ou códigos QR.
+
+Os botões **Guardar contacto** descarregam ficheiros vCard 3.0 (`.vcf`) com nome, função, empresa, telefone, email e link pessoal. No telemóvel, abrir o ficheiro permite confirmar a adição à agenda; a página não grava contactos sem essa confirmação. Email e chamadas usam as aplicações do dispositivo. **Copiar link** copia o endereço da página ou do contacto escolhido para partilhar. Se o browser bloquear a cópia, aparece um campo para cópia manual.
+
+Editar `src/data/links.json` para atualizar contactos. `redes` e `recursos` começam vazios: as secções só aparecem quando tiverem ligações reais. Exemplo de uma entrada futura, substituindo o endereço pelo endereço confirmado:
+
+```json
+{"label": "LinkedIn", "url": "https://www.linkedin.com/company/ENDERECO-CONFIRMADO/"}
+```
+
+`recursos` aceita o mesmo formato para apresentações públicas, vídeos ou outros materiais aprovados. Não incluir documentos internos. Os identificadores das pessoas devem manter-se estáveis para preservar links já partilhados. Os contactos foram transcritos dos cartões de visita da RenovAR; o email geral é o publicado no site.
+
+`npm run dev` e `npm run build` regeneram `public/links/index.html` e os vCards a partir desse ficheiro. Depois de editar os dados durante uma sessão, executar `node scripts/build-links.mjs`. HTML e vCards gerados ficam versionados, permitindo publicar a pasta estática sem depender de JavaScript para ver os contactos e usar as ligações principais. Os estilos e as interações progressivas estão em `public/links/links.css` e `public/links/links.js`. São usados apenas recursos locais e a mesma preferência de aparência do site.
+
+Verificação adicional: `node --test scripts/build-links.test.mjs`. Confirmar também o ficheiro num iPhone e num Android reais antes de distribuir cartões impressos; a importação para a agenda depende da aplicação de contactos do dispositivo.
+
+### Ficheiros do site
+
 - `src/App.tsx`: conteúdo, navegação, exploração das etapas e perguntas frequentes.
 - `src/SystemDiagram.tsx` e `src/schematic.css`: fluxo de dados, comando da ventilação e nova medição, com destaque da etapa selecionada.
 - `src/ThemeToggle.tsx` e `public/theme.js`: seletor claro/escuro, preferência do dispositivo e armazenamento local da escolha, aplicado antes de desenhar a página.
