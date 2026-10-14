@@ -627,6 +627,9 @@ function App() {
         <div className="container footer-bottom">
           <p>© {new Date().getFullYear()} RenovAR Systems</p>
           <p>Qualidade do ar e ventilação inteligente.</p>
+          <a href="/links/">
+            Links e contactos <ArrowUpRight size={13} aria-hidden="true" />
+          </a>
           <a href={contactHref}>
             Contacto <ArrowUpRight size={13} aria-hidden="true" />
           </a>
