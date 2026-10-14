@@ -1,18 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import SystemDiagram from "./SystemDiagram";
 import ThemeToggle from "./ThemeToggle";
+import usePageEffects from "./usePageEffects";
 import {
   ArrowDown,
   ArrowRight,
   ArrowUpRight,
-  Check,
   ChevronDown,
   Menu,
   X,
   Wind,
-  Thermometer,
   Activity,
-  Zap,
   Radio,
   SlidersHorizontal,
 } from "lucide-react";
@@ -97,11 +95,14 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const menuButton = useRef<HTMLButtonElement>(null);
+  const navigationRef = useRef<HTMLElement>(null);
+  const activeSection = usePageEffects();
   const step = steps[activeStep];
   const StepIcon = step.icon;
 
   useEffect(() => {
     if (!menuOpen) return;
+    navigationRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setMenuOpen(false);
@@ -112,8 +113,11 @@ function App() {
     return () => document.removeEventListener("keydown", closeOnEscape);
   }, [menuOpen]);
 
-  function followAnchor() {
+  function followAnchor(event: MouseEvent<HTMLAnchorElement>) {
+    if (!menuOpen) return;
     setMenuOpen(false);
+    const destination = event.currentTarget.getAttribute("href")?.slice(1);
+    if (destination) document.getElementById(destination)?.focus({ preventScroll: true });
   }
 
   return (
@@ -145,16 +149,23 @@ function App() {
             />
           </a>
           <nav
+            ref={navigationRef}
             id="navegacao"
             className={`navigation ${menuOpen ? "is-open" : ""}`}
             aria-label="Navegação principal"
           >
             {navigation.map((item) => (
-              <a key={item.href} href={item.href} onClick={followAnchor}>
+              <a
+                key={item.href}
+                href={item.href}
+                onClick={followAnchor}
+                aria-current={activeSection === item.href.slice(1) ? "location" : undefined}
+              >
                 {item.label}
               </a>
             ))}
-            <a className="nav-contact" href="#contacto" onClick={followAnchor}>
+            <a className="nav-contact" href="#contacto" onClick={followAnchor}
+              aria-current={activeSection === "contacto" ? "location" : undefined}>
               Avaliar um piloto <ArrowUpRight size={16} aria-hidden="true" />
             </a>
           </nav>
@@ -176,17 +187,12 @@ function App() {
       </header>
 
       <main id="conteudo" tabIndex={-1}>
-        <section id="top" className="hero">
+        <section id="top" className="hero" tabIndex={-1}>
           <div className="container hero-grid">
             <div className="hero-copy">
-              <p className="eyebrow">
-                <span className="line-mark" /> Monitorização e controlo da
-                ventilação
-              </p>
-              <h1>
-                O ar muda.
-                <br />O edifício <span>responde.</span>
-              </h1>
+              <p className="eyebrow">RenovAR Systems · Qualidade do ar</p>
+              <h1>Ventilação<br /><span>inteligente.</span></h1>
+              <p className="hero-lede">Para o edifício que já existe.</p>
               <p className="hero-description">
                 A RenovAR liga sensores ambientais ao controlo da ventilação de
                 edifícios existentes, considerando as condições interiores e
@@ -208,52 +214,35 @@ function App() {
               </a>
             </div>
             <figure className="hero-visual">
-              <img
-                className="window-photo"
-                src="/assets/renovar-janelas-abertas.jpeg"
-                alt="Janelas com atuadores motorizados do protótipo RenovAR, abertas num espaço interior"
-                width="1536"
-                height="2048"
-                fetchPriority="high"
-              />
-              <div className="photo-topline" aria-hidden="true">
-                <span>DO AR À AÇÃO</span>
-                <Wind size={22} />
+              <div className="hero-photograph">
+                <img
+                  className="window-photo"
+                  src="/assets/renovar-janelas-abertas.jpeg"
+                  alt="Janelas com atuadores motorizados do protótipo RenovAR, abertas num espaço interior"
+                  width="1536"
+                  height="2048"
+                  fetchPriority="high"
+                />
               </div>
               <figcaption className="photo-caption">
-                <span className="caption-number">01 /</span>
-                <span>
-                  Ventilação natural motorizada
-                  <small>Fotografia do protótipo em funcionamento</small>
-                </span>
+                <strong>Ventilação natural motorizada</strong>
+                <span>O protótipo, em funcionamento.</span>
               </figcaption>
             </figure>
           </div>
           <div className="container hero-bottom">
-            <p>
-              Edifícios existentes.
-              <br />
-              <strong>Novas formas de cuidar do ar.</strong>
-            </p>
-            <a href="#problema" aria-label="Descobrir o problema">
-              <ArrowDown size={24} aria-hidden="true" />
+            <p>Monitorização ambiental. Controlo local. Atuação.</p>
+            <a href="#funcionamento">
+              Explorar o funcionamento <ArrowDown size={17} aria-hidden="true" />
             </a>
-            <p className="hero-bottom-right">
-              Desenvolvido para espaços de serviços
-              <br />
-              de pequena e média dimensão.
-            </p>
           </div>
         </section>
 
-        <section id="problema" className="problem section-space">
+        <section id="problema" className="problem section-space" tabIndex={-1}>
           <div className="container problem-grid">
-            <p className="eyebrow">01 — O ponto de partida</p>
+            <p className="eyebrow">O ponto de partida</p>
             <div>
-              <h2>
-                Saber como está o ar
-                <br />é só o primeiro passo.
-              </h2>
+              <h2>Ventilar depende do que se passa dentro e fora.</h2>
               <p className="large-copy">
                 Um sensor mostra o que está a acontecer. Para melhorar o
                 ambiente, é preciso decidir quando ventilar e pôr essa decisão
@@ -273,20 +262,16 @@ function App() {
           </div>
         </section>
 
-        <section id="funcionamento" className="operation section-space">
+        <section id="funcionamento" className="operation section-space" tabIndex={-1}>
           <div className="container">
-            <div className="section-heading">
+            <div className="section-heading" data-reveal>
               <div>
-                <p className="eyebrow">02 — Como funciona</p>
-                <h2>
-                  Um ciclo completo.
-                  <br />
-                  Da medição à ventilação.
-                </h2>
+                <p className="eyebrow">Como funciona</p>
+                <h2>Das medições ao comando da janela.</h2>
               </div>
               <p>
-                Explore as cinco etapas. O sistema mede, decide, atua e volta a
-                medir para orientar a próxima decisão.
+                Selecione uma etapa para acompanhar como as condições do espaço
+                orientam a ventilação.
               </p>
             </div>
             <div
@@ -310,16 +295,30 @@ function App() {
               ))}
             </div>
             <div id="cycle-panel" className="cycle-panel">
-              <div className="cycle-copy" aria-live="polite" aria-atomic="true">
-                <p className="eyebrow">
-                  0{activeStep + 1} / {step.name}
-                </p>
-                <h3>{step.title}</h3>
-                <p>{step.text}</p>
-                <span className="detail-label">
-                  <StepIcon size={18} aria-hidden="true" />
-                  {step.detail}
-                </span>
+              <div className="cycle-copy">
+                <div aria-live="polite" aria-atomic="true">
+                  <div className="cycle-copy-content" key={step.name}>
+                    <p className="eyebrow">{step.name}</p>
+                    <h3>{step.title}</h3>
+                    <p>{step.text}</p>
+                    <span className="detail-label">
+                      <StepIcon size={18} aria-hidden="true" />
+                      {step.detail}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  className="cycle-next text-link"
+                  type="button"
+                  onClick={() =>
+                    setActiveStep(current => (current + 1) % steps.length)
+                  }
+                >
+                  {activeStep === steps.length - 1
+                    ? "Voltar ao início do ciclo"
+                    : "Próxima etapa"}
+                  <ArrowRight size={17} aria-hidden="true" />
+                </button>
               </div>
               <SystemDiagram activeStep={activeStep} />
             </div>
@@ -331,17 +330,14 @@ function App() {
               <ol>
                 <li>
                   <span>01</span>
-                  <Thermometer size={21} aria-hidden="true" />
                   <strong>Conforto térmico</strong>
                 </li>
                 <li>
                   <span>02</span>
-                  <Wind size={21} aria-hidden="true" />
                   <strong>Qualidade do ar</strong>
                 </li>
                 <li>
                   <span>03</span>
-                  <Zap size={21} aria-hidden="true" />
                   <strong>Eficiência energética</strong>
                 </li>
               </ol>
@@ -349,9 +345,9 @@ function App() {
           </div>
         </section>
 
-        <section id="solucao" className="product section-space">
+        <section id="solucao" className="product section-space" tabIndex={-1}>
           <div className="container product-grid">
-            <figure className="sensor-visual">
+            <figure className="sensor-visual" data-reveal>
               <img
                 src="/assets/renovar-sensor.jpeg"
                 alt="Protótipo do sensor ambiental RenovAR instalado numa parede, com caixa e placa eletrónica visíveis"
@@ -360,25 +356,20 @@ function App() {
                 loading="lazy"
               />
               <figcaption>
-                <span>02 / Sensor ambiental</span>
+                <span>Sensor ambiental</span>
                 <span>Protótipo funcional</span>
               </figcaption>
             </figure>
             <div className="product-copy">
-              <p className="eyebrow">03 — O sistema</p>
-              <h2>
-                Tecnologia que se liga
-                <br />
-                ao espaço que já existe.
-              </h2>
+              <p className="eyebrow">O sistema</p>
+              <h2>Sensores, controlo e acompanhamento.</h2>
               <p className="body-copy">
-                Sensores, controlo e acompanhamento trabalham em conjunto. A
-                instalação é definida pelas características do edifício e pelos
-                equipamentos disponíveis.
+                A instalação é definida pelas características do edifício e pelos
+                equipamentos disponíveis. O sistema reúne a medição do ar, o
+                controlo da ventilação e o acesso aos dados.
               </p>
               <div className="feature-list">
                 <div>
-                  <Radio size={22} aria-hidden="true" />
                   <div>
                     <h3>Monitorização ambiental</h3>
                     <p>
@@ -388,7 +379,6 @@ function App() {
                   </div>
                 </div>
                 <div>
-                  <SlidersHorizontal size={22} aria-hidden="true" />
                   <div>
                     <h3>Controlo local</h3>
                     <p>
@@ -398,7 +388,6 @@ function App() {
                   </div>
                 </div>
                 <div>
-                  <Activity size={22} aria-hidden="true" />
                   <div>
                     <h3>Plataforma de acompanhamento</h3>
                     <p>
@@ -416,16 +405,12 @@ function App() {
           </div>
         </section>
 
-        <section id="validacao" className="development section-space">
+        <section id="validacao" className="development section-space" tabIndex={-1}>
           <div className="container">
-            <div className="section-heading">
+            <div className="section-heading" data-reveal>
               <div>
-                <p className="eyebrow">04 — Pilotos</p>
-                <h2>
-                  Do protótipo
-                  <br />
-                  ao seu espaço.
-                </h2>
+                <p className="eyebrow">Pilotos</p>
+                <h2>Preparar uma instalação piloto.</h2>
               </div>
               <p>
                 Estamos a preparar pilotos em edifícios existentes para
@@ -443,25 +428,22 @@ function App() {
                 </p>
                 <ul>
                   <li>
-                    <Check size={17} aria-hidden="true" />
                     Monitorização e decisão de ventilação
                   </li>
                   <li>
-                    <Check size={17} aria-hidden="true" />
                     Atuação em janelas motorizadas
                   </li>
                   <li>
-                    <Check size={17} aria-hidden="true" />
                     Operação local e acompanhamento dos dados
                   </li>
                 </ul>
               </div>
               <div className="next-stage">
                 <p className="eyebrow">Trabalhe connosco</p>
-                <h3>Vamos conhecer o seu edifício.</h3>
+                <h3>O ponto de partida é o espaço.</h3>
                 <p>
-                  O ponto de partida é o espaço: como é utilizado, como ventila
-                  e o que pretende melhorar. A partir daí, definimos a
+                  Como é utilizado, como ventila e o que pretende melhorar.
+                  A partir daí, definimos a
                   configuração e os objetivos de acompanhamento.
                 </p>
                 <a className="text-link" href={pilotHref}>
@@ -484,21 +466,14 @@ function App() {
           </div>
         </section>
 
-        <section id="equipa" className="team section-space">
+        <section id="equipa" className="team section-space" tabIndex={-1}>
           <div className="container">
-            <div className="section-heading">
-              <div>
-                <p className="eyebrow">05 — Os fundadores</p>
-                <h2>Quem está a construir a RenovAR.</h2>
-              </div>
-              <p>
-                Três fundadores que ligam o desenvolvimento do produto à
-                organização da empresa e à execução no terreno.
-              </p>
+            <div className="team-heading" data-reveal>
+              <h2>Os fundadores.</h2>
+              <p>Da arquitetura do produto à instalação no terreno.</p>
             </div>
             <div className="team-list">
               <article>
-                <span className="member-number">01 /</span>
                 <h3>Afonso Mota</h3>
                 <p className="member-role">Direção técnica e estratégia</p>
                 <p className="member-bio">
@@ -508,7 +483,6 @@ function App() {
                 </p>
               </article>
               <article>
-                <span className="member-number">02 /</span>
                 <h3>Gabriel Conceição</h3>
                 <p className="member-role">
                   Operações, negócio e comunicação
@@ -521,7 +495,6 @@ function App() {
                 </p>
               </article>
               <article>
-                <span className="member-number">03 /</span>
                 <h3>Nuno Ferreira</h3>
                 <p className="member-role">Eletrónica e prototipagem física</p>
                 <p className="member-bio">
@@ -535,14 +508,11 @@ function App() {
           </div>
         </section>
 
-        <section id="perguntas" className="faq section-space">
+        <section id="perguntas" className="faq section-space" tabIndex={-1}>
           <div className="container faq-grid">
             <div>
-              <p className="eyebrow">06 — Perguntas frequentes</p>
-              <h2>
-                Respostas para
-                <br />o seu projeto.
-              </h2>
+              <p className="eyebrow">Perguntas frequentes</p>
+              <h2>Antes de instalar.</h2>
               <p className="body-copy">
                 Aplicação, instalação e funcionamento, explicados de forma
                 direta.
@@ -562,15 +532,11 @@ function App() {
           </div>
         </section>
 
-        <section id="contacto" className="contact-section">
+        <section id="contacto" className="contact-section" tabIndex={-1}>
           <div className="container contact-grid">
             <div>
               <p className="eyebrow">Avaliar um piloto</p>
-              <h2>
-                O seu espaço pode
-                <br />
-                ser o próximo passo.
-              </h2>
+              <h2>Conte-nos como ventila o seu espaço.</h2>
               <p>
                 Conte-nos o tipo de espaço, a localização e como é feita a
                 ventilação. A equipa ajuda a avaliar uma configuração adequada
