@@ -127,6 +127,7 @@ ${Object.entries(messages).map(([code, language]) => `            <button type="
           <span class="tile-icon">${icon('mail')}</span>
           <strong data-i18n="emailLink">${text('emailLink')}</strong>
         </a>
+        <button class="share-page" data-share="" type="button" hidden>${icon('share')}<span data-i18n="sharePage">${text('sharePage')}</span></button>
       </nav>
       <section class="team-section" aria-labelledby="team-title">
         <h2 id="team-title" data-i18n="contactsHeading">${text('contactsHeading')}</h2>
@@ -134,7 +135,7 @@ ${Object.entries(messages).map(([code, language]) => `            <button type="
 ${data.pessoas.map(person => `          <article class="person" id="${person.id}" aria-labelledby="name-${person.id}">
             <div class="person-row">
               <h3 class="person-name" id="name-${person.id}">${escapeHtml(person.nome)}</h3>
-              <a class="save-contact" href="/links/contactos/${person.id}.vcf" download="${person.primeiroNome}_RenovAR.vcf" data-i18n-aria="saveContactLabel" data-i18n-name="${escapeHtml(person.nome)}" aria-label="${escapeHtml(translate('pt', 'saveContactLabel', { name: person.nome }))}">${icon('download')}<span data-i18n="saveContact">${text('saveContact')}</span></a>
+              <a class="save-contact" href="/links/contactos/${person.id}.vcf" download="${person.primeiroNome}_RenovAR.vcf" data-i18n-aria="saveContactLabel" data-i18n-name="${escapeHtml(person.nome)}" aria-label="${escapeHtml(translate('pt', 'saveContactLabel', { name: person.nome }))}"><span class="save-contact-button">${icon('download')}<span data-i18n="saveContact">${text('saveContact')}</span></span></a>
             </div>
             <details class="person-details">
               <summary><span data-i18n="contactDetails">${text('contactDetails')}</span>${icon('chevron', 'person-chevron')}</summary>
@@ -152,7 +153,6 @@ ${optionalSection('resourcesHeading', data.recursos)}
       <div class="share-fallback" id="share-fallback" hidden><p data-i18n="fallbackHint">${text('fallbackHint')}</p><label for="share-url" data-i18n="fallbackLink">${text('fallbackLink')}</label><input id="share-url" type="url" readonly><button type="button" id="close-share" data-i18n="close">${text('close')}</button></div>
       <p class="status" id="status" role="status" aria-live="polite"></p>
     </main>
-    <footer class="page-footer"><button class="share-page" data-share="" type="button" hidden>${icon('share')}<span data-i18n="sharePage">${text('sharePage')}</span></button></footer>
   </div>
 </body>
 </html>
