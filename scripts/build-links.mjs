@@ -1,6 +1,7 @@
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({
@@ -68,9 +69,9 @@ const paths = {
 const icon = (name, className = '') => `<svg class="icon ${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
 const optionalSection = (title, items) => items.length ? `<section class="additional-section" aria-label="${title}"><h2>${title}</h2><div class="additional-links">${items.map(item => `<a href="${escapeHtml(item.url)}" rel="noopener noreferrer">${escapeHtml(item.label)}${icon('arrow')}</a>`).join('')}</div></section>` : '';
 
-export function render(data) {
+export function render(data, revision = '') {
   validate(data);
-  const pilot = `mailto:${data.email}?subject=${encodeURIComponent('Interesse num piloto RenovAR')}`;
+  const assetVersion = revision ? `?v=${revision}` : '';
   return `<!doctype html>
 <html lang="pt-PT">
 <head>
@@ -79,7 +80,7 @@ export function render(data) {
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
   <title>RenovAR | Links e contactos</title>
-  <meta name="description" content="Conheça a RenovAR, fale connosco sobre um piloto e guarde os contactos da nossa equipa.">
+  <meta name="description" content="Visite o site RenovAR, envie um email e guarde os contactos da equipa.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_PT">
   <meta property="og:title" content="RenovAR | Links e contactos">
@@ -91,8 +92,8 @@ export function render(data) {
   <link rel="preload" href="/assets/fonts/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/Montserrat-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/theme.js"></script>
-  <link rel="stylesheet" href="/links/links.css">
-  <script src="/links/links.js" defer></script>
+  <link rel="stylesheet" href="/links/links.css${assetVersion}">
+  <script type="module" src="/links/links.js${assetVersion}"></script>
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
@@ -118,10 +119,6 @@ export function render(data) {
           <span class="tile-icon">${icon('mail')}</span>
           <strong>Enviar email</strong>
         </a>
-        <a class="link-tile" href="${escapeHtml(pilot)}">
-          <span class="tile-icon">${icon('mail')}</span>
-          <strong>Pedir um piloto</strong> <span class="destination">Por email</span>
-        </a>
       </nav>
       <section class="team-section" aria-labelledby="team-title">
         <h2 id="team-title">Guardar contactos</h2>
@@ -136,7 +133,7 @@ ${data.pessoas.map(person => `          <article class="person" id="${person.id}
               <div class="person-content">
                 <a class="contact-line" href="mailto:${escapeHtml(person.email)}">${icon('mail')}<span>${escapeHtml(person.email)}</span></a>
                 <a class="contact-line" href="tel:${person.telefone.replace(/\s/g, '')}">${icon('phone')}<span>${escapeHtml(person.telefone)}</span></a>
-                <button class="copy-link" type="button" data-share="${person.id}" aria-label="Copiar link de ${escapeHtml(person.nome)}" hidden>${icon('share')}<span>Copiar link</span></button>
+                <button class="share-link" type="button" data-share="${person.id}" aria-label="Partilhar contacto de ${escapeHtml(person.nome)}" hidden>${icon('share')}<span>Partilhar contacto</span></button>
               </div>
             </details>
           </article>`).join('\n')}
@@ -144,10 +141,10 @@ ${data.pessoas.map(person => `          <article class="person" id="${person.id}
       </section>
 ${optionalSection('Redes sociais', data.redes)}
 ${optionalSection('Outros links', data.recursos)}
-      <div class="share-fallback" id="share-fallback" hidden><label for="share-url">Copie este link para partilhar:</label><input id="share-url" type="url" readonly><button type="button" id="close-share">Fechar</button></div>
+      <div class="share-fallback" id="share-fallback" hidden><p>Use a opção de partilha do navegador ou este link.</p><label for="share-url">Link para partilhar</label><input id="share-url" type="url" readonly><button type="button" id="close-share">Fechar</button></div>
       <p class="status" id="status" role="status" aria-live="polite"></p>
     </main>
-    <footer class="page-footer"><button class="copy-link" data-share="" type="button" aria-label="Copiar link da página" hidden>${icon('share')}<span>Copiar link da página</span></button></footer>
+    <footer class="page-footer"><button class="share-page" data-share="" type="button" hidden>${icon('share')}<span>Partilhar página</span></button></footer>
   </div>
 </body>
 </html>
@@ -156,7 +153,10 @@ ${optionalSection('Outros links', data.recursos)}
 
 export async function buildLinks() {
   const data = JSON.parse(await readFile(join(root, 'src/data/links.json'), 'utf8'));
-  const html = render(data);
+  const assets = await Promise.all(['links.css', 'links.js', 'share.js'].map(name => readFile(join(root, 'public/links', name))));
+  const hash = createHash('sha256');
+  for (const asset of assets) hash.update(asset);
+  const html = render(data, hash.digest('hex').slice(0, 12));
   await mkdir(join(root, 'public/links/contactos'), { recursive: true });
   await writeFile(join(root, 'public/links/index.html'), html);
   for (const person of data.pessoas) {

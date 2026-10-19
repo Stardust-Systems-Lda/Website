@@ -30,11 +30,15 @@ As alterações devem entrar numa branch própria e ser revistas num Pull Reques
 
 ### Página de links e contactos
 
-`https://renovar-systems.com/links/` reúne o site principal, avaliação de pilotos, email geral e contactos dos três fundadores. O rodapé da landing page inclui uma ligação para esta página. Os links `/links/#afonso`, `/links/#gabriel` e `/links/#nuno` abrem diretamente o contacto respetivo e podem ser usados em assinaturas ou códigos QR.
+`https://renovar-systems.com/links/` reúne o site principal, um único acesso ao email geral e contactos dos três fundadores. O rodapé da landing page inclui uma ligação para esta página. Os links `/links/#afonso`, `/links/#gabriel` e `/links/#nuno` abrem diretamente o contacto respetivo e podem ser usados em assinaturas ou códigos QR.
 
-A interface usa apenas os botões **Visitar o site**, **Enviar email** e **Pedir um piloto** (por email), sem título promocional nem parágrafos de apresentação. Cada pessoa tem um botão **Guardar contacto** sempre visível; **Email e telefone** revela os dados e a opção de copiar o link individual. As funções profissionais continuam incluídas nos vCards.
+A interface usa apenas os botões principais **Visitar o site** e **Enviar email**, sem ações redundantes nem texto promocional. O contacto sobre pilotos continua disponível na landing page. Cada pessoa tem um botão **Guardar contacto** sempre visível; **Email e telefone** revela os dados e **Partilhar contacto**. As funções profissionais continuam incluídas nos vCards.
 
-Os botões **Guardar contacto** descarregam ficheiros vCard 3.0 (`.vcf`) com nome, função, empresa, telefone, email e link pessoal. No telemóvel, abrir o ficheiro permite confirmar a adição à agenda; a página não grava contactos sem essa confirmação. Email e chamadas usam as aplicações do dispositivo. **Copiar link** copia o endereço da página ou do contacto escolhido para partilhar. Se o browser bloquear a cópia, aparece um campo para cópia manual.
+Os botões **Guardar contacto** descarregam ficheiros vCard 3.0 (`.vcf`) com nome, função, empresa, telefone, email e link pessoal. No telemóvel, abrir o ficheiro permite confirmar a adição à agenda; a página não grava contactos sem essa confirmação. Email e chamadas usam as aplicações do dispositivo.
+
+**Partilhar página** e **Partilhar contacto** invocam `navigator.share()` diretamente após o toque, abrindo o menu de partilha do sistema com as apps que o dispositivo disponibilizar. A implementação em `public/links/share.js` verifica o suporte, respeita o cancelamento, impede partilhas simultâneas e não copia nada automaticamente. Se a API estiver ausente ou bloqueada, aparece uma alternativa curta com o endereço e indicação para usar o menu do navegador. A partilha exige HTTPS no domínio público e autorização `web-share` da mesma origem, declarada nos cabeçalhos. A lista de apps depende do sistema e do navegador; a página não enumera nem inventa apps instaladas.
+
+A organização segue os [rótulos específicos e curtos da NN/G](https://www.nngroup.com/articles/better-link-labels/) e os [alvos de toque de 44 × 44 px da W3C](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html). O site surge primeiro, cada botão tem uma função distinta e as ligações opcionais só aparecem quando confirmadas. A partilha segue a [documentação da Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share).
 
 Editar `src/data/links.json` para atualizar contactos. `redes` e `recursos` começam vazios: as secções só aparecem quando tiverem ligações reais. Exemplo de uma entrada futura, substituindo o endereço pelo endereço confirmado:
 
@@ -46,7 +50,9 @@ Editar `src/data/links.json` para atualizar contactos. `redes` e `recursos` come
 
 `npm run dev` e `npm run build` regeneram `public/links/index.html` e os vCards a partir desse ficheiro. Depois de editar os dados durante uma sessão, executar `node scripts/build-links.mjs`. HTML e vCards gerados ficam versionados, permitindo publicar a pasta estática sem depender de JavaScript para ver os contactos e usar as ligações principais. Os estilos e as interações progressivas estão em `public/links/links.css` e `public/links/links.js`. São usados apenas recursos locais e a mesma preferência de aparência do site.
 
-Verificação adicional: `node --test scripts/build-links.test.mjs`. Confirmar também o ficheiro num iPhone e num Android reais antes de distribuir cartões impressos; a importação para a agenda depende da aplicação de contactos do dispositivo.
+O build inclui uma versão calculada a partir dos estilos e scripts nos URLs dos recursos. Os cabeçalhos de `/links/*` exigem revalidação da cache. Isto evita que uma visita receba o HTML novo com estilos ou comportamentos antigos guardados pelo navegador.
+
+Verificação adicional: `node --test scripts/build-links.test.mjs scripts/share-links.test.mjs`. Os testes da partilha usam simulações da API, incluindo cancelamento e falhas de suporte/política. Confirmar também a partilha e a importação de contactos num iPhone e num Android reais antes de distribuir cartões impressos; as apps e a importação dependem do dispositivo.
 
 ### Ficheiros do site
 
