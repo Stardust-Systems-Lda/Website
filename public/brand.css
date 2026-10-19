@@ -1,0 +1,30 @@
+/* RenovAR — Manual de Normas Gráficas v3.1, pp. 17–20 and 28.
+   Shared by the landing page and /links/. Logo masters remain unchanged. */
+@font-face {
+  font-family: "Montserrat";
+  src: url("/assets/fonts/Montserrat-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Montserrat";
+  src: url("/assets/fonts/Montserrat-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  --font-family-brand: "Montserrat", Arial, sans-serif;
+  --brand-white: #FFFFFF;
+  --brand-navy: #002262;
+  --brand-deep: #00184A;
+  --brand-blue: #0571D0;
+  --brand-electric: #0F8DE1;
+  --brand-air: #0EBDE4;
+  --brand-slate: #5B6D8C;
+  --brand-ink: #14202B;
+  --brand-mist: #EAF4F7;
+  --brand-cyan: #20C3E7;
+  --brand-pale-cyan: #BDEFF7;
+}
