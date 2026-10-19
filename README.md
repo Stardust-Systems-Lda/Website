@@ -50,7 +50,7 @@ Editar `src/data/links.json` para atualizar contactos. `redes` e `recursos` come
 
 `npm run dev` e `npm run build` regeneram `public/links/index.html` e os vCards a partir desse ficheiro. Depois de editar os dados durante uma sessão, executar `node scripts/build-links.mjs`. HTML e vCards gerados ficam versionados, permitindo publicar a pasta estática sem depender de JavaScript para ver os contactos e usar as ligações principais. Os estilos e as interações progressivas estão em `public/links/links.css` e `public/links/links.js`. São usados apenas recursos locais e a mesma preferência de aparência do site.
 
-O build inclui uma versão calculada a partir dos estilos e scripts nos URLs dos recursos. Os cabeçalhos de `/links/*` exigem revalidação da cache. Isto evita que uma visita receba o HTML novo com estilos ou comportamentos antigos guardados pelo navegador.
+O build inclui uma versão calculada a partir dos estilos e scripts nos URLs dos recursos, propagada também ao módulo de partilha. Os cabeçalhos de `/links/*` pedem revalidação da cache; os URLs versionados asseguram a atualização mesmo quando uma regra do alojamento conserva scripts por mais tempo. Os botões de partilha só aparecem depois de o módulo estar carregado, preservando a ativação do toque. Isto evita HTML novo com estilos ou comportamentos antigos guardados pelo navegador.
 
 Verificação adicional: `node --test scripts/build-links.test.mjs scripts/share-links.test.mjs`. Os testes da partilha usam simulações da API, incluindo cancelamento e falhas de suporte/política. Confirmar também a partilha e a importação de contactos num iPhone e num Android reais antes de distribuir cartões impressos; as apps e a importação dependem do dispositivo.
 
