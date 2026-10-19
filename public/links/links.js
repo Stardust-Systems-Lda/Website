@@ -1,5 +1,3 @@
-import { shareLink } from './share.js';
-
 const status = document.getElementById('status');
 const themeButton = document.getElementById('theme-toggle');
 const deviceTheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -56,31 +54,36 @@ document.getElementById('close-share').addEventListener('click', () => {
   previousShareButton?.focus();
 });
 
-for (const button of document.querySelectorAll('[data-share]')) {
-  button.hidden = false;
-  button.addEventListener('click', async () => {
-    if (sharing) return;
-    previousShareButton = button;
-    fallback.hidden = true;
-    status.textContent = '';
-    const id = button.dataset.share;
-    const url = new URL('/links/', window.location.origin);
-    if (id) url.hash = id;
-    const personName = id ? document.getElementById(id)?.querySelector('.person-name')?.textContent : '';
-    const title = personName ? `${personName} — RenovAR` : 'RenovAR — Links e contactos';
-    sharing = true;
-    button.disabled = true;
-    button.setAttribute('aria-busy', 'true');
-    const result = await shareLink({ title, url: url.href });
-    sharing = false;
-    button.disabled = false;
-    button.removeAttribute('aria-busy');
-    if (result === 'unavailable') {
-      status.textContent = 'A partilha do dispositivo não está disponível neste navegador.';
-      fallback.hidden = false;
-      fallbackInput.value = url.href;
-      fallbackInput.focus();
-      fallbackInput.select();
-    }
-  });
-}
+// Load the matching helper before showing buttons; clicks keep user activation.
+import(`./share.js${new URL(import.meta.url).search}`).then(({ shareLink }) => {
+  for (const button of document.querySelectorAll('[data-share]')) {
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      if (sharing) return;
+      previousShareButton = button;
+      fallback.hidden = true;
+      status.textContent = '';
+      const id = button.dataset.share;
+      const url = new URL('/links/', window.location.origin);
+      if (id) url.hash = id;
+      const personName = id ? document.getElementById(id)?.querySelector('.person-name')?.textContent : '';
+      const title = personName ? `${personName} — RenovAR` : 'RenovAR — Links e contactos';
+      sharing = true;
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      const result = await shareLink({ title, url: url.href });
+      sharing = false;
+      button.disabled = false;
+      button.removeAttribute('aria-busy');
+      if (result === 'unavailable') {
+        status.textContent = 'A partilha do dispositivo não está disponível neste navegador.';
+        fallback.hidden = false;
+        fallbackInput.value = url.href;
+        fallbackInput.focus();
+        fallbackInput.select();
+      }
+    });
+  }
+}).catch(() => {
+  status.textContent = 'Use a opção de partilha do navegador.';
+});
