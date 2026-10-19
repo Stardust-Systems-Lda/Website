@@ -2,6 +2,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
+import { messages, translate } from '../public/links/i18n.js';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({
@@ -67,11 +68,12 @@ const paths = {
   sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',
 };
 const icon = (name, className = '') => `<svg class="icon ${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
-const optionalSection = (title, items) => items.length ? `<section class="additional-section" aria-label="${title}"><h2>${title}</h2><div class="additional-links">${items.map(item => `<a href="${escapeHtml(item.url)}" rel="noopener noreferrer">${escapeHtml(item.label)}${icon('arrow')}</a>`).join('')}</div></section>` : '';
+const optionalSection = (key, items) => items.length ? `<section class="additional-section" data-i18n-aria="${key}" aria-label="${translate('pt', key)}"><h2 data-i18n="${key}">${translate('pt', key)}</h2><div class="additional-links">${items.map(item => `<a href="${escapeHtml(item.url)}" rel="noopener noreferrer">${escapeHtml(item.label)}${icon('arrow')}</a>`).join('')}</div></section>` : '';
 
 export function render(data, revision = '') {
   validate(data);
   const assetVersion = revision ? `?v=${revision}` : '';
+  const text = key => escapeHtml(translate('pt', key));
   return `<!doctype html>
 <html lang="pt-PT">
 <head>
@@ -79,72 +81,78 @@ export function render(data, revision = '') {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
-  <title>RenovAR | Links e contactos</title>
-  <meta name="description" content="Visite o site RenovAR, envie um email e guarde os contactos da equipa.">
+  <title>${text('documentTitle')}</title>
+  <meta name="description" content="${text('description')}">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_PT">
-  <meta property="og:title" content="RenovAR | Links e contactos">
-  <meta property="og:description" content="O site, as ligações úteis e os contactos da equipa RenovAR, num só lugar.">
+  <meta property="og:title" content="${text('documentTitle')}">
+  <meta property="og:description" content="${text('description')}">
   <meta property="og:url" content="${data.site}/links/">
   <meta property="og:image" content="${data.site}/assets/renovar-assinatura.png">
   <link rel="canonical" href="${data.site}/links/">
   <link rel="icon" href="/favicon.ico">
   <link rel="preload" href="/assets/fonts/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/Montserrat-Bold.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="/theme.js"></script>
+  <script src="/links/theme.js${assetVersion}"></script>
   <link rel="stylesheet" href="/links/links.css${assetVersion}">
   <script type="module" src="/links/links.js${assetVersion}"></script>
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
+  <a class="skip-link" href="#conteudo" data-i18n="skipLink">${text('skipLink')}</a>
   <div class="page-shell">
     <header class="page-header">
-      <a class="brand" href="/" aria-label="RenovAR — visitar o site">
+      <a class="brand" href="/" data-i18n-aria="brandLabel" aria-label="${text('brandLabel')}">
         <img class="brand-light" src="/assets/renovar-simbolo.png" alt="" width="56" height="56">
         <img class="brand-dark" src="/assets/renovar-simbolo-branco.png" alt="" width="56" height="56">
       </a>
-      <h1 id="page-title">Links e contactos</h1>
+      <h1 id="page-title" data-i18n="pageTitle">${text('pageTitle')}</h1>
       <div class="header-actions">
+        <details class="language-picker" id="language-picker" hidden>
+          <summary class="icon-button language-toggle" id="language-toggle" aria-label="${escapeHtml(translate('pt', 'languageCurrent', { language: messages.pt.name }))}">${icon('globe')}<span id="language-code" aria-hidden="true">PT</span></summary>
+          <div class="language-options" role="group" data-i18n-aria="languageLabel" aria-label="${text('languageLabel')}">
+${Object.entries(messages).map(([code, language]) => `            <button type="button" data-language="${code}" lang="${language.tag}" aria-pressed="${code === 'pt'}">${language.name}</button>`).join('\n')}
+          </div>
+        </details>
         <button class="icon-button" id="theme-toggle" type="button" aria-label="Alternar aparência" hidden>${icon('sun')}</button>
       </div>
     </header>
     <main id="conteudo">
-      <nav class="main-links" aria-label="Ligações RenovAR">
+      <nav class="main-links" data-i18n-aria="navLabel" aria-label="${text('navLabel')}">
         <a class="link-tile primary" href="/">
           <span class="tile-icon">${icon('globe')}</span>
-          <strong>Visitar o site</strong>
+          <strong data-i18n="siteLink">${text('siteLink')}</strong>
           ${icon('arrow', 'trailing')}
         </a>
         <a class="link-tile" href="mailto:${escapeHtml(data.email)}">
           <span class="tile-icon">${icon('mail')}</span>
-          <strong>Enviar email</strong>
+          <strong data-i18n="emailLink">${text('emailLink')}</strong>
         </a>
       </nav>
       <section class="team-section" aria-labelledby="team-title">
-        <h2 id="team-title">Guardar contactos</h2>
+        <h2 id="team-title" data-i18n="contactsHeading">${text('contactsHeading')}</h2>
         <div class="team-list">
 ${data.pessoas.map(person => `          <article class="person" id="${person.id}" aria-labelledby="name-${person.id}">
             <div class="person-row">
               <h3 class="person-name" id="name-${person.id}">${escapeHtml(person.nome)}</h3>
-              <a class="save-contact" href="/links/contactos/${person.id}.vcf" download="${person.primeiroNome}_RenovAR.vcf" aria-label="Guardar contacto de ${escapeHtml(person.nome)}">${icon('download')} Guardar contacto</a>
+              <a class="save-contact" href="/links/contactos/${person.id}.vcf" download="${person.primeiroNome}_RenovAR.vcf" data-i18n-aria="saveContactLabel" data-i18n-name="${escapeHtml(person.nome)}" aria-label="${escapeHtml(translate('pt', 'saveContactLabel', { name: person.nome }))}">${icon('download')}<span data-i18n="saveContact">${text('saveContact')}</span></a>
             </div>
             <details class="person-details">
-              <summary>Email e telefone ${icon('chevron', 'person-chevron')}</summary>
+              <summary><span data-i18n="contactDetails">${text('contactDetails')}</span>${icon('chevron', 'person-chevron')}</summary>
               <div class="person-content">
                 <a class="contact-line" href="mailto:${escapeHtml(person.email)}">${icon('mail')}<span>${escapeHtml(person.email)}</span></a>
                 <a class="contact-line" href="tel:${person.telefone.replace(/\s/g, '')}">${icon('phone')}<span>${escapeHtml(person.telefone)}</span></a>
-                <button class="share-link" type="button" data-share="${person.id}" aria-label="Partilhar contacto de ${escapeHtml(person.nome)}" hidden>${icon('share')}<span>Partilhar contacto</span></button>
+                <button class="share-link" type="button" data-share="${person.id}" data-i18n-aria="shareContactLabel" data-i18n-name="${escapeHtml(person.nome)}" aria-label="${escapeHtml(translate('pt', 'shareContactLabel', { name: person.nome }))}" hidden>${icon('share')}<span data-i18n="shareContact">${text('shareContact')}</span></button>
               </div>
             </details>
           </article>`).join('\n')}
         </div>
       </section>
-${optionalSection('Redes sociais', data.redes)}
-${optionalSection('Outros links', data.recursos)}
-      <div class="share-fallback" id="share-fallback" hidden><p>Use a opção de partilha do navegador ou este link.</p><label for="share-url">Link para partilhar</label><input id="share-url" type="url" readonly><button type="button" id="close-share">Fechar</button></div>
+${optionalSection('socialHeading', data.redes)}
+${optionalSection('resourcesHeading', data.recursos)}
+      <div class="share-fallback" id="share-fallback" hidden><p data-i18n="fallbackHint">${text('fallbackHint')}</p><label for="share-url" data-i18n="fallbackLink">${text('fallbackLink')}</label><input id="share-url" type="url" readonly><button type="button" id="close-share" data-i18n="close">${text('close')}</button></div>
       <p class="status" id="status" role="status" aria-live="polite"></p>
     </main>
-    <footer class="page-footer"><button class="share-page" data-share="" type="button" hidden>${icon('share')}<span>Partilhar página</span></button></footer>
+    <footer class="page-footer"><button class="share-page" data-share="" type="button" hidden>${icon('share')}<span data-i18n="sharePage">${text('sharePage')}</span></button></footer>
   </div>
 </body>
 </html>
@@ -153,7 +161,7 @@ ${optionalSection('Outros links', data.recursos)}
 
 export async function buildLinks() {
   const data = JSON.parse(await readFile(join(root, 'src/data/links.json'), 'utf8'));
-  const assets = await Promise.all(['links.css', 'links.js', 'share.js'].map(name => readFile(join(root, 'public/links', name))));
+  const assets = await Promise.all(['links.css', 'links.js', 'share.js', 'i18n.js', 'theme.js'].map(name => readFile(join(root, 'public/links', name))));
   const hash = createHash('sha256');
   for (const asset of assets) hash.update(asset);
   const html = render(data, hash.digest('hex').slice(0, 12));
