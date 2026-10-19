@@ -82,7 +82,7 @@ export function render(data) {
   <meta name="description" content="Conheça a RenovAR, fale connosco sobre um piloto e guarde os contactos da nossa equipa.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_PT">
-  <meta property="og:title" content="RenovAR | Vamos pôr o ar em movimento.">
+  <meta property="og:title" content="RenovAR | Links e contactos">
   <meta property="og:description" content="O site, as ligações úteis e os contactos da equipa RenovAR, num só lugar.">
   <meta property="og:url" content="${data.site}/links/">
   <meta property="og:image" content="${data.site}/assets/renovar-assinatura.png">
@@ -102,62 +102,52 @@ export function render(data) {
         <img class="brand-light" src="/assets/renovar-simbolo.png" alt="" width="56" height="56">
         <img class="brand-dark" src="/assets/renovar-simbolo-branco.png" alt="" width="56" height="56">
       </a>
+      <h1 id="page-title">Links e contactos</h1>
       <div class="header-actions">
         <button class="icon-button" id="theme-toggle" type="button" aria-label="Alternar aparência" hidden>${icon('sun')}</button>
-        <button class="icon-button" data-share="" type="button" aria-label="Copiar link da página" hidden>${icon('share')}</button>
       </div>
     </header>
     <main id="conteudo">
-      <section class="intro" aria-labelledby="page-title">
-        <p class="eyebrow"><span></span> RENOVAR SYSTEMS</p>
-        <h1 id="page-title">Vamos pôr o ar<br>em <em>movimento.</em></h1>
-        <p class="intro-copy">Qualidade do ar e ventilação inteligente.<br>Conheça o projeto. Fale com quem o constrói.</p>
-      </section>
       <nav class="main-links" aria-label="Ligações RenovAR">
-        <a class="link-tile primary" href="${escapeHtml(pilot)}">
-          <span class="tile-icon">${icon('arrow')}</span>
-          <span><strong>Vamos avaliar um piloto?</strong><small>O próximo passo pode ser no seu edifício.</small></span>
-          ${icon('arrow', 'trailing')}
-        </a>
-        <a class="link-tile" href="/">
+        <a class="link-tile primary" href="/">
           <span class="tile-icon">${icon('globe')}</span>
-          <span><strong>Conhecer a RenovAR</strong><small>Visite o nosso site e descubra a solução.</small></span>
+          <strong>Visitar o site</strong>
           ${icon('arrow', 'trailing')}
         </a>
         <a class="link-tile" href="mailto:${escapeHtml(data.email)}">
           <span class="tile-icon">${icon('mail')}</span>
-          <span><strong>Falar com a equipa</strong><small>${escapeHtml(data.email)}</small></span>
-          ${icon('arrow', 'trailing')}
+          <strong>Enviar email</strong>
+        </a>
+        <a class="link-tile" href="${escapeHtml(pilot)}">
+          <span class="tile-icon">${icon('mail')}</span>
+          <strong>Pedir um piloto</strong> <span class="destination">Por email</span>
         </a>
       </nav>
       <section class="team-section" aria-labelledby="team-title">
-        <div class="section-heading"><h2 id="team-title">Uma equipa. Contacto direto.</h2><span>OS FUNDADORES</span></div>
-        <p class="section-copy">Escolha uma pessoa para falar ou guardar o contacto.</p>
+        <h2 id="team-title">Guardar contactos</h2>
         <div class="team-list">
-${data.pessoas.map(person => `          <details class="person" id="${person.id}">
-            <summary>
-              <span class="initials" aria-hidden="true">${escapeHtml(person.primeiroNome[0] + person.apelido[0])}</span>
-              <span class="person-heading"><span class="person-name">${escapeHtml(person.nome)}</span><span class="person-role">${escapeHtml(person.funcao)}</span></span>
-              ${icon('chevron', 'person-chevron')}
-            </summary>
-            <div class="person-content">
-              <a class="contact-line" href="mailto:${escapeHtml(person.email)}">${icon('mail')}<span>${escapeHtml(person.email)}</span></a>
-              <a class="contact-line" href="tel:${person.telefone.replace(/\s/g, '')}">${icon('phone')}<span>${escapeHtml(person.telefone)}</span></a>
-              <div class="person-actions">
-                <a class="save-contact" href="/links/contactos/${person.id}.vcf" download="${person.primeiroNome}_RenovAR.vcf" aria-label="Guardar contacto de ${escapeHtml(person.nome)}">${icon('download')} Guardar contacto</a>
-                <button class="share-contact" type="button" data-share="${person.id}" aria-label="Copiar link de ${escapeHtml(person.nome)}" hidden>${icon('share')}<span>Copiar link</span></button>
-              </div>
-              <p class="contact-help">Abra o ficheiro no telemóvel e confirme a adição aos contactos.</p>
+${data.pessoas.map(person => `          <article class="person" id="${person.id}" aria-labelledby="name-${person.id}">
+            <div class="person-row">
+              <h3 class="person-name" id="name-${person.id}">${escapeHtml(person.nome)}</h3>
+              <a class="save-contact" href="/links/contactos/${person.id}.vcf" download="${person.primeiroNome}_RenovAR.vcf" aria-label="Guardar contacto de ${escapeHtml(person.nome)}">${icon('download')} Guardar contacto</a>
             </div>
-          </details>`).join('\n')}
+            <details class="person-details">
+              <summary>Email e telefone ${icon('chevron', 'person-chevron')}</summary>
+              <div class="person-content">
+                <a class="contact-line" href="mailto:${escapeHtml(person.email)}">${icon('mail')}<span>${escapeHtml(person.email)}</span></a>
+                <a class="contact-line" href="tel:${person.telefone.replace(/\s/g, '')}">${icon('phone')}<span>${escapeHtml(person.telefone)}</span></a>
+                <button class="copy-link" type="button" data-share="${person.id}" aria-label="Copiar link de ${escapeHtml(person.nome)}" hidden>${icon('share')}<span>Copiar link</span></button>
+              </div>
+            </details>
+          </article>`).join('\n')}
         </div>
       </section>
-${optionalSection('Acompanhe a RenovAR', data.redes)}
-${optionalSection('Mais sobre o projeto', data.recursos)}
+${optionalSection('Redes sociais', data.redes)}
+${optionalSection('Outros links', data.recursos)}
       <div class="share-fallback" id="share-fallback" hidden><label for="share-url">Copie este link para partilhar:</label><input id="share-url" type="url" readonly><button type="button" id="close-share">Fechar</button></div>
       <p class="status" id="status" role="status" aria-live="polite"></p>
     </main>
-    <footer class="page-footer"><span>Do ar à ação.</span><a href="/">renovar-systems.com ${icon('arrow')}</a></footer>
+    <footer class="page-footer"><button class="copy-link" data-share="" type="button" aria-label="Copiar link da página" hidden>${icon('share')}<span>Copiar link da página</span></button></footer>
   </div>
 </body>
 </html>

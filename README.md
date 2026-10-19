@@ -32,6 +32,8 @@ As alterações devem entrar numa branch própria e ser revistas num Pull Reques
 
 `https://renovar-systems.com/links/` reúne o site principal, avaliação de pilotos, email geral e contactos dos três fundadores. O rodapé da landing page inclui uma ligação para esta página. Os links `/links/#afonso`, `/links/#gabriel` e `/links/#nuno` abrem diretamente o contacto respetivo e podem ser usados em assinaturas ou códigos QR.
 
+A interface usa apenas os botões **Visitar o site**, **Enviar email** e **Pedir um piloto** (por email), sem título promocional nem parágrafos de apresentação. Cada pessoa tem um botão **Guardar contacto** sempre visível; **Email e telefone** revela os dados e a opção de copiar o link individual. As funções profissionais continuam incluídas nos vCards.
+
 Os botões **Guardar contacto** descarregam ficheiros vCard 3.0 (`.vcf`) com nome, função, empresa, telefone, email e link pessoal. No telemóvel, abrir o ficheiro permite confirmar a adição à agenda; a página não grava contactos sem essa confirmação. Email e chamadas usam as aplicações do dispositivo. **Copiar link** copia o endereço da página ou do contacto escolhido para partilhar. Se o browser bloquear a cópia, aparece um campo para cópia manual.
 
 Editar `src/data/links.json` para atualizar contactos. `redes` e `recursos` começam vazios: as secções só aparecem quando tiverem ligações reais. Exemplo de uma entrada futura, substituindo o endereço pelo endereço confirmado:

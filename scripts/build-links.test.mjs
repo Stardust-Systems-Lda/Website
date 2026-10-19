@@ -33,8 +33,8 @@ test('contact links remain usable without JavaScript; empty optional sections st
     assert.ok(html.includes(`href="/links/contactos/${person.id}.vcf"`));
     assert.ok(html.includes(`href="mailto:${person.email}"`));
   }
-  assert.ok(!html.includes('Acompanhe a RenovAR'));
-  assert.ok(!html.includes('Mais sobre o projeto'));
+  assert.ok(!html.includes('Redes sociais'));
+  assert.ok(!html.includes('Outros links'));
 });
 
 test('future links render safely and invalid protocols/duplicate people fail before writing', () => {

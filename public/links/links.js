@@ -11,6 +11,7 @@ function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
   document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#071322' : '#ffffff';
   themeButton.setAttribute('aria-label', theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro');
+  themeButton.title = themeButton.getAttribute('aria-label');
 }
 
 let chosenTheme = preference();
@@ -35,8 +36,9 @@ window.addEventListener('storage', (event) => {
 function openContact() {
   const id = window.location.hash.slice(1);
   const contact = document.getElementById(id);
-  if (contact instanceof HTMLDetailsElement) {
-    contact.open = true;
+  if (contact instanceof HTMLElement && contact.classList.contains('person')) {
+    const details = contact.querySelector('details');
+    if (details) details.open = true;
     contact.scrollIntoView({ block: 'start' });
   }
 }
@@ -65,8 +67,9 @@ for (const button of document.querySelectorAll('[data-share]')) {
       status.textContent = personName ? `Link de ${personName} copiado.` : 'Link da página copiado.';
       const label = button.querySelector('span');
       if (label) {
+        const originalLabel = label.textContent;
         label.textContent = 'Link copiado';
-        setTimeout(() => { label.textContent = 'Copiar link'; }, 2500);
+        setTimeout(() => { label.textContent = originalLabel; }, 2500);
       }
     } catch {
       fallback.hidden = false;
