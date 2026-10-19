@@ -1,3 +1,5 @@
+import { shareLink } from './share.js';
+
 const status = document.getElementById('status');
 const themeButton = document.getElementById('theme-toggle');
 const deviceTheme = window.matchMedia('(prefers-color-scheme: dark)');
@@ -48,6 +50,7 @@ window.addEventListener('hashchange', openContact);
 const fallback = document.getElementById('share-fallback');
 const fallbackInput = document.getElementById('share-url');
 let previousShareButton;
+let sharing = false;
 document.getElementById('close-share').addEventListener('click', () => {
   fallback.hidden = true;
   previousShareButton?.focus();
@@ -56,22 +59,24 @@ document.getElementById('close-share').addEventListener('click', () => {
 for (const button of document.querySelectorAll('[data-share]')) {
   button.hidden = false;
   button.addEventListener('click', async () => {
+    if (sharing) return;
     previousShareButton = button;
+    fallback.hidden = true;
     status.textContent = '';
     const id = button.dataset.share;
     const url = new URL('/links/', window.location.origin);
     if (id) url.hash = id;
     const personName = id ? document.getElementById(id)?.querySelector('.person-name')?.textContent : '';
-    try {
-      await navigator.clipboard.writeText(url.href);
-      status.textContent = personName ? `Link de ${personName} copiado.` : 'Link da página copiado.';
-      const label = button.querySelector('span');
-      if (label) {
-        const originalLabel = label.textContent;
-        label.textContent = 'Link copiado';
-        setTimeout(() => { label.textContent = originalLabel; }, 2500);
-      }
-    } catch {
+    const title = personName ? `${personName} — RenovAR` : 'RenovAR — Links e contactos';
+    sharing = true;
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    const result = await shareLink({ title, url: url.href });
+    sharing = false;
+    button.disabled = false;
+    button.removeAttribute('aria-busy');
+    if (result === 'unavailable') {
+      status.textContent = 'A partilha do dispositivo não está disponível neste navegador.';
       fallback.hidden = false;
       fallbackInput.value = url.href;
       fallbackInput.focus();

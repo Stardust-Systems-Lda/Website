@@ -28,6 +28,8 @@ test('long Unicode values fold by octets and reserved vCard separators are escap
 test('contact links remain usable without JavaScript; empty optional sections stay hidden', () => {
   const html = render(data);
   assert.ok(html.includes('href="/"'));
+  const navigation = html.match(/<nav class="main-links"[^>]*>([\s\S]*?)<\/nav>/)[1];
+  assert.equal((navigation.match(/href="mailto:/g) ?? []).length, 1);
   for (const person of data.pessoas) {
     assert.ok(html.includes(`id="${person.id}"`));
     assert.ok(html.includes(`href="/links/contactos/${person.id}.vcf"`));
