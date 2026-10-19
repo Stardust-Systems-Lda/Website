@@ -54,6 +54,18 @@ O build inclui uma versão calculada a partir dos estilos e scripts nos URLs dos
 
 Verificação adicional: `node --test scripts/build-links.test.mjs scripts/share-links.test.mjs`. Os testes da partilha usam simulações da API, incluindo cancelamento e falhas de suporte/política. Confirmar também a partilha e a importação de contactos num iPhone e num Android reais antes de distribuir cartões impressos; as apps e a importação dependem do dispositivo.
 
+### Idiomas e cores da página de links
+
+O botão de idioma fica ao lado do seletor de tema e oferece Português, English, Français e Español, com os nomes nativos e sem bandeiras. O menu funciona por toque, rato e teclado; Escape, escolha de idioma ou clique fora fecham-no. A tradução cobre textos, nomes acessíveis, título, metadados e mensagens de partilha da página de links. Nomes de pessoas, marca, emails, telefones e os ficheiros vCard conservam os dados oficiais. A landing page principal não é traduzida por este seletor.
+
+`public/links/i18n.js` contém os quatro dicionários. O idioma explícito de `?lang=en`, `?lang=fr`, `?lang=es` ou `?lang=pt` prevalece sobre a escolha guardada localmente em `renovar-language`; sem escolha, usa-se português. As ligações partilhadas incluem o idioma e conservam o identificador do contacto. A escolha não é enviada a serviços de tradução externos. As secções opcionais são traduzidas; os rótulos de ligações futuras, introduzidos em `src/data/links.json`, mantêm o texto editorial configurado.
+
+As cores de `/links/` seguem o Manual de Normas Gráficas RenovAR v3.1, páginas 17-20: branco e névoa `#EAF4F7` no tema claro; azul-profundo `#00184A` e azul-marinho `#002262` no escuro. Azul `#0571D0`, ardósia `#5B6D8C`, ciano `#0EBDE4` e ciano-claro `#BDEFF7` têm funções de controlo, texto ou destaque com contraste verificado. O ciano não é usado como texto corrido sobre branco. A tipografia permanece Montserrat com alternativa Arial. Os símbolos oficiais permanecem intactos, com a versão negativa no escuro e dimensão visível superior ao mínimo de 48 px (páginas 13, 21, 22 e 28).
+
+`public/links/theme.js` aplica as cores do tema antes de desenhar esta página; a preferência de tema continua partilhada com o site. Este ficheiro, os dicionários e o módulo de partilha recebem a versão dos recursos. O tema do resto do site não foi alterado por esta revisão.
+
+Verificação completa: `node --test scripts/build-links.test.mjs scripts/share-links.test.mjs scripts/links-i18n-brand.test.mjs`. Os testes confirmam cobertura dos quatro idiomas, conservação dos nomes e idioma nos links, cores da paleta e contraste mínimo de 4,5:1 para texto normal e 3:1 para ícones/limites de controlos nos dois temas.
+
 ### Ficheiros do site
 
 - `src/App.tsx`: conteúdo, navegação, exploração das etapas e perguntas frequentes.
