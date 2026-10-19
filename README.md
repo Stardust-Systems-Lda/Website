@@ -80,7 +80,13 @@ Verificação completa: `node --test scripts/build-links.test.mjs scripts/share-
 
 ## Marca e conteúdo
 
-A apresentação segue o Manual de Normas Gráficas RenovAR v3.1: Montserrat, azul-marinho `#002262`, azul `#0571D0` e ciano `#0EBDE4` como acento. O cabeçalho usa apenas o símbolo oficial, sem composição de nome em HTML; o modo escuro usa o símbolo negativo branco oficial. A assinatura completa mantém o fundo branco original no rodapé. Os ficheiros oficiais de marca são usados sem redesenho. As fontes WOFF2 conservam os glifos das fontes institucionais, com compressão para a web.
+A referência é o Manual de Normas Gráficas RenovAR v3.1, guardado no workspace da empresa em `05_Marca_e_Comunicacao/Identidade_Visual/`. `public/brand.css` centraliza a paleta aprovada (pp. 17–20) e Montserrat Regular/Bold com alternativa Arial (p. 28); a landing page e `/links/` partilham esta fonte de verdade. Os estilos de cada página atribuem funções semânticas às cores, sem introduzir tonalidades adicionais. O fundo escuro e a cor do navegador usam azul-profundo `#00184A`.
+
+O cabeçalho usa o símbolo policromático oficial sobre branco e o negativo branco oficial no escuro. A largura visível é superior a 48 px e o cabeçalho reserva 12 px em redor do ficheiro de 64 px, cumprindo a proteção mínima de 20% da largura do símbolo (pp. 13, 21–24). O rodapé usa o master horizontal com slogan, intacto sobre branco: a largura do ficheiro é 550 px, correspondendo a mais de 460 px de desenho visível. Abaixo de 901 px utiliza o símbolo de 64 px com proteção própria. Não se recompõem logótipos em HTML nem se aplicam filtros, deformações ou sombras. Os hashes dos três PNG publicados correspondem aos masters oficiais. A identidade verde anterior e três imagens sem referências foram retiradas da distribuição.
+
+As fotografias são do protótipo real (p. 32). A sequência editorial segue problema, resposta, funcionamento, prova/estado do protótipo e tecnologia (pp. 30–31), mantendo afirmações coerentes com a memória da empresa. O slogan conserva a forma oficial «Breathe Better, Live Better» no master, sem tradução ou alteração.
+
+A verificação guardada no workspace em `05_Marca_e_Comunicacao/Website/Verificacao/Normas_Graficas/RELATORIO.md` reúne a correspondência com o manual, provas visuais e resultados. Os scripts de verificação recebem o caminho do clone técnico; fontes e resultados ficam nas áreas oficiais. Compilações e dependências permanecem no clone técnico fora do Drive.
 
 As fotografias identificam o protótipo; a antiga fotografia da equipa foi removida. A equipa publicada é Afonso Mota, Gabriel Conceição e Nuno Ferreira.
 

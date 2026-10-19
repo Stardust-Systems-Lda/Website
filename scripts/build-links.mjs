@@ -94,6 +94,7 @@ export function render(data, revision = '') {
   <link rel="preload" href="/assets/fonts/Montserrat-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/Montserrat-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/links/theme.js${assetVersion}"></script>
+  <link rel="stylesheet" href="/brand.css${assetVersion}">
   <link rel="stylesheet" href="/links/links.css${assetVersion}">
   <script type="module" src="/links/links.js${assetVersion}"></script>
 </head>
@@ -162,6 +163,7 @@ ${optionalSection('resourcesHeading', data.recursos)}
 export async function buildLinks() {
   const data = JSON.parse(await readFile(join(root, 'src/data/links.json'), 'utf8'));
   const assets = await Promise.all(['links.css', 'links.js', 'share.js', 'i18n.js', 'theme.js'].map(name => readFile(join(root, 'public/links', name))));
+  assets.push(await readFile(join(root, 'public/brand.css')));
   const hash = createHash('sha256');
   for (const asset of assets) hash.update(asset);
   const html = render(data, hash.digest('hex').slice(0, 12));

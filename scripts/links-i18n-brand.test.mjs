@@ -6,6 +6,7 @@ import { render } from './build-links.mjs';
 
 const data = JSON.parse(await readFile(new URL('../src/data/links.json', import.meta.url), 'utf8'));
 const css = await readFile(new URL('../public/links/links.css', import.meta.url), 'utf8');
+const brand = await readFile(new URL('../public/brand.css', import.meta.url), 'utf8');
 
 test('all four languages cover every visible/accessibility key and preserve contact names', () => {
   const keys = Object.keys(messages.pt).sort();
@@ -41,7 +42,11 @@ test('shared pages and contacts retain the chosen language on another device', (
 
 // Reference: RenovAR graphic manual v3.1, pages 17, 18 and 20.
 const approved = new Set(['#FFFFFF', '#002262', '#00184A', '#0571D0', '#0F8DE1', '#0EBDE4', '#5B6D8C', '#14202B', '#EAF4F7', '#20C3E7', '#BDEFF7']);
-const variables = block => Object.fromEntries([...block.matchAll(/(--[\w-]+):\s*(#[\da-f]{6})/gi)].map(([, key, value]) => [key, value]));
+const primitives = Object.fromEntries([...brand.matchAll(/(--brand-[\w-]+):\s*(#[\da-f]{6})/gi)].map(([, key, value]) => [key, value]));
+const variables = block => Object.fromEntries([...block.matchAll(/(--[\w-]+):\s*var\((--brand-[\w-]+)\)/g)].map(([, key, reference]) => {
+  assert.ok(primitives[reference], `Unknown brand colour ${reference}`);
+  return [key, primitives[reference]];
+}));
 const light = variables(css.match(/:root\s*\{([\s\S]*?)\}/)[1]);
 const dark = { ...light, ...variables(css.match(/:root\[data-theme='dark'\]\s*\{([\s\S]*?)\}/)[1]) };
 function luminance(hex) {
@@ -55,7 +60,7 @@ function contrast(a, b) {
 }
 
 test('both themes use approved brand colours', () => {
-  for (const [colour] of css.matchAll(/#[\da-f]{6}\b/gi)) assert.ok(approved.has(colour.toUpperCase()), colour);
+  for (const [colour] of (brand + css).matchAll(/#[\da-f]{6}\b/gi)) assert.ok(approved.has(colour.toUpperCase()), colour);
   assert.equal(dark['--surface'].toUpperCase(), '#00184A');
   assert.equal(dark['--panel'].toUpperCase(), '#002262');
 });

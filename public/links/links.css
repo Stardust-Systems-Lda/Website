@@ -1,51 +1,37 @@
-@font-face {
-  font-family: Montserrat;
-  src: url('/assets/fonts/Montserrat-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: Montserrat;
-  src: url('/assets/fonts/Montserrat-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 :root {
   color-scheme: light;
   /* RenovAR v3.1, pages 17-20: approved palette and contrast. */
-  --surface: #FFFFFF;
-  --panel: #EAF4F7;
-  --heading: #002262;
-  --text: #14202b;
-  --muted: #5b6d8c;
-  --line: #EAF4F7;
-  --control-line: #5B6D8C;
-  --accent: #0571d0;
-  --primary: #002262;
-  --primary-text: #FFFFFF;
-  --primary-hover: #00184A;
-  --hover: #BDEFF7;
-  font-family: Montserrat, Arial, sans-serif;
+  --surface: var(--brand-white);
+  --panel: var(--brand-mist);
+  --heading: var(--brand-navy);
+  --text: var(--brand-ink);
+  --muted: var(--brand-slate);
+  --line: var(--brand-mist);
+  --control-line: var(--brand-slate);
+  --accent: var(--brand-blue);
+  --primary: var(--brand-navy);
+  --primary-text: var(--brand-white);
+  --primary-hover: var(--brand-deep);
+  --hover: var(--brand-pale-cyan);
+  font-family: var(--font-family-brand);
   font-synthesis: none;
   background: var(--surface);
   color: var(--text);
 }
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --surface: #00184A;
-  --panel: #002262;
-  --heading: #FFFFFF;
-  --text: #EAF4F7;
-  --muted: #BDEFF7;
-  --line: #0571D0;
-  --control-line: #0571D0;
-  --accent: #0ebde4;
-  --primary: #0ebde4;
-  --primary-text: #002262;
-  --primary-hover: #BDEFF7;
-  --hover: #002262;
+  --surface: var(--brand-deep);
+  --panel: var(--brand-navy);
+  --heading: var(--brand-white);
+  --text: var(--brand-mist);
+  --muted: var(--brand-pale-cyan);
+  --line: var(--brand-blue);
+  --control-line: var(--brand-blue);
+  --accent: var(--brand-air);
+  --primary: var(--brand-air);
+  --primary-text: var(--brand-navy);
+  --primary-hover: var(--brand-pale-cyan);
+  --hover: var(--brand-navy);
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 24px; }
@@ -62,7 +48,7 @@ button { cursor: pointer; color: inherit; }
 a, button, summary { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
-::selection { background: #bdeff7; color: #002262; }
+::selection { background: var(--brand-pale-cyan); color: var(--brand-navy); }
 .icon { width: 20px; height: 20px; flex-shrink: 0; }
 .page-shell { max-width: 500px; margin: auto; padding: 32px 24px 20px; }
 .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }

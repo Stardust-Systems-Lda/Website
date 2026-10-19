@@ -20,8 +20,8 @@ const contactHref = `mailto:${contactEmail}?subject=${encodeURIComponent("Contac
 const pilotHref = `mailto:${contactEmail}?subject=${encodeURIComponent("Interesse num piloto RenovAR")}`;
 const navigation = [
   { label: "Como funciona", href: "#funcionamento" },
-  { label: "O sistema", href: "#solucao" },
   { label: "Pilotos", href: "#validacao" },
+  { label: "O sistema", href: "#solucao" },
   { label: "Equipa", href: "#equipa" },
 ];
 
@@ -345,66 +345,6 @@ function App() {
           </div>
         </section>
 
-        <section id="solucao" className="product section-space" tabIndex={-1}>
-          <div className="container product-grid">
-            <figure className="sensor-visual" data-reveal>
-              <img
-                src="/assets/renovar-sensor.jpeg"
-                alt="Protótipo do sensor ambiental RenovAR instalado numa parede, com caixa e placa eletrónica visíveis"
-                width="1536"
-                height="1536"
-                loading="lazy"
-              />
-              <figcaption>
-                <span>Sensor ambiental</span>
-                <span>Protótipo funcional</span>
-              </figcaption>
-            </figure>
-            <div className="product-copy">
-              <p className="eyebrow">O sistema</p>
-              <h2>Sensores, controlo e acompanhamento.</h2>
-              <p className="body-copy">
-                A instalação é definida pelas características do edifício e pelos
-                equipamentos disponíveis. O sistema reúne a medição do ar, o
-                controlo da ventilação e o acesso aos dados.
-              </p>
-              <div className="feature-list">
-                <div>
-                  <div>
-                    <h3>Monitorização ambiental</h3>
-                    <p>
-                      CO₂, temperatura, humidade relativa, partículas e
-                      compostos orgânicos voláteis.
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <h3>Controlo local</h3>
-                    <p>
-                      Modos automático, assistido e manual, com autonomia de
-                      operação local.
-                    </p>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <h3>Plataforma de acompanhamento</h3>
-                    <p>
-                      Leituras em tempo real e histórico, com comunicação Wi-Fi
-                      e acesso remoto através da cloud.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <a className="text-link" href="#perguntas">
-                Esclareça as suas dúvidas{" "}
-                <ArrowRight size={17} aria-hidden="true" />
-              </a>
-            </div>
-          </div>
-        </section>
-
         <section id="validacao" className="development section-space" tabIndex={-1}>
           <div className="container">
             <div className="section-heading" data-reveal>
@@ -462,6 +402,66 @@ function App() {
                   </li>
                 </ol>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="solucao" className="product section-space" tabIndex={-1}>
+          <div className="container product-grid">
+            <figure className="sensor-visual" data-reveal>
+              <img
+                src="/assets/renovar-sensor.jpeg"
+                alt="Protótipo do sensor ambiental RenovAR instalado numa parede, com caixa e placa eletrónica visíveis"
+                width="1536"
+                height="1536"
+                loading="lazy"
+              />
+              <figcaption>
+                <span>Sensor ambiental</span>
+                <span>Protótipo funcional</span>
+              </figcaption>
+            </figure>
+            <div className="product-copy">
+              <p className="eyebrow">O sistema</p>
+              <h2>Sensores, controlo e acompanhamento.</h2>
+              <p className="body-copy">
+                A instalação é definida pelas características do edifício e pelos
+                equipamentos disponíveis. O sistema reúne a medição do ar, o
+                controlo da ventilação e o acesso aos dados.
+              </p>
+              <div className="feature-list">
+                <div>
+                  <div>
+                    <h3>Monitorização ambiental</h3>
+                    <p>
+                      CO₂, temperatura, humidade relativa, partículas e
+                      compostos orgânicos voláteis.
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <h3>Controlo local</h3>
+                    <p>
+                      Modos automático, assistido e manual, com autonomia de
+                      operação local.
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <h3>Plataforma de acompanhamento</h3>
+                    <p>
+                      Leituras em tempo real e histórico, com comunicação Wi-Fi
+                      e acesso remoto através da cloud.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <a className="text-link" href="#perguntas">
+                Esclareça as suas dúvidas{" "}
+                <ArrowRight size={17} aria-hidden="true" />
+              </a>
             </div>
           </div>
         </section>

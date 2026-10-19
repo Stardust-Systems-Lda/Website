@@ -22,7 +22,7 @@ export default function ThemeToggle() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.querySelector('meta[name="theme-color"]')?.setAttribute(
-      "content", theme === "dark" ? "#071322" : "#ffffff",
+      "content", theme === "dark" ? "#00184A" : "#FFFFFF",
     );
   }, [theme]);
 
